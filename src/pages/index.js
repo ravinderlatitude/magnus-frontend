@@ -5,6 +5,10 @@ import styles from "@/styles/Home.module.css";
 import Header from "@/components/header";
 import Aboutus from "@/pages/aboutus";
 
+import BannerImg from "../assets/images/banner-img.png";
+import PlayIc from "../assets/images/playic.svg";
+import Link from "next/link";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -16,7 +20,60 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>Home Content</main>
+      <main>
+        <div className="banner title-text">
+          <div className="container">
+            <div className="row align-items-center">
+              <div className="col-md-6 col-12 ">
+                <h6>
+                  Let’s <span>Begins</span>
+                </h6>
+                <h2>
+                  Let's Find The <span>Right Test </span>For you
+                </h2>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                  dignissim, sem non convallis molestie.
+                </p>
+                <div className="btn-block">
+                  <Link className="btn btn-orange-color" href="/">
+                    Register
+                  </Link>
+                  <Link
+                    className="btn btn-link-blue-color align-items-center d-inline-flex"
+                    href="/"
+                  >
+                    <span className="ms-2 me-2">
+                      <Image src={PlayIc} />
+                    </span>
+                    Play Video
+                  </Link>
+                </div>
+              </div>
+              <div className="col-md-6 col-12 order-md-last order-first">
+                <Image src={BannerImg} className="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="why-us">
+          <div className="container">
+            <div className="title-text">
+              <h6>
+                Let’s <span>Begins</span>
+              </h6>
+              <h2>
+                Let's Find The <span>Right Test </span>For you
+              </h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                dignissim, sem non convallis molestie.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
     </>
   );
 }

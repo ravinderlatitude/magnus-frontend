@@ -5,8 +5,8 @@ import LOGO from "../assets/images/logo.svg";
 
 export default function Header() {
   return (
-    <div className="header-main">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <div className="header-main fixed-top">
+      <nav className="navbar navbar-expand-lg navbar-light ">
         <div className="container c-container">
           <Link href="/" className="navbar-brand">
             <Image src={LOGO} />
@@ -28,7 +28,6 @@ export default function Header() {
               </li>
               <li className="nav-item dropdown">
                 <Link href="/" className="nav-link dropdown-toggle">
-                  {" "}
                   Self Assessment
                 </Link>
                 <ul className="dropdown-menu">
@@ -85,6 +84,10 @@ export default function Header() {
                 </Link>
               </li>
             </ul>
+          </div>
+          <div className="btn-block">
+            <button className="btn btn-orange ms-3">Login </button>
+            <button className="btn btn-blue ms-3">Register </button>
           </div>
         </div>
       </nav>
