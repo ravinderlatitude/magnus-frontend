@@ -6,7 +6,12 @@ import Header from "@/components/header";
 import Aboutus from "@/pages/aboutus";
 
 import BannerImg from "../assets/images/banner-img.png";
+import PeopleTalking from "../assets/images/people-talking.png";
 import PlayIc from "../assets/images/playic.svg";
+
+import ICAccessible from "../assets/images/ICAccessible.svg";
+import ICReputable from "../assets/images/ICReputable.svg";
+import ICDiscreet from "../assets/images/ICDiscreet.svg";
 import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -59,17 +64,200 @@ export default function Home() {
 
         <div className="why-us">
           <div className="container">
-            <div className="title-text">
-              <h6>
-                Let’s <span>Begins</span>
-              </h6>
-              <h2>
-                Let's Find The <span>Right Test </span>For you
-              </h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-                dignissim, sem non convallis molestie.
-              </p>
+            <div className="row">
+              <div className="col-md-4 col-12">
+                <div className="title-text">
+                  <h6>WHY US?</h6>
+                  <h3>Why you Purchase test?</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Etiam dignissim, sem non convallis molestie.
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-8 col-12">
+                <div className="row">
+                  <div className="col-md-4 col-12">
+                    <div className="bx-block bg_colorOrange">
+                      <div className="bx-icon">
+                        <Image src={ICAccessible} />
+                      </div>
+                      <h6>Easy to Accessible</h6>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Etiam dignissim, sem non convallis molestie.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="col-md-4 col-12">
+                    <div className="bx-block bg_colorDarkBlue">
+                      <div className="bx-icon">
+                        <Image src={ICReputable} />
+                      </div>
+                      <h6>Reputable Portal</h6>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Etiam dignissim, sem non convallis molestie.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="col-md-4 col-12">
+                    <div className="bx-block bg_colorOrange">
+                      <div className="bx-icon">
+                        <Image src={ICDiscreet} />
+                      </div>
+                      <h6>Discreet Payment</h6>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Etiam dignissim, sem non convallis molestie.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="right-test">
+          <div className="container">
+            <div className="row">
+              <div className="title-text text-center">
+                <h6>AVAILABLE FOR YOU</h6>
+                <h3>Find The Right Test</h3>
+                <p className="col-12 col-md-6 mx-auto mb-5">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                  dignissim, sem non convallis molestie.
+                </p>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-3 col-sm-6 col-12">
+                <div className="bx-block bg_colorOrange">
+                  <div className="bx-icon">
+                    <Image src={ICReputable} />
+                  </div>
+                  <h6>Reputable Portal</h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Etiam dignissim, sem non convallis molestie.
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-3 col-sm-6 col-12">
+                <div className="bx-block bg_colorDarkBlue">
+                  <div className="bx-icon">
+                    <Image src={ICReputable} />
+                  </div>
+                  <h6>Reputable Portal</h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Etiam dignissim, sem non convallis molestie.
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-3 col-sm-6 col-12">
+                <div className="bx-block bg_colorOrange">
+                  <div className="bx-icon">
+                    <Image src={ICReputable} />
+                  </div>
+                  <h6>Reputable Portal</h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Etiam dignissim, sem non convallis molestie.
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-3 col-sm-6 col-12">
+                <div className="bx-block bg_colorDarkBlue">
+                  <div className="bx-icon">
+                    <Image src={ICReputable} />
+                  </div>
+                  <h6>Reputable Portal</h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Etiam dignissim, sem non convallis molestie.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-3 col-sm-6 col-12">
+                <div className="bx-block  bg_colorDarkBlue">
+                  <div className="bx-icon">
+                    <Image src={ICReputable} />
+                  </div>
+                  <h6>Reputable Portal</h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Etiam dignissim, sem non convallis molestie.
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-3 col-sm-6 col-12">
+                <div className="bx-block bg_colorOrange">
+                  <div className="bx-icon">
+                    <Image src={ICReputable} />
+                  </div>
+                  <h6>Reputable Portal</h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Etiam dignissim, sem non convallis molestie.
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-3 col-sm-6 col-12">
+                <div className="bx-block bg_colorDarkBlue">
+                  <div className="bx-icon">
+                    <Image src={ICReputable} />
+                  </div>
+                  <h6>Reputable Portal</h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Etiam dignissim, sem non convallis molestie.
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-3 col-sm-6 col-12">
+                <div className="bx-block bg_colorOrange">
+                  <div className="bx-icon">
+                    <Image src={ICReputable} />
+                  </div>
+                  <h6>Reputable Portal</h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Etiam dignissim, sem non convallis molestie.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-auto mx-auto">
+                <Link href="/" className="btn btn-orange-color">
+                  Log in
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="people-talking">
+          <div className="container">
+            <div className="row align-items-center">
+              <div className="col-md-6 col-12">
+                <Image src={PeopleTalking} className="img-fluid" />
+              </div>
+              <div className="col-md-6 col-12 title-text">
+                <h6>TEST WE HAVE</h6>
+                <h2 className="text-white">
+                  People Talking About Magnus Latitude
+                </h2>
+                <p className="text-white">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                  dignissim, sem non convallis molestie.
+                </p>
+              </div>
             </div>
           </div>
         </div>

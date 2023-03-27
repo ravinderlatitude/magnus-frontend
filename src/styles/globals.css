@@ -6,6 +6,7 @@
 
   /* color */
   --colorBlue: #0a6eb0;
+  --colorDarkBlue: #003355;
   --colorOrange: #ea8127;
   --colorDarkGray: #2f2f2f;
   --lightBlue: #e2f4ff;
@@ -62,7 +63,7 @@ a {
   text-decoration: none;
 }
 p {
-  font-size: 18px;
+  font-size: 16px;
   color: #2f2f2f;
 }
 
@@ -96,8 +97,7 @@ p {
 .nav-item.dropdown:hover .dropdown-menu li:hover .dropdown-item {
   background-color: var(--colorOrange);
 }
-.btn-block {
-}
+
 .btn-block button {
   border: 1px solid;
   font-weight: bold;
@@ -162,11 +162,20 @@ p {
   font-family: var(--titleFont);
   color: var(--colorOrange);
 }
+.title-text h3 {
+  font-family: var(--titleFont);
+  font-size: 46px;
+  color: var(--colorBlue);
+}
+.title-text h3 span {
+  font-family: var(--titleFont);
+  color: var(--colorOrange);
+}
 .btn-orange-color {
   background-color: var(--colorOrange);
   color: var(--bs-white);
   font-size: 16px;
-  padding: 8px 15px;
+  padding: 8px 25px;
 }
 .btn-orange-color:hover {
   background-color: var(--colorBlue);
@@ -176,7 +185,7 @@ p {
   background-color: var(--colorBlue);
   color: var(--bs-white);
   font-size: 16px;
-  padding: 8px 15px;
+  padding: 8px 25px;
 }
 .btn-blue-color:hover {
   background-color: var(--colorOrange);
@@ -192,4 +201,49 @@ p {
 .why-us {
   padding: 60px 0px;
   background-color: var(--lightBlue);
+}
+.bx-block {
+  border-radius: 8px;
+  padding: 20px;
+  padding-top: 35px;
+  min-height: 250px;
+  margin-bottom: 20px;
+}
+.bx-icon {
+  display: flex;
+  background-color: var(--bs-white);
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+.bx-block h6 {
+  color: var(--bs-white);
+  font-size: 16px;
+  font-weight: bold;
+}
+.bx-block p {
+  font-size: 14px;
+  color: var(--bs-white);
+}
+.bg_colorOrange {
+  background-color: var(--colorOrange);
+}
+.bg_colorDarkBlue {
+  background-color: var(--colorDarkBlue);
+}
+.right-test {
+  padding: 60px 0px;
+}
+.right-test h3 {
+  color: var(--colorDarkGray);
+}
+.people-talking {
+  background-color: var(--colorDarkBlue);
+  padding: 60px 0px;
+}
+.people-talking h3 {
+  color: var(--bs-white);
 }
