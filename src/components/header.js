@@ -1,93 +1,138 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useEffect, useRef, useState } from "react";
+import ActiveLink from "./ActiveLink";
+import useOutsideClick from "../hooks/useOutsideClick";
 
 import LOGO from "../assets/images/logo.svg";
+import ModalLogin from "./ModalLogin";
+import ModalRegister from "./ModalRegister";
+export default function Header({ href, children }) {
+  const dropdown = useRef(null);
 
-export default function Header() {
+  // menu toggle page for menu
+  const [isActive, setIsActive] = useState(false);
+  useOutsideClick(dropdown, () => setIsActive(false));
+  const handleClick = (event) => {
+    setIsActive((current) => !current);
+  };
+
+  // for Modal
+  // const handelModal = useRef(null);
+
+  const [isModal, setIsModal] = useState(false);
+  const [isModalRegister, setIsModalRegister] = useState(false);
+  // useOutsideClick(handelModal, () => setIsModal(false));
+  // const modalClick = (event) => {
+  //   setIsModal((current) => !current);
+  // };
+
   return (
     <div className="header-main fixed-top">
       <nav className="navbar navbar-expand-lg navbar-light ">
-        <div className="container c-container">
-          <Link href="/" className="navbar-brand">
-            <Image src={LOGO} />
-          </Link>
-          <button className="navbar-toggler">
+        <div className="container c-container" ref={dropdown}>
+          <ActiveLink href="/" className="navbar-brand">
+            <Image alt="" src={LOGO} />
+          </ActiveLink>
+          <button className="navbar-toggler" onClick={handleClick}>
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse">
+
+          <div
+            className={
+              "navbar-collapse " + (!isActive ? "collapse" : "collapsed")
+            }
+            onClick={handleClick}
+          >
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link href="/" className="nav-link active">
-                  Home
-                </Link>
+                <ActiveLink href="/">Home</ActiveLink>
               </li>
               <li className="nav-item">
-                <Link href="/aboutus" className="nav-link">
-                  About us
-                </Link>
+                <ActiveLink href="/aboutus">About us</ActiveLink>
               </li>
               <li className="nav-item dropdown">
-                <Link href="/" className="nav-link dropdown-toggle">
+                <ActiveLink href="/" className="nav-link dropdown-toggle">
                   Self Assessment
-                </Link>
+                </ActiveLink>
                 <ul className="dropdown-menu">
                   <li>
-                    <Link href="/" className="dropdown-item">
+                    <ActiveLink href="/" className="dropdown-item">
                       Learning Style
-                    </Link>
+                    </ActiveLink>
                   </li>
                   <li>
-                    <Link href="/" className="dropdown-item">
+                    <ActiveLink href="/" className="dropdown-item">
                       Stream Selector
-                    </Link>
+                    </ActiveLink>
                   </li>
                   <li>
-                    <Link href="/" className="dropdown-item">
+                    <ActiveLink href="/" className="dropdown-item">
                       Ideal Career
-                    </Link>
+                    </ActiveLink>
                   </li>
                   <li>
-                    <Link href="/" className="dropdown-item">
+                    <ActiveLink href="/" className="dropdown-item">
                       Personality
-                    </Link>
+                    </ActiveLink>
                   </li>
                   <li>
-                    <Link href="/" className="dropdown-item">
+                    <ActiveLink href="/" className="dropdown-item">
                       Multiple Intelligence
-                    </Link>
+                    </ActiveLink>
                   </li>
                   <li>
-                    <Link href="/" className="dropdown-item">
+                    <ActiveLink href="/" className="dropdown-item">
                       Engineering Branch
-                    </Link>
+                    </ActiveLink>
                   </li>
                   <li>
-                    <Link href="/" className="dropdown-item">
+                    <ActiveLink href="/" className="dropdown-item">
                       Humanities Branch
-                    </Link>
+                    </ActiveLink>
                   </li>
                   <li>
-                    <Link href="/" className="dropdown-item">
+                    <ActiveLink href="/" className="dropdown-item">
                       Commerce Branch
-                    </Link>
+                    </ActiveLink>
                   </li>
                 </ul>
               </li>
               <li className="nav-item">
-                <Link href="/" className="nav-link">
+                <ActiveLink href="/" className="nav-link">
                   Faq
-                </Link>
+                </ActiveLink>
               </li>
               <li className="nav-item">
-                <Link href="/" className="nav-link">
+                <ActiveLink href="/" className="nav-link">
                   Contact
-                </Link>
+                </ActiveLink>
               </li>
             </ul>
           </div>
           <div className="btn-block">
-            <button className="btn btn-orange ms-3">Login </button>
-            <button className="btn btn-blue ms-3">Register </button>
+            <button
+              className="btn btn-orange ms-3"
+              onClick={() => setIsModal((current) => !current)}
+            >
+              Login
+            </button>
+            <button
+              className="btn btn-blue ms-3"
+              onClick={() => setIsModalRegister((current) => !current)}
+            >
+              Register{" "}
+            </button>
+            <div>
+              <ModalLogin isModal={isModal} setIsModal={setIsModal} />
+            </div>
+            <div>
+              <ModalRegister
+                isModal={isModalRegister}
+                setIsModal={setIsModalRegister}
+              />
+            </div>
           </div>
         </div>
       </nav>

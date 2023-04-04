@@ -9,9 +9,9 @@ export default function Footer() {
     <div className="footer-main">
       <div className="container c-container">
         <div className="row justify-content-between">
-          <div className="col-md-4">
+          <div className="col-lg-4 col-md-12">
             <Link href="/">
-              <Image src={FOOTER_LOGO} />
+              <Image alt="" src={FOOTER_LOGO} />
             </Link>
             <p className="mt-3">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
@@ -19,7 +19,7 @@ export default function Footer() {
               vel tempor dolor augue et lectus.
             </p>
           </div>
-          <div className="col-md-6 col-12">
+          <div className="col-lg-8 col-sm-12 col-12">
             <div className="row">
               <div className="col-md-4">
                 <h4>Navigations</h4>
@@ -52,7 +52,7 @@ export default function Footer() {
                   </li>
                 </ul>
               </div>
-              <div className="col-md-4">
+              <div className="col-auto">
                 <h4>Contact Us</h4>
                 <ul>
                   <li>
