@@ -18,6 +18,10 @@ export default function Header({ href, children }) {
     setIsActive((current) => !current);
   };
 
+  const [isSubmenu, setIsSubmenu] = useState(false);
+  const handleClickSubMenu = (event) => {
+    setIsSubmenu((current) => !current);
+  };
   // for Modal
   // const handelModal = useRef(null);
 
@@ -43,22 +47,32 @@ export default function Header({ href, children }) {
             className={
               "navbar-collapse " + (!isActive ? "collapse" : "collapsed")
             }
-            onClick={handleClick}
           >
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <ActiveLink href="/">Home</ActiveLink>
+                <ActiveLink href="/" onClick={handleClick}>
+                  Home
+                </ActiveLink>
               </li>
               <li className="nav-item">
-                <ActiveLink href="/aboutus">About us</ActiveLink>
-              </li>
-              <li className="nav-item dropdown">
-                <ActiveLink href="/" className="nav-link dropdown-toggle">
-                  Self Assessment
+                <ActiveLink href="/aboutus" onClick={handleClick}>
+                  About us
                 </ActiveLink>
-                <ul className="dropdown-menu">
+              </li>
+              <li
+                className={"nav-item dropdown " + (isSubmenu ? "active" : "")}
+                onMouseLeave={() => setIsSubmenu(false)}
+              >
+                <span
+                  className="nav-link dropdown-toggle"
+                  onClick={handleClickSubMenu}
+                  onMouseOver={() => setIsSubmenu(true)}
+                >
+                  Self Assessment
+                </span>
+                <ul className="dropdown-menu ">
                   <li>
-                    <ActiveLink href="/" className="dropdown-item">
+                    <ActiveLink href="/course-detail" className="dropdown-item">
                       Learning Style
                     </ActiveLink>
                   </li>

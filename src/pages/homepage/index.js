@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,10 +34,13 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
-
-const inter = Inter({ subsets: ["latin"] });
+import ModalRegister from "@/components/ModalRegister";
+import ModalLogin from "@/components/ModalLogin";
 
 export default function homepage() {
+  const [isModalRegister, setIsModalRegister] = useState(false);
+  const [isModal, setIsModal] = useState(false);
+
   return (
     <div>
       <div className="banner title-text">
@@ -54,9 +58,13 @@ export default function homepage() {
                 dignissim, sem non convallis molestie.
               </p>
               <div className="btn-block">
-                <Link className="btn btn-orange-color" href="/">
+                <button
+                  className="btn btn-orange-color"
+                  onClick={() => setIsModalRegister((current) => !current)}
+                >
                   Register
-                </Link>
+                </button>
+
                 <Link
                   className="btn btn-link-blue-color align-items-center d-inline-flex"
                   href="/"
@@ -67,6 +75,11 @@ export default function homepage() {
                   Play Video
                 </Link>
               </div>
+              <ModalRegister
+                isModal={isModalRegister}
+                setIsModal={setIsModalRegister}
+              />
+              <ModalLogin isModal={isModal} setIsModal={setIsModal} />
             </div>
             <div className="col-md-6 col-12 order-md-last order-first">
               <Image alt="" src={BannerImg} className="img-fluid" />
@@ -297,9 +310,12 @@ export default function homepage() {
 
           <div className="row">
             <div className="col-auto mx-auto">
-              <Link href="/" className="btn btn-orange-color">
+              <button
+                className="btn btn-orange-color"
+                onClick={() => setIsModal((current) => !current)}
+              >
                 Log in
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -336,9 +352,12 @@ export default function homepage() {
                 </div>
               </div>
 
-              <Link href="/" className="btn btn-orange-color">
+              <button
+                className="btn btn-orange-color"
+                onClick={() => setIsModal((current) => !current)}
+              >
                 Log in
-              </Link>
+              </button>
             </div>
           </div>
         </div>

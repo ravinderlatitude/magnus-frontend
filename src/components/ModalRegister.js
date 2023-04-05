@@ -69,7 +69,9 @@ export default function ModalRegister({ isModal, setIsModal }) {
               </div>
 
               <div className="">
-                <button className="btn btn-orange-color border-0">Login</button>
+                <button className="btn btn-orange-color border-0">
+                  Register
+                </button>
               </div>
             </div>
           </div>

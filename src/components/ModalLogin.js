@@ -88,7 +88,7 @@ export default function ModalLogin({ isModal, setIsModal }) {
 
                 <div className="">
                   <button className="btn btn-orange-color border-0">
-                    Login
+                    Submit
                   </button>
                 </div>
               </div>
