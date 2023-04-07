@@ -41,7 +41,7 @@ export default function aboutus() {
             <div className="col-md-6 col-12">
               <Image src={AboutImg} alt="" className="img-fluid" />
             </div>
-            <div className="col-md-6 col-12 title-text">
+            <div className="col-md-6 col-12 title-text mt-md-0 mt-4">
               <h6>Know More</h6>
               <h3>We offer a carefully and planned test.</h3>
               <p>

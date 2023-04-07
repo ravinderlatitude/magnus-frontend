@@ -72,54 +72,54 @@ export default function Header({ href, children }) {
                 </span>
                 <ul className="dropdown-menu ">
                   <li>
-                    <ActiveLink href="/course-detail" className="dropdown-item">
+                    <ActiveLink href="/test-detail" className="dropdown-item">
                       Learning Style
                     </ActiveLink>
                   </li>
                   <li>
-                    <ActiveLink href="/" className="dropdown-item">
+                    <ActiveLink href="/test-detail" className="dropdown-item">
                       Stream Selector
                     </ActiveLink>
                   </li>
                   <li>
-                    <ActiveLink href="/" className="dropdown-item">
+                    <ActiveLink href="/test-detail" className="dropdown-item">
                       Ideal Career
                     </ActiveLink>
                   </li>
                   <li>
-                    <ActiveLink href="/" className="dropdown-item">
+                    <ActiveLink href="/test-detail" className="dropdown-item">
                       Personality
                     </ActiveLink>
                   </li>
                   <li>
-                    <ActiveLink href="/" className="dropdown-item">
+                    <ActiveLink href="/test-detail" className="dropdown-item">
                       Multiple Intelligence
                     </ActiveLink>
                   </li>
                   <li>
-                    <ActiveLink href="/" className="dropdown-item">
+                    <ActiveLink href="/test-detail" className="dropdown-item">
                       Engineering Branch
                     </ActiveLink>
                   </li>
                   <li>
-                    <ActiveLink href="/" className="dropdown-item">
+                    <ActiveLink href="/test-detail" className="dropdown-item">
                       Humanities Branch
                     </ActiveLink>
                   </li>
                   <li>
-                    <ActiveLink href="/" className="dropdown-item">
+                    <ActiveLink href="/test-detail" className="dropdown-item">
                       Commerce Branch
                     </ActiveLink>
                   </li>
                 </ul>
               </li>
               <li className="nav-item">
-                <ActiveLink href="/" className="nav-link">
+                <ActiveLink href="/faqs" onClick={handleClick}>
                   Faq
                 </ActiveLink>
               </li>
               <li className="nav-item">
-                <ActiveLink href="/" className="nav-link">
+                <ActiveLink href="/contact" onClick={handleClick}>
                   Contact
                 </ActiveLink>
               </li>

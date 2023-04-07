@@ -4,7 +4,11 @@ import BannerImg from "../assets/images/banner-img.jpg";
 import Image from "next/image";
 import Link from "next/link";
 
+import { useRouter } from "next/router";
+
 export default function banner({ title, isButton }) {
+  // const router = useRouter();
+  // const testName = router.query.testName;
   return (
     <div className="banner-bg">
       {isButton ? (
