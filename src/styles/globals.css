@@ -241,6 +241,10 @@ p {
   height: 48px;
   border-radius: 50%;
   margin-bottom: 20px;
+  overflow: hidden;
+}
+.bx-icon img {
+  object-fit: contain;
 }
 .bx-block h6 {
   color: var(--bs-white);
