@@ -225,9 +225,12 @@ p {
 .bx-main + .bx-block:nth-child(even) {
   background-color: var(--colorDarkBlue);
 } */
-.bx-block:has(.box_blue) {
+.box_blue {
   /* styles to apply if the content contains audio OR video */
   background-color: var(--colorDarkBlue);
+}
+.bgred > .bx-block .box_blue {
+  background: red !important;
 }
 .bx-icon {
   display: flex;

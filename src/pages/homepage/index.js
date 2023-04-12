@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,9 +26,25 @@ import ModalRegister from "@/components/ModalRegister";
 import ModalLogin from "@/components/ModalLogin";
 import Testimonials from "@/components/Testimonials";
 
+import { getTetsList } from "./../../../apiServices/services";
+
 export default function homepage() {
   const [isModalRegister, setIsModalRegister] = useState(false);
   const [isModal, setIsModal] = useState(false);
+
+  const [testListData, setTestListData] = useState([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        let testList = await getTetsList();
+        setTestListData(testList.data);
+
+        console.log("testListData==========:", testList);
+      } catch (ee) {
+        console.error("hftygfy hfyfdchdfg", ee);
+      }
+    })();
+  }, []);
 
   return (
     <div>
@@ -105,8 +121,8 @@ export default function homepage() {
                   </div>
                 </div>
                 <div className="col-md-4 col-12">
-                  <div className="bx-block">
-                    <div className="bx-icon box_blue">
+                  <div className="bx-block box_blue">
+                    <div className="bx-icon">
                       <Image alt="" src={ICReputable} />
                     </div>
                     <h6>Reputable Portal</h6>
@@ -147,25 +163,33 @@ export default function homepage() {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-3 col-sm-6 col-12">
-              <div className="bx-block">
-                <div className="bx-icon box_blue">
-                  <Image alt="" src={ICLearning} />
+            {testListData.map((data, index) => (
+              <div className="col-md-3 col-sm-6 col-12">
+                <div
+                  className={index % 2 == 1 ? "bx-block" : "bx-block box_blue"}
+                >
+                  <div className="bx-icon">
+                    <Image alt="" src={ICLearning} />
+                  </div>
+                  <h6>{data.test_name}</h6>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Etiam dignissim, sem non convallis molestie.
+                  </p>
+                  <Link
+                    href="/"
+                    className="d-flex text-white justify-content-end"
+                  >
+                    Take Assessment
+                    <span className="ms-2">
+                      <Image src={ICArrow} alt="" />
+                    </span>
+                  </Link>
                 </div>
-                <h6>Learning Style</h6>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-                  dignissim, sem non convallis molestie.
-                </p>
-                <Link href="/" className="text-white justify-content-end">
-                  Take Assessment
-                  <span className="ms-2">
-                    <Image src={ICArrow} alt="" />
-                  </span>
-                </Link>
               </div>
-            </div>
-            <div className="col-md-3 col-sm-6 col-12">
+            ))}
+
+            {/* <div className="col-md-3 col-sm-6 col-12">
               <div className="bx-block">
                 <div className="bx-icon">
                   <Image alt="" src={ICStream} />
@@ -183,9 +207,10 @@ export default function homepage() {
                 </Link>
               </div>
             </div>
+
             <div className="col-md-3 col-sm-6 col-12">
-              <div className="bx-block">
-                <div className="bx-icon box_blue">
+              <div className="bx-block box_blue">
+                <div className="bx-icon">
                   <Image alt="" src={ICIdeal} />
                 </div>
                 <h6>Ideal Career</h6>
@@ -201,6 +226,7 @@ export default function homepage() {
                 </Link>
               </div>
             </div>
+
             <div className="col-md-3 col-sm-6 col-12">
               <div className="bx-block">
                 <div className="bx-icon">
@@ -240,8 +266,8 @@ export default function homepage() {
             </div>
 
             <div className="col-md-3 col-sm-6 col-12">
-              <div className="bx-block">
-                <div className="bx-icon box_blue">
+              <div className="bx-block box_blue">
+                <div className="bx-icon">
                   <Image alt="" src={ICEngineering} />
                 </div>
                 <h6>Engineering Branch</h6>
@@ -278,8 +304,8 @@ export default function homepage() {
             </div>
 
             <div className="col-md-3 col-sm-6 col-12">
-              <div className="bx-block">
-                <div className="bx-icon box_blue">
+              <div className="bx-block box_blue">
+                <div className="bx-icon">
                   <Image alt="" src={ICCommerce} />
                 </div>
                 <h6>Commerce Branch</h6>
@@ -294,7 +320,7 @@ export default function homepage() {
                   </span>
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="row">

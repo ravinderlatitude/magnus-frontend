@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import Image from "next/image";
@@ -14,7 +14,22 @@ import UserImg from "../../src/assets/images/UserImg.png";
 import StarFill from "../../src/assets/images/star-fill.svg";
 import StarBlank from "../../src/assets/images/star-blank.svg";
 
+import { getFaqList, getTetimonialList } from "./../../apiServices/services";
+
 export default function Testimonials() {
+  const [testimonialData, setTestimonialData] = useState([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        let tetimonialList = await getTetimonialList();
+        setTestimonialData(tetimonialList.data);
+
+        console.log("tetimonialList==========:", tetimonialList);
+      } catch (ee) {
+        console.error(ee.data);
+      }
+    })();
+  }, []);
   return (
     <>
       <Swiper
@@ -34,113 +49,30 @@ export default function Testimonials() {
           },
         }}
       >
-        <SwiperSlide>
-          <div className="testi-blcok">
-            <div className="user-info">
-              <div className="user-img">
-                <Image alt="" src={UserImg} />
+        {testimonialData.map((testimonial, index) => (
+          <SwiperSlide>
+            <div className="testi-blcok">
+              <div className="user-info">
+                <div className="user-img">
+                  {/* <Image alt="" src={UserImg} /> */}
+                  <Image
+                    alt=""
+                    src={`${testimonial.image}`}
+                    width={100}
+                    height={100}
+                  />
+                </div>
+                <div>
+                  <h4>{testimonial.title}</h4>
+                  <h6>{testimonial.sub_title}</h6>
+                </div>
               </div>
-              <div>
-                <h4>Friskidia1</h4>
-                <h6>Client</h6>
-              </div>
-            </div>
-            <div className="ratings">
-              <span>
-                <Image alt="" src={StarFill} />
-              </span>
-              <span>
-                <Image alt="" src={StarFill} />
-              </span>
-              <span>
-                <Image alt="" src={StarFill} />
-              </span>
-              <span>
-                <Image alt="" src={StarBlank} />
-              </span>
-              <span>
-                <Image alt="" src={StarBlank} />
-              </span>
-            </div>
-            <p className="mt-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-              rutrum dapibus luctus.
-            </p>
-            <span className="top-right-corner"> </span>
-          </div>
-        </SwiperSlide>
 
-        <SwiperSlide>
-          <div className="testi-blcok">
-            <div className="user-info">
-              <div className="user-img">
-                <Image alt="" src={UserImg} />
-              </div>
-              <div>
-                <h4>Friskidia2</h4>
-                <h6>Client</h6>
-              </div>
+              <p className="mt-3">{testimonial.description}</p>
+              <span className="top-right-corner"> </span>
             </div>
-            <div className="ratings">
-              <span>
-                <Image alt="" src={StarFill} />
-              </span>
-              <span>
-                <Image alt="" src={StarFill} />
-              </span>
-              <span>
-                <Image alt="" src={StarFill} />
-              </span>
-              <span>
-                <Image alt="" src={StarBlank} />
-              </span>
-              <span>
-                <Image alt="" src={StarBlank} />
-              </span>
-            </div>
-            <p className="mt-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-              rutrum dapibus luctus.
-            </p>
-            <span className="top-right-corner"> </span>
-          </div>
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <div className="testi-blcok">
-            <div className="user-info">
-              <div className="user-img">
-                <Image alt="" src={UserImg} />
-              </div>
-              <div>
-                <h4>Friskidia3</h4>
-                <h6>Client</h6>
-              </div>
-            </div>
-            <div className="ratings">
-              <span>
-                <Image alt="" src={StarFill} />
-              </span>
-              <span>
-                <Image alt="" src={StarFill} />
-              </span>
-              <span>
-                <Image alt="" src={StarFill} />
-              </span>
-              <span>
-                <Image alt="" src={StarBlank} />
-              </span>
-              <span>
-                <Image alt="" src={StarBlank} />
-              </span>
-            </div>
-            <p className="mt-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-              rutrum dapibus luctus.
-            </p>
-            <span className="top-right-corner"> </span>
-          </div>
-        </SwiperSlide>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );
