@@ -169,7 +169,12 @@ export default function homepage() {
                   className={index % 2 == 1 ? "bx-block" : "bx-block box_blue"}
                 >
                   <div className="bx-icon">
-                    <Image alt="" src={ICLearning} />
+                    <Image
+                      alt={data.test_name}
+                      src={data?.image ? data.image : ICLearning}
+                      width={32}
+                      height={32}
+                    />
                   </div>
                   <h6>{data.test_name}</h6>
                   <p>

@@ -13,21 +13,17 @@ import "swiper/css/autoplay";
 import Image from "next/image";
 
 // import LOGO from "../assets/images/logo.svg";
-import { getFaqList, getTetimonialList } from "../../../apiServices/services";
+import { getFaqList } from "../../../apiServices/services";
 
 import Testimonials from "@/components/Testimonials";
 
 const faqs = () => {
   const [faqData, setfaqData] = useState([]);
-  const [testimonialData, setTestimonialData] = useState([]);
   useEffect(() => {
     (async () => {
       try {
         let faqList = await getFaqList();
         setfaqData(faqList.data);
-
-        let tetimonialList = await getTetimonialList();
-        setTestimonialData(tetimonialList.data);
       } catch (ee) {
         console.error(ee.data);
       }

@@ -13,8 +13,9 @@ import "swiper/css/autoplay";
 import UserImg from "../../src/assets/images/UserImg.png";
 import StarFill from "../../src/assets/images/star-fill.svg";
 import StarBlank from "../../src/assets/images/star-blank.svg";
+import ICSetUp from "../../src/assets/images/ICSetUp.svg";
 
-import { getFaqList, getTetimonialList } from "./../../apiServices/services";
+import { getTetimonialList } from "./../../apiServices/services";
 
 export default function Testimonials() {
   const [testimonialData, setTestimonialData] = useState([]);
@@ -30,6 +31,7 @@ export default function Testimonials() {
       }
     })();
   }, []);
+
   return (
     <>
       <Swiper
@@ -54,10 +56,10 @@ export default function Testimonials() {
             <div className="testi-blcok">
               <div className="user-info">
                 <div className="user-img">
-                  {/* <Image alt="" src={UserImg} /> */}
+                  {/* <Image alt="" src={ICSetUp} /> */}
                   <Image
-                    alt=""
-                    src={`${testimonial.image}`}
+                    alt={testimonial.title}
+                    src={testimonial?.image ? testimonial.image : ICSetUp}
                     width={100}
                     height={100}
                   />
