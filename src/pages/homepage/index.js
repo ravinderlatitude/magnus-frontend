@@ -38,8 +38,6 @@ export default function homepage() {
       try {
         let testList = await getTetsList();
         setTestListData(testList.data);
-
-        console.log("testListData==========:", testList);
       } catch (ee) {
         console.error("hftygfy hfyfdchdfg", ee);
       }
