@@ -58,3 +58,8 @@ export const getTetsList = async () => {
 export const loginAPI = async (body) => {
   return await axiosClient.post("/login", body);
 };
+
+// Get Test List Detail
+export const getTetsListDetail = async (id) => {
+  return await axiosClient.get(`/test-detail/${id}`);
+};

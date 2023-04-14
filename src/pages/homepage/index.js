@@ -97,6 +97,7 @@ export default function homepage() {
             <div className="col-md-4 col-12">
               <div className="title-text">
                 <h6>WHY US?</h6>
+
                 <h3>Why you Purchase test?</h3>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
@@ -160,12 +161,10 @@ export default function homepage() {
               </p>
             </div>
           </div>
-          <div className="row">
-            {testListData.map((data, index) => (
-              <div className="col-md-3 col-sm-6 col-12">
-                <div
-                  className={index % 2 == 1 ? "bx-block" : "bx-block box_blue"}
-                >
+          <div className="row justify-content-around">
+            {testListData?.map((data, index) =>
+              testListData.length >= 8 ? (
+                <div className="fourbox">
                   <div className="bx-icon">
                     <Image
                       alt={data.test_name}
@@ -189,8 +188,8 @@ export default function homepage() {
                     </span>
                   </Link>
                 </div>
-              </div>
-            ))}
+              ) : null
+            )}
 
             {/* <div className="col-md-3 col-sm-6 col-12">
               <div className="bx-block">

@@ -49,7 +49,7 @@ export default function Testimonials() {
           },
         }}
       >
-        {testimonialData.map((testimonial, index) => (
+        {testimonialData?.map((testimonial, index) => (
           <SwiperSlide>
             <div className="testi-blcok">
               <div className="user-info">
