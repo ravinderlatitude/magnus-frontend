@@ -38,3 +38,8 @@ export const getTetimonialList = async () => {
 export const getTetsList = async () => {
   return await axiosClient.get("/test-list");
 };
+
+// Get Test List Detail
+export const getTetsListDetail = async (id) => {
+  return await axiosClient.get(`/test-detail/${id}`);
+};

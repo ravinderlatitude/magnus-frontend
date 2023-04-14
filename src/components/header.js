@@ -8,6 +8,7 @@ import useOutsideClick from "../hooks/useOutsideClick";
 import LOGO from "../assets/images/logo.svg";
 import ModalLogin from "./ModalLogin";
 import ModalRegister from "./ModalRegister";
+import { getTetsList, getTetsListDetail } from "../../apiServices/services";
 export default function Header({ href, children }) {
   const dropdown = useRef(null);
 
@@ -31,6 +32,36 @@ export default function Header({ href, children }) {
   // const modalClick = (event) => {
   //   setIsModal((current) => !current);
   // };
+  const [testListData, setTestListData] = useState([]);
+  const [testListDetail, setTestListDetail] = useState([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        let testList = await getTetsList();
+        setTestListData(testList.data);
+
+        // console.log("testListData==========:", testList);
+      } catch (ee) {
+        console.error("hftygfy hfyfdchdfg", ee);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        let testDetails = await getTetsListDetail();
+        setTestListDetail(testDetails.data);
+
+        // console.log("testListData==========:", testList);
+
+        // console.log("testListData___header__call", testList);
+        console.log("testListDetail===========", testDetails);
+      } catch (ee) {
+        console.error("hftygfy hfyfdchdfg", ee);
+      }
+    })();
+  }, []);
 
   return (
     <div className="header-main fixed-top">
@@ -70,13 +101,22 @@ export default function Header({ href, children }) {
                 >
                   Self Assessment
                 </span>
-                <ul className="dropdown-menu ">
-                  <li>
-                    <ActiveLink href="/test-detail" className="dropdown-item">
-                      Learning Style
-                    </ActiveLink>
-                  </li>
-                  <li>
+                <ul className="dropdown-menu">
+                  {testListData?.map((data, index) => (
+                    <li>
+                      {/* {console.log("LI data=====", data)} */}
+                      {/* <ActiveLink href="/test-detail" className="dropdown-item"> */}
+                      <ActiveLink
+                        href={`/test-detail/${encodeURIComponent(
+                          data.test_id
+                        )}`}
+                        className="dropdown-item"
+                      >
+                        {data.test_name}
+                      </ActiveLink>
+                    </li>
+                  ))}
+                  {/* <li>
                     <ActiveLink href="/test-detail" className="dropdown-item">
                       Stream Selector
                     </ActiveLink>
@@ -110,7 +150,7 @@ export default function Header({ href, children }) {
                     <ActiveLink href="/test-detail" className="dropdown-item">
                       Commerce Branch
                     </ActiveLink>
-                  </li>
+                  </li> */}
                 </ul>
               </li>
               <li className="nav-item">

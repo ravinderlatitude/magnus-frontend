@@ -24,6 +24,7 @@ const faqs = () => {
       try {
         let faqList = await getFaqList();
         setfaqData(faqList.data);
+        console.log("faqList=======", faqList);
       } catch (ee) {
         console.error(ee.data);
       }
@@ -63,7 +64,7 @@ const faqs = () => {
             <div className="container">
               <div className="col-md-8 col-12 mx-auto mb-5">
                 <ul>
-                  {faqData.map((faq, index) => (
+                  {faqData?.map((faq, index) => (
                     <AccordionItem
                       key={index}
                       faq={faq}
