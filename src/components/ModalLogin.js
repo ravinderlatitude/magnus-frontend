@@ -29,12 +29,21 @@ export default function ModalLogin({ isModal, setIsModal }) {
 
   const handleClick = async () => {
     // console.log(JSON.stringify({ email, password }));
+
+    // if (response.status == 200) {
+    //   setIsModal(false);
+    // } else {
+    //   null;
+    // }
     try {
       let body = JSON.stringify({ email, password });
       const response = await loginAPI(body);
 
       console.log("login success response=====================");
       console.log(response);
+      if (response.status == 200) {
+        modalClose();
+      }
       console.log(response.data.email);
     } catch (error) {
       console.error(error);
@@ -64,7 +73,7 @@ export default function ModalLogin({ isModal, setIsModal }) {
                 </div>
                 <div>
                   <input
-                    type="name"
+                    type="password"
                     value={password}
                     placeholder="Password"
                     className="form-control"
