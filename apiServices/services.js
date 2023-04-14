@@ -1,12 +1,27 @@
 import axios from "axios";
 
+let headers = "";
+if (
+  typeof window !== "undefined" &&
+  localStorage.getItem("authToken") != null &&
+  localStorage.getItem("authToken") != undefined
+) {
+  headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + localStorage.getItem("authToken"),
+  };
+} else {
+  headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  };
+}
+
 const axiosClient = axios.create({
   baseURL: "https://testyourapp.online/magnus-latitude/api",
   //   baseURL: "https://reqres.in/api",
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  },
+  headers: headers,
 });
 
 axiosClient.interceptors.response.use(
@@ -37,4 +52,9 @@ export const getTetimonialList = async () => {
 // Get Test List
 export const getTetsList = async () => {
   return await axiosClient.get("/test-list");
+};
+
+// Call Login API
+export const loginAPI = async (body) => {
+  return await axiosClient.post("/login", body);
 };

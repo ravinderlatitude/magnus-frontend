@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ICclose from "../assets/images/ICclose.svg";
 import useOutsideClick from "../hooks/useOutsideClick";
+import { loginAPI } from "../../apiServices/services";
 
 export default function ModalLogin({ isModal, setIsModal }) {
   const modelRef = useRef(null);
@@ -22,6 +23,24 @@ export default function ModalLogin({ isModal, setIsModal }) {
     console.log(isModalForgot, "modal");
   };
   useOutsideClick(modelRef, modalClose);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleClick = async () => {
+    // console.log(JSON.stringify({ email, password }));
+    try {
+      let body = JSON.stringify({ email, password });
+      const response = await loginAPI(body);
+
+      console.log("login success response=====================");
+      console.log(response);
+      console.log(response.data.email);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <div>
@@ -37,17 +56,19 @@ export default function ModalLogin({ isModal, setIsModal }) {
                 <div>
                   <input
                     type="name"
-                    value=""
+                    value={email}
                     placeholder="Email"
                     className="form-control"
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div>
                   <input
                     type="name"
-                    value=""
+                    value={password}
                     placeholder="Password"
                     className="form-control"
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
 
@@ -57,7 +78,10 @@ export default function ModalLogin({ isModal, setIsModal }) {
                   </Link>
                 </div>
                 <div className="">
-                  <button className="btn btn-orange-color border-0">
+                  <button
+                    className="btn btn-orange-color border-0"
+                    onClick={handleClick}
+                  >
                     Login
                   </button>
                 </div>

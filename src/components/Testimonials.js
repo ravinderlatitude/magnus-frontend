@@ -24,8 +24,6 @@ export default function Testimonials() {
       try {
         let tetimonialList = await getTetimonialList();
         setTestimonialData(tetimonialList.data);
-
-        console.log("tetimonialList==========:", tetimonialList);
       } catch (ee) {
         console.error(ee.data);
       }
