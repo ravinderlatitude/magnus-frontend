@@ -15,20 +15,21 @@ import StarFill from "../../src/assets/images/star-fill.svg";
 import StarBlank from "../../src/assets/images/star-blank.svg";
 import ICSetUp from "../../src/assets/images/ICSetUp.svg";
 
-import { getTetimonialList } from "./../../apiServices/services";
+import { getTetsList, getTetimonialList } from "../../apiServices/services";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Testimonials() {
-  const [testimonialData, setTestimonialData] = useState([]);
+  // const [testimonialData, setTestimonialData] = useState([]);
+  const dispatch = useDispatch();
+  const tetimonialList = useSelector((state) => state.tetimonialList.data);
+  const loading = useSelector((state) => state.tetimonialList.loading);
+  const error = useSelector((state) => state.tetimonialList.error);
   useEffect(() => {
-    (async () => {
-      try {
-        let tetimonialList = await getTetimonialList();
-        setTestimonialData(tetimonialList.data);
-      } catch (ee) {
-        console.error(ee.data);
-      }
-    })();
+    console.log("first");
+    dispatch(getTetimonialList());
+    return () => {};
   }, []);
+  // console.log("dispatch==========", tetimonialList);
 
   return (
     <>
@@ -49,8 +50,8 @@ export default function Testimonials() {
           },
         }}
       >
-        {testimonialData?.map((testimonial, index) => (
-          <SwiperSlide>
+        {tetimonialList?.map((testimonial, index) => (
+          <SwiperSlide key={index.toString()}>
             <div className="testi-blcok">
               <div className="user-info">
                 <div className="user-img">

@@ -1,3 +1,5 @@
+import authSlice from "@/redux/authSlice";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 let headers = "";
@@ -45,19 +47,32 @@ export const getFaqList = async () => {
 };
 
 // Get Testimonial
-export const getTetimonialList = async () => {
-  return await axiosClient.get("/testimonial-list");
-};
+export const getTetimonialList = createAsyncThunk(
+  "testimonial/getTetimonialList",
+  async () => {
+    return await axiosClient.get("/testimonial-list");
+  }
+);
 
 // Get Test List
-export const getTetsList = async () => {
-  return await axiosClient.get("/test-list");
-};
+// export const getTetsList = async () => {
+//   return await axiosClient.get("/test-list");
+// };
+
+export const getTetsList = createAsyncThunk(
+  "testList/getTetsList",
+  async () => {
+    return await axiosClient.get("/test-list");
+  }
+);
 
 // Call Login API
-export const loginAPI = async (body) => {
-  return await axiosClient.post("/login", body);
-};
+
+export const loginAPI = createAsyncThunk("auth/login", async (body) => {
+  const response = await axiosClient.post("/login", body);
+  localStorage.setItem("userData", JSON.stringify(response));
+  return response;
+});
 
 // Get Test List Detail
 export const getTetsListDetail = async (id) => {

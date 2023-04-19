@@ -3,11 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import ICclose from "../assets/images/ICclose.svg";
 import useOutsideClick from "../hooks/useOutsideClick";
+import { useDispatch, useSelector } from "react-redux";
+
 import { loginAPI } from "../../apiServices/services";
 
 export default function ModalLogin({ isModal, setIsModal }) {
   const modelRef = useRef(null);
-
   const [isModalForgot, setIsModalForgot] = useState(false);
 
   // for Modal
@@ -24,31 +25,53 @@ export default function ModalLogin({ isModal, setIsModal }) {
   };
   useOutsideClick(modelRef, modalClose);
 
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+
+  // const handleClick = async () => {
+  //   // console.log(JSON.stringify({ email, password }));
+
+  //   // if (response.status == 200) {
+  //   //   setIsModal(false);
+  //   // } else {
+  //   //   null;
+  //   // }
+  //   try {
+  //     let body = JSON.stringify({ email, password });
+  //     const response = await loginAPI(body);
+
+  //     console.log("login success response=====================");
+  //     console.log(response);
+  //     if (response.status == 200) {
+  //       modalClose();
+  //     }
+  //     console.log(response.data.email);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleClick = async () => {
-    // console.log(JSON.stringify({ email, password }));
+  const auth = useSelector((state) => state.auth.user);
 
-    // if (response.status == 200) {
-    //   setIsModal(false);
-    // } else {
-    //   null;
-    // }
-    try {
-      let body = JSON.stringify({ email, password });
-      const response = await loginAPI(body);
+  const handleClick = async (e) => {
+    e.preventDefault();
+    dispatch(loginAPI({ email, password }));
 
-      console.log("login success response=====================");
-      console.log(response);
-      if (response.status == 200) {
-        modalClose();
-      }
-      console.log(response.data.email);
-    } catch (error) {
-      console.error(error);
-    }
+    // setIsModal(false);
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(loginAPI({ email, password }));
+  };
+  useEffect(() => {
+    if (auth) {
+      modalClose();
+    }
+  }, [auth]);
 
   return (
     <div>
@@ -61,39 +84,40 @@ export default function ModalLogin({ isModal, setIsModal }) {
                   <Image src={ICclose} alt="" />
                 </span>
                 <h2>Login</h2>
-
-                <div>
-                  <input
-                    type="name"
-                    value={email}
-                    placeholder="Email"
-                    className="form-control"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <input
-                    type="password"
-                    value={password}
-                    placeholder="Password"
-                    className="form-control"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-
-                <div className="w-100 text-end">
-                  <Link href="/" className="modal-links" onClick={modalOpen}>
-                    Forgot Password?
-                  </Link>
-                </div>
-                <div className="">
-                  <button
-                    className="btn btn-orange-color border-0"
-                    onClick={handleClick}
-                  >
-                    Login
-                  </button>
-                </div>
+                <form onSubmit={handleSubmit}>
+                  {status === "failed" && <div>{error}</div>}
+                  <div>
+                    <input
+                      type="name"
+                      value={email}
+                      placeholder="Email"
+                      className="form-control"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="password"
+                      value={password}
+                      placeholder="Password"
+                      className="form-control"
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                  <div className="w-100 text-end">
+                    <Link href="/" className="modal-links" onClick={modalOpen}>
+                      Forgot Password?
+                    </Link>
+                  </div>
+                  <div className="">
+                    <button
+                      className="btn btn-orange-color border-0"
+                      onClick={handleClick}
+                    >
+                      Login
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
