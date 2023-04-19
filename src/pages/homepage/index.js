@@ -27,22 +27,26 @@ import ModalLogin from "@/components/ModalLogin";
 import Testimonials from "@/components/Testimonials";
 
 import { getTetsList } from "./../../../apiServices/services";
+import { useSelector } from "react-redux";
 
 export default function homepage() {
   const [isModalRegister, setIsModalRegister] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
-  const [testListData, setTestListData] = useState([]);
-  useEffect(() => {
-    (async () => {
-      try {
-        let testList = await getTetsList();
-        setTestListData(testList.data);
-      } catch (ee) {
-        console.error("hftygfy hfyfdchdfg", ee);
-      }
-    })();
-  }, []);
+  const testList = useSelector((state) => state.testList.data);
+  // const [testListData, setTestListData] = useState([]);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       let testList = await getTetsList();
+  //       setTestListData(testList.data);
+  //     } catch (ee) {
+  //       console.error("hftygfy hfyfdchdfg", ee);
+  //     }
+  //   })();
+  // }, []);
+
+  // console.log(testList);
 
   return (
     <div>
@@ -162,9 +166,9 @@ export default function homepage() {
             </div>
           </div>
           <div className="row justify-content-around">
-            {testListData?.map((data, index) =>
-              testListData.length >= 8 ? (
-                <div className="fourbox">
+            {testList?.map((data, index) =>
+              testList?.length >= 8 ? (
+                <div className="fourbox" key={index.toString()}>
                   <div className="bx-icon">
                     <Image
                       alt={data.test_name}

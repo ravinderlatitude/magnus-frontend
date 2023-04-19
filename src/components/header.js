@@ -8,7 +8,14 @@ import useOutsideClick from "../hooks/useOutsideClick";
 import LOGO from "../assets/images/logo.svg";
 import ModalLogin from "./ModalLogin";
 import ModalRegister from "./ModalRegister";
-import { getTetsList, getTetsListDetail } from "../../apiServices/services";
+import {
+  getTetsList,
+  getTetsListDetail,
+  loginAPI,
+} from "../../apiServices/services";
+import { useDispatch, useSelector } from "react-redux";
+import { setCredentials, setLogout } from "@/redux/authSlice";
+
 export default function Header({ href, children }) {
   const dropdown = useRef(null);
 
@@ -34,35 +41,71 @@ export default function Header({ href, children }) {
   // };
   const [testListData, setTestListData] = useState([]);
   const [testListDetail, setTestListDetail] = useState([]);
+
+  const dispatch = useDispatch();
+  const testList = useSelector((state) => state.testList.data);
+  const loading = useSelector((state) => state.testList.loading);
+  const error = useSelector((state) => state.testList.error);
   useEffect(() => {
-    (async () => {
-      try {
-        let testList = await getTetsList();
-        setTestListData(testList.data);
+    const user = localStorage.getItem("userData");
+    if (user) {
+      dispatch(setCredentials(JSON.parse(user)));
+    }
 
-        // console.log("testListData==========:", testList);
-      } catch (ee) {
-        console.error("hftygfy hfyfdchdfg", ee);
-      }
-    })();
-  }, []);
+    dispatch(getTetsList());
+  }, [dispatch]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        let testDetails = await getTetsListDetail();
-        setTestListDetail(testDetails.data);
+  const handleLogout = (e) => {
+    localStorage.removeItem("userData");
+    dispatch(setCredentials(null));
+    setIsModal(false);
+    // if (userLogout) {
+    //   dispatch(setLogout(JSON.parse(userLogout)));
+    // }
+  };
+  // **************************************************************************
 
-        // console.log("testListData==========:", testList);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       let testList = await getTetsList();
+  //       setTestListData(testList.data);
 
-        // console.log("testListData___header__call", testList);
-        console.log("testListDetail===========", testDetails);
-      } catch (ee) {
-        console.error("hftygfy hfyfdchdfg", ee);
-      }
-    })();
-  }, []);
+  //       // console.log("testListData==========:", testList);
+  //     } catch (ee) {
+  //       console.error("hftygfy hfyfdchdfg", ee);
+  //     }
+  //   })();
+  // }, []);
 
+  // **************************************************************************
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       let testDetails = await getTetsListDetail();
+  //       setTestListDetail(testDetails.data);
+
+  //       // console.log("testListData==========:", testList);
+
+  //       // console.log("testListData___header__call", testList);
+  //       console.log("testListDetail===========", testDetails);
+  //     } catch (ee) {
+  //       console.error("hftygfy hfyfdchdfg", ee);
+  //     }
+  //   })();
+  // }, []);
+
+  const auth = useSelector((state) => state.auth.user);
+  console.log("auth=====", auth);
+  const [isLogin, setIsLogin] = useState(false);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+  console.log(auth);
   return (
     <div className="header-main fixed-top">
       <nav className="navbar navbar-expand-lg navbar-light ">
@@ -73,7 +116,6 @@ export default function Header({ href, children }) {
           <button className="navbar-toggler" onClick={handleClick}>
             <span className="navbar-toggler-icon"></span>
           </button>
-
           <div
             className={
               "navbar-collapse " + (!isActive ? "collapse" : "collapsed")
@@ -102,14 +144,12 @@ export default function Header({ href, children }) {
                   Self Assessment
                 </span>
                 <ul className="dropdown-menu">
-                  {testListData?.map((data, index) => (
-                    <li>
+                  {testList?.map((data, index) => (
+                    <li key={index.toString()}>
                       {/* {console.log("LI data=====", data)} */}
                       {/* <ActiveLink href="/test-detail" className="dropdown-item"> */}
                       <ActiveLink
-                        href={`/test-detail/${encodeURIComponent(
-                          data.test_id
-                        )}`}
+                        href={`/test-detail/${encodeURIComponent(data.slug)}`}
                         className="dropdown-item"
                       >
                         {data.test_name}
@@ -165,29 +205,36 @@ export default function Header({ href, children }) {
               </li>
             </ul>
           </div>
-          <div className="btn-block">
-            <button
-              className="btn btn-orange ms-3"
-              onClick={() => setIsModal((current) => !current)}
-            >
-              Login
-            </button>
-            <button
-              className="btn btn-blue ms-3"
-              onClick={() => setIsModalRegister((current) => !current)}
-            >
-              Register{" "}
-            </button>
-            <div>
-              <ModalLogin isModal={isModal} setIsModal={setIsModal} />
+          {!auth?.data ? (
+            <div className="btn-block">
+              <button
+                className="btn btn-orange ms-3"
+                onClick={() => setIsModal((current) => !current)}
+              >
+                Login
+              </button>
+              <button
+                className="btn btn-blue ms-3"
+                onClick={() => setIsModalRegister((current) => !current)}
+              >
+                Register{" "}
+              </button>
+              <div>
+                <ModalLogin isModal={isModal} setIsModal={setIsModal} />
+              </div>
+              <div>
+                <ModalRegister
+                  isModal={isModalRegister}
+                  setIsModal={setIsModalRegister}
+                />
+              </div>
             </div>
-            <div>
-              <ModalRegister
-                isModal={isModalRegister}
-                setIsModal={setIsModalRegister}
-              />
-            </div>
-          </div>
+          ) : (
+            <>
+              {auth?.data?.first_name}
+              <a onClick={() => handleLogout()}>Logout</a>
+            </>
+          )}
         </div>
       </nav>
     </div>
