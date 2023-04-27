@@ -389,7 +389,7 @@ p {
   margin-bottom: 10px;
 }
 .modal-main .modal-links {
-  color: var(--colorDarkBlue);
+  color: var(--colorOrange);
   font-size: 14px;
 }
 .modal-main .form-input {
@@ -674,7 +674,12 @@ h6.text-blue {
   font-family: var(--titleFont);
   color: var(--colorDarkBlue) !important;
 }
-
+.error-message {
+  font-size: 14px;
+  position: relative;
+  top: -10px;
+  color: #fff;
+}
 @media (max-width: 767px) {
   .footer-main h4 {
     margin-top: 10px;

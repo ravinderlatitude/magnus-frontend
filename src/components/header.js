@@ -8,11 +8,7 @@ import useOutsideClick from "../hooks/useOutsideClick";
 import LOGO from "../assets/images/logo.svg";
 import ModalLogin from "./ModalLogin";
 import ModalRegister from "./ModalRegister";
-import {
-  getTetsList,
-  getTetsListDetail,
-  loginAPI,
-} from "../../apiServices/services";
+import { getTetsList } from "../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials, setLogout } from "@/redux/authSlice";
 
@@ -96,7 +92,7 @@ export default function Header({ href, children }) {
   // }, []);
 
   const auth = useSelector((state) => state.auth.user);
-  console.log("auth=====", auth);
+  // console.log("auth=====", auth);
   const [isLogin, setIsLogin] = useState(false);
   if (loading) {
     return <div>Loading...</div>;
@@ -105,7 +101,7 @@ export default function Header({ href, children }) {
   if (error) {
     return <div>Error: {error}</div>;
   }
-  console.log(auth);
+  // console.log(auth);
   return (
     <div className="header-main fixed-top">
       <nav className="navbar navbar-expand-lg navbar-light ">
