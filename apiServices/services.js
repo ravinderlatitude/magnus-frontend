@@ -66,11 +66,19 @@ export const getTetsList = createAsyncThunk(
   }
 );
 
-// Call Login API
+//post Call Login API
 
 export const loginAPI = createAsyncThunk("auth/login", async (body) => {
   const response = await axiosClient.post("/login", body);
   localStorage.setItem("userData", JSON.stringify(response));
+  return response;
+});
+
+//post Call Login API
+
+export const rgisterAPI = createAsyncThunk("auth/register", async (body) => {
+  const response = await axiosClient.post("/register", body);
+  localStorage.setItem("userRgisterData", JSON.stringify(response));
   return response;
 });
 

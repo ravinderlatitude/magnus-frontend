@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ICclose from "../assets/images/ICclose.svg";
+import ic_cross from "../assets/images/ic_cross.svg";
 import useOutsideClick from "../hooks/useOutsideClick";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -52,26 +53,67 @@ export default function ModalLogin({ isModal, setIsModal }) {
   // };
 
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [error, setError] = useState(null);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const auth = useSelector((state) => state.auth.user);
 
-  const handleClick = async (e) => {
-    e.preventDefault();
-    dispatch(loginAPI({ email, password }));
+  // const handleClick = async (e) => {
+  //   e.preventDefault();
+  //   dispatch(loginAPI({ email, password }));
+  //   // setIsModal(false);
+  // };
 
-    // setIsModal(false);
+  const handleEmailChange = (event) => {
+    const { value } = event.target;
+    setEmail(value);
+
+    // email validation
+    const emailRegex = /^[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(value)) {
+      setEmailError("Invalid email address");
+    } else {
+      setEmailError("");
+    }
   };
+
+  const handlePasswordChange = (event) => {
+    const { value } = event.target;
+    setPassword(value);
+
+    // password validation
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,191}$/;
+    if (!passwordRegex.test(value)) {
+      setPasswordError(
+        "Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character."
+      );
+    } else {
+      setPasswordError("");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(loginAPI({ email, password }));
+    setError(auth?.message);
+
+    // setEmail(e.target.value);
   };
-  useEffect(() => {
-    if (auth) {
-      modalClose();
-    }
-  }, [auth]);
+
+  // useEffect(() => {
+  //   // if (!isValidEmail(e.target.value)) {
+  //   // } else {
+  //   //   setError(auth?.message);
+  //   //   setIsModal(true);
+  //   // }
+  //   // if (auth) {
+  //   //   // modalClose();
+  //   // }
+  // }, [error]);
+  // console.log(error, password, email, auth, ">>");
 
   return (
     <div>
@@ -85,15 +127,18 @@ export default function ModalLogin({ isModal, setIsModal }) {
                 </span>
                 <h2>Login</h2>
                 <form onSubmit={handleSubmit}>
-                  {status === "failed" && <div>{error}</div>}
+                  {/* {status === "failed" && <div>{error}</div>} */}
                   <div>
                     <input
                       type="name"
                       value={email}
                       placeholder="Email"
                       className="form-control"
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={handleEmailChange}
                     />
+                    {emailError && (
+                      <span className="error-message">{emailError}</span>
+                    )}
                   </div>
                   <div>
                     <input
@@ -101,9 +146,17 @@ export default function ModalLogin({ isModal, setIsModal }) {
                       value={password}
                       placeholder="Password"
                       className="form-control"
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={handlePasswordChange}
                     />
                   </div>
+                  {passwordError && (
+                    <span className="error-message">{passwordError}</span>
+                  )}
+                  {error && (
+                    <span style={{ color: "red", fontSize: "14px" }}>
+                      {auth?.message}
+                    </span>
+                  )}
                   <div className="w-100 text-end">
                     <Link href="/" className="modal-links" onClick={modalOpen}>
                       Forgot Password?
@@ -112,7 +165,7 @@ export default function ModalLogin({ isModal, setIsModal }) {
                   <div className="">
                     <button
                       className="btn btn-orange-color border-0"
-                      onClick={handleClick}
+                      // onClick={handleClick}
                     >
                       Login
                     </button>
