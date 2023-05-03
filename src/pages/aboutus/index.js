@@ -12,9 +12,11 @@ import ICChoose from "../../assets/images/ICChoose.svg";
 import ICPay from "../../assets/images/ICPay.svg";
 
 import Testimonials from "@/components/Testimonials";
+import { useSelector } from "react-redux";
 
 // import LOGO from "../assets/images/logo.svg";
 export default function aboutus() {
+  const auth = useSelector((state) => state.auth.user);
   const [isModalRegister, setIsModalRegister] = useState(false);
 
   return (
@@ -44,12 +46,18 @@ export default function aboutus() {
                   <h6 className="text-blue">Test we offer</h6>
                 </div>
               </div>
-              <button
-                className="btn btn-orange-color"
-                onClick={() => setIsModalRegister((current) => !current)}
-              >
-                Register
-              </button>
+
+              {!auth?.data ? (
+                <div className="btn-block">
+                  <button
+                    className="btn btn-orange-color"
+                    onClick={() => setIsModalRegister((current) => !current)}
+                  >
+                    Register
+                  </button>
+                </div>
+              ) : null}
+
               <div>
                 <ModalRegister
                   isModal={isModalRegister}

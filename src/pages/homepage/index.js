@@ -26,10 +26,10 @@ import ModalRegister from "@/components/ModalRegister";
 import ModalLogin from "@/components/ModalLogin";
 import Testimonials from "@/components/Testimonials";
 
-import { getTetsList } from "./../../../apiServices/services";
 import { useSelector } from "react-redux";
 
 export default function homepage() {
+  const auth = useSelector((state) => state.auth.user);
   const [isModalRegister, setIsModalRegister] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
@@ -64,24 +64,41 @@ export default function homepage() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
                 dignissim, sem non convallis molestie.
               </p>
-              <div className="btn-block">
+              {/* <div className="btn-block">
                 <button
                   className="btn btn-orange-color"
                   onClick={() => setIsModalRegister((current) => !current)}
                 >
                   Register
                 </button>
+              </div> */}
 
-                <Link
-                  className="btn btn-link-blue-color align-items-center d-inline-flex"
-                  href="/"
-                >
-                  <span className="ms-2 me-2">
-                    <Image alt="" src={PlayIc} />
-                  </span>
-                  Play Video
-                </Link>
-              </div>
+              {!auth?.data ? (
+                <div className="btn-block">
+                  <button
+                    className="btn btn-orange-color"
+                    onClick={() => setIsModalRegister((current) => !current)}
+                  >
+                    Register
+                  </button>
+                  <div>
+                    <ModalLogin isModal={isModal} setIsModal={setIsModal} />
+                  </div>
+                  <div>
+                    <ModalRegister
+                      isModal={isModalRegister}
+                      setIsModal={setIsModalRegister}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <Link className="btn btn-orange-color" href="/aboutus">
+                    More About
+                  </Link>
+                </>
+              )}
+
               <ModalRegister
                 isModal={isModalRegister}
                 setIsModal={setIsModalRegister}
@@ -329,16 +346,16 @@ export default function homepage() {
             </div> */}
           </div>
 
-          <div className="row">
-            <div className="col-auto mx-auto">
+          {!auth?.data ? (
+            <div className="btn-block text-center">
               <button
-                className="btn btn-orange-color"
+                className="btn btn-orange-color btn-sm"
                 onClick={() => setIsModal((current) => !current)}
               >
                 Log in
               </button>
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
 
@@ -373,12 +390,16 @@ export default function homepage() {
                 </div>
               </div>
 
-              <button
-                className="btn btn-orange-color"
-                onClick={() => setIsModal((current) => !current)}
-              >
-                Log in
-              </button>
+              {!auth?.data ? (
+                <div className="btn-block">
+                  <button
+                    className="btn btn-orange-color border-0"
+                    onClick={() => setIsModal((current) => !current)}
+                  >
+                    Log in
+                  </button>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

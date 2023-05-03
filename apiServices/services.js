@@ -74,13 +74,23 @@ export const loginAPI = createAsyncThunk("auth/login", async (body) => {
   return response;
 });
 
-//post Call Login API
+//post Call Register API
 
 export const rgisterAPI = createAsyncThunk("auth/register", async (body) => {
   const response = await axiosClient.post("/register", body);
   localStorage.setItem("userRgisterData", JSON.stringify(response));
   return response;
 });
+
+//post Call Forgot API
+export const forgotPwdAPI = createAsyncThunk(
+  "auth/forgot-password",
+  async (body) => {
+    const response = await axiosClient.post("/forgot-password", body);
+    localStorage.setItem("forgotPasswordData", JSON.stringify(response));
+    return response;
+  }
+);
 
 // Get Test List Detail
 export const getTetsListDetail = async (id) => {

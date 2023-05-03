@@ -1,10 +1,21 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect } from "react";
 
 // local images
 import FOOTER_LOGO from "../assets/images/Flogo.svg";
+import { getTetsList } from "../../apiServices/services";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Footer() {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth.user);
+
+  const testList = useSelector((state) => state.testList.data);
+  useEffect(() => {
+    dispatch(getTetsList());
+    console.log("Footer=======>>>", testList);
+  }, [dispatch]);
   return (
     <div className="footer-main">
       <div className="container c-container">
@@ -38,18 +49,17 @@ export default function Footer() {
               <div className="col-md-4">
                 <h4>Assessments</h4>
                 <ul>
-                  <li>
-                    <Link href="/"> IELET</Link>
-                  </li>
-                  <li>
-                    <Link href="/"> PTE</Link>
-                  </li>
-                  <li>
-                    <Link href="/"> TOEFL</Link>
-                  </li>
-                  <li>
-                    <Link href="/"> PR</Link>
-                  </li>
+                  {testList?.map((data, index) => (
+                    <li key={index.toString()}>
+                      {/* {console.log("LI data=====", data)} */}
+                      {/* <ActiveLink href="/test-detail" className="dropdown-item"> */}
+                      <Link
+                        href={`/test-detail/${encodeURIComponent(data.slug)}`}
+                      >
+                        {data.test_name}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="col-auto">
