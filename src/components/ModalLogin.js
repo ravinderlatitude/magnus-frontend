@@ -6,7 +6,7 @@ import ic_cross from "../assets/images/ic_cross.svg";
 import useOutsideClick from "../hooks/useOutsideClick";
 import { useDispatch, useSelector } from "react-redux";
 
-import { loginAPI } from "../../apiServices/services";
+import { loginAPI, forgotPwdAPI } from "../../apiServices/services";
 
 export default function ModalLogin({ isModal, setIsModal }) {
   const modelRef = useRef(null);
@@ -58,7 +58,9 @@ export default function ModalLogin({ isModal, setIsModal }) {
   const [error, setError] = useState(null);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
   const auth = useSelector((state) => state.auth.user);
+  const authForgotPwd = useSelector((state) => state.authForgotPwd.user);
 
   // const handleClick = async (e) => {
   //   e.preventDefault();
@@ -68,6 +70,7 @@ export default function ModalLogin({ isModal, setIsModal }) {
 
   const handleEmailChange = (event) => {
     const { value } = event.target;
+
     setEmail(value);
 
     // email validation
@@ -103,15 +106,38 @@ export default function ModalLogin({ isModal, setIsModal }) {
     // setEmail(e.target.value);
   };
 
+  const handleForgotPasswordSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(
+      forgotPwdAPI({
+        // first_name: firstName,
+        // last_name: lastName,
+        email: email,
+        // password: password,
+        // confirm_password: confirmPassword,
+      })
+    );
+    setError(authForgotPwd?.message);
+
+    // setEmail(e.target.value);
+  };
+
+  const handleForgotPasswordEmailChange = (event) => {
+    const { value } = event.target;
+
+    setEmail(value);
+
+    // email validation
+    const emailRegex = /^[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(value)) {
+      setEmailError("Invalid email address");
+    } else {
+      setEmailError("");
+    }
+  };
+
   // useEffect(() => {
-  //   // if (!isValidEmail(e.target.value)) {
-  //   // } else {
-  //   //   setError(auth?.message);
-  //   //   setIsModal(true);
-  //   // }
-  //   // if (auth) {
-  //   //   // modalClose();
-  //   // }
+  //   dispatch(forgotPwdAPI({ email }));
   // }, [error]);
   // console.log(error, password, email, auth, ">>");
 
@@ -137,7 +163,7 @@ export default function ModalLogin({ isModal, setIsModal }) {
                       onChange={handleEmailChange}
                     />
                     {emailError && (
-                      <span className="error-message">{emailError}</span>
+                      <span className="errorMessage">{emailError}</span>
                     )}
                   </div>
                   <div>
@@ -149,20 +175,20 @@ export default function ModalLogin({ isModal, setIsModal }) {
                       onChange={handlePasswordChange}
                     />
                   </div>
-                  {passwordError && (
-                    <span className="error-message">{passwordError}</span>
-                  )}
-                  {error && (
-                    <span style={{ color: "red", fontSize: "14px" }}>
-                      {auth?.message}
-                    </span>
-                  )}
+                  <div className="d-flex flex-column">
+                    {passwordError && (
+                      <span className="errorMessage">{passwordError}</span>
+                    )}
+                    {error && (
+                      <span className="errorMessage">{auth?.message}</span>
+                    )}
+                  </div>
                   <div className="w-100 text-end">
                     <Link href="/" className="modal-links" onClick={modalOpen}>
                       Forgot Password?
                     </Link>
                   </div>
-                  <div className="">
+                  <div>
                     <button
                       className="btn btn-orange-color border-0"
                       // onClick={handleClick}
@@ -181,26 +207,35 @@ export default function ModalLogin({ isModal, setIsModal }) {
                 <span className="modal-close" onClick={modalClose}>
                   <Image src={ICclose} alt="" />
                 </span>
-                <h2>Forgot Password?</h2>
-                <div>
-                  <input
-                    type="name"
-                    value=""
-                    placeholder="Email"
-                    className="form-control"
-                  />
-                </div>
-                <div className="w-100 text-end">
-                  <Link href="/" className="modal-links" onClick={modalOpen}>
-                    Go Back to Login
-                  </Link>
-                </div>
-
-                <div className="">
-                  <button className="btn btn-orange-color border-0">
-                    Submit
-                  </button>
-                </div>
+                <form onSubmit={handleForgotPasswordSubmit}>
+                  <h2>Forgot Password?</h2>
+                  <div>
+                    <input
+                      type="name"
+                      value={email}
+                      placeholder="Email"
+                      className="form-control"
+                      onChange={handleForgotPasswordEmailChange}
+                    />
+                  </div>
+                  <div className="d-flex">
+                    {error && (
+                      <span className="errorMessage">
+                        {authForgotPwd?.message}
+                      </span>
+                    )}
+                  </div>
+                  <div className="w-100 text-end">
+                    <Link href="/" className="modal-links" onClick={modalOpen}>
+                      Go Back to Login
+                    </Link>
+                  </div>
+                  <div className="">
+                    <button className="btn btn-orange-color border-0">
+                      Submit
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

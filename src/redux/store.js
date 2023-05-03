@@ -3,6 +3,7 @@ import testListSlice from "./createSlice";
 import testimonialSlice from "./testimonialSlice";
 import authSlice from "./authSlice";
 import authRegisterSlice from "./authRegisterSlice";
+import authForgotPwdSlice from "./authForgotPwdSlice";
 
 export default configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
     tetimonialList: testimonialSlice,
     auth: authSlice,
     authRegister: authRegisterSlice,
+    authForgotPwd: authForgotPwdSlice,
   },
 });

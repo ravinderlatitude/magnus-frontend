@@ -149,8 +149,9 @@ p {
 }
 .footer-main ul li {
   font-size: 14px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   color: var(--bs-white);
+  text-transform: capitalize;
 }
 .footer-main ul li a:hover {
   color: var(--colorOrange);
@@ -678,6 +679,24 @@ h6.text-blue {
   font-size: 14px;
   position: relative;
   top: -10px;
+  color: #fff;
+}
+.btn-logout {
+  padding: 5px;
+  border-radius: 30px;
+  margin-left: 10px;
+  text-decoration: none;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding-right: 10px;
+}
+.btn-logout img {
+  margin-right: 5px;
+}
+.errorMessage {
+  font-size: 12px;
   color: #fff;
 }
 @media (max-width: 767px) {

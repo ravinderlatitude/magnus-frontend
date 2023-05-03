@@ -1,16 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
+
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import ActiveLink from "./ActiveLink";
 import useOutsideClick from "../hooks/useOutsideClick";
-
+import IcOff from "../assets/images/ic-logout.svg";
 import LOGO from "../assets/images/logo.svg";
 import ModalLogin from "./ModalLogin";
 import ModalRegister from "./ModalRegister";
 import { getTetsList } from "../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
-import { setCredentials, setLogout } from "@/redux/authSlice";
+import { setCredentials } from "@/redux/authSlice";
 
 export default function Header({ href, children }) {
   const dropdown = useRef(null);
@@ -152,41 +153,6 @@ export default function Header({ href, children }) {
                       </ActiveLink>
                     </li>
                   ))}
-                  {/* <li>
-                    <ActiveLink href="/test-detail" className="dropdown-item">
-                      Stream Selector
-                    </ActiveLink>
-                  </li>
-                  <li>
-                    <ActiveLink href="/test-detail" className="dropdown-item">
-                      Ideal Career
-                    </ActiveLink>
-                  </li>
-                  <li>
-                    <ActiveLink href="/test-detail" className="dropdown-item">
-                      Personality
-                    </ActiveLink>
-                  </li>
-                  <li>
-                    <ActiveLink href="/test-detail" className="dropdown-item">
-                      Multiple Intelligence
-                    </ActiveLink>
-                  </li>
-                  <li>
-                    <ActiveLink href="/test-detail" className="dropdown-item">
-                      Engineering Branch
-                    </ActiveLink>
-                  </li>
-                  <li>
-                    <ActiveLink href="/test-detail" className="dropdown-item">
-                      Humanities Branch
-                    </ActiveLink>
-                  </li>
-                  <li>
-                    <ActiveLink href="/test-detail" className="dropdown-item">
-                      Commerce Branch
-                    </ActiveLink>
-                  </li> */}
                 </ul>
               </li>
               <li className="nav-item">
@@ -228,7 +194,13 @@ export default function Header({ href, children }) {
           ) : (
             <>
               {auth?.data?.first_name}
-              <a onClick={() => handleLogout()}>Logout</a>
+              <a
+                className="btn-orange-color btn-logout"
+                onClick={() => handleLogout()}
+              >
+                <Image src={IcOff} />
+                Logout
+              </a>
             </>
           )}
         </div>
