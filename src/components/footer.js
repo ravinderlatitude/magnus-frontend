@@ -14,7 +14,7 @@ export default function Footer() {
   const testList = useSelector((state) => state.testList.data);
   useEffect(() => {
     dispatch(getTetsList());
-    console.log("Footer=======>>>", testList);
+    // console.log("Footer=======>>>", testList);
   }, [dispatch]);
   return (
     <div className="footer-main">
