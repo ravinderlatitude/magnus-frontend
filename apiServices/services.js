@@ -92,6 +92,16 @@ export const forgotPwdAPI = createAsyncThunk(
   }
 );
 
+//post Call Forgot API
+export const ResetPwdAPI = createAsyncThunk(
+  "auth/reset-password",
+  async (body) => {
+    const response = await axiosClient.post("/reset-password", body);
+    localStorage.setItem("forgotPasswordData", JSON.stringify(response));
+    return response;
+  }
+);
+
 // Get Test List Detail
 export const getTetsListDetail = async (id) => {
   return await axiosClient.get(`/test-detail/${id}`);

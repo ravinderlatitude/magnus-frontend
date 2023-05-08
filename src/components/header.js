@@ -9,12 +9,17 @@ import IcOff from "../assets/images/ic-logout.svg";
 import LOGO from "../assets/images/logo.svg";
 import ModalLogin from "./ModalLogin";
 import ModalRegister from "./ModalRegister";
+import ModalResetPwd from "./ModalResetPwd";
 import { getTetsList } from "../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/redux/authSlice";
 
 export default function Header({ href, children }) {
   const dropdown = useRef(null);
+
+  const router = useRouter();
+  const { resetpassword } = router.query;
+  console.log(resetpassword);
 
   // menu toggle page for menu
   const [isActive, setIsActive] = useState(false);
@@ -32,6 +37,7 @@ export default function Header({ href, children }) {
 
   const [isModal, setIsModal] = useState(false);
   const [isModalRegister, setIsModalRegister] = useState(false);
+  const [isModalResetpwd, setIsModalResetPwd] = useState(false);
   // useOutsideClick(handelModal, () => setIsModal(false));
   // const modalClick = (event) => {
   //   setIsModal((current) => !current);
@@ -51,6 +57,12 @@ export default function Header({ href, children }) {
 
     dispatch(getTetsList());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (resetpassword) {
+      setIsModalResetPwd(true);
+    }
+  }, [resetpassword]);
 
   const handleLogout = (e) => {
     localStorage.removeItem("userData");
@@ -188,6 +200,12 @@ export default function Header({ href, children }) {
                 <ModalRegister
                   isModal={isModalRegister}
                   setIsModal={setIsModalRegister}
+                />
+              </div>
+              <div>
+                <ModalResetPwd
+                  isModal={isModalResetpwd}
+                  setIsModal={setIsModalResetPwd}
                 />
               </div>
             </div>

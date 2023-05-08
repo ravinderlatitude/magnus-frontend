@@ -30,6 +30,7 @@ import { useSelector } from "react-redux";
 
 export default function homepage() {
   const auth = useSelector((state) => state.auth.user);
+
   const [isModalRegister, setIsModalRegister] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
@@ -98,12 +99,6 @@ export default function homepage() {
                   </Link>
                 </>
               )}
-
-              <ModalRegister
-                isModal={isModalRegister}
-                setIsModal={setIsModalRegister}
-              />
-              <ModalLogin isModal={isModal} setIsModal={setIsModal} />
             </div>
             <div className="col-md-6 col-12 order-md-last order-first">
               <Image alt="" src={BannerImg} className="img-fluid" />
@@ -118,7 +113,6 @@ export default function homepage() {
             <div className="col-md-4 col-12">
               <div className="title-text">
                 <h6>WHY US?</h6>
-
                 <h3>Why you Purchase test?</h3>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
@@ -199,15 +193,29 @@ export default function homepage() {
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Etiam dignissim, sem non convallis molestie.
                   </p>
-                  <Link
-                    href="/"
+                  {/* <Link
+                    href={`/test-detail/${encodeURIComponent(data.slug)}`}
                     className="d-flex text-white justify-content-end"
                   >
                     Take Assessment
                     <span className="ms-2">
                       <Image src={ICArrow} alt="" />
                     </span>
-                  </Link>
+                  </Link> */}
+
+                  <li key={index.toString()}>
+                    {/* {console.log("LI data=====", data)} */}
+                    {/* <ActiveLink href="/test-detail" className="dropdown-item"> */}
+                    <Link
+                      href={`/test-detail/${encodeURIComponent(data.slug)}`}
+                      className="d-flex text-white justify-content-end"
+                    >
+                      Take Assessment
+                      <span className="ms-2">
+                        <Image src={ICArrow} alt="" />
+                      </span>
+                    </Link>
+                  </li>
                 </div>
               ) : null
             )}

@@ -381,8 +381,9 @@ p {
 }
 .modal-main h2 {
   font-family: var(--titleFont);
-  font-size: 40px;
+  font-size: 22px;
   color: var(--bs-white);
+  margin-bottom: 20px;
 }
 .modal-main input {
   color: var(--colorDarkGray);

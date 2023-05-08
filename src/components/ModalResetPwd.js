@@ -4,46 +4,44 @@ import Link from "next/link";
 import ICclose from "../assets/images/ICclose.svg";
 import useOutsideClick from "../hooks/useOutsideClick";
 
-import { rgisterAPI } from "../../apiServices/services";
+import { ResetPwdAPI } from "../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
-export default function ModalRegister({ isModal, setIsModal }) {
+export default function ModalResetPwd({ isModal, setIsModal }) {
   // for Modal
   const modalClick = (event) => {
     setIsModal((current) => !current);
   };
 
   const dispatch = useDispatch();
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
-  const [email, setEmail] = useState(null);
+
+  const [otp, setOtp] = useState(null);
+  const [verificationcode, setVerificationcode] = useState(null);
+  const [otpError, setOtpError] = useState("");
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
-  const [error, setError] = useState(null);
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  const authRegister = useSelector((state) => state.authRegister.user);
+  const [passwordError, setPasswordError] = useState("");
+  const [error, setError] = useState(null);
 
-  const handleFirstName = (event) => {
-    const { value } = event.target;
-    setFirstName(value);
-  };
+  const authResetPwd = useSelector((state) => state.authResetPwd.user);
 
-  const handleLastName = (event) => {
+  // console.log("authResetPwd==============", authResetPwd);
+  const router = useRouter();
+  const { resetpassword } = router.query;
+  // console.log(resetpassword);
+
+  const handleOTPChange = (event) => {
     const { value } = event.target;
-    setLastName(value);
-  };
-  const handleEmailChange = (event) => {
-    const { value } = event.target;
-    setEmail(value);
+    setOtp(value);
 
     // email validation
-    const emailRegex = /^[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(value)) {
-      setEmailError("Invalid email address");
+    const otpRegex = /[0-9a-zA-Z]{6,}/;
+    if (!otpRegex.test(value)) {
+      setOtpError("OTP is an Invalid");
     } else {
-      setEmailError("");
+      setOtpError("");
     }
   };
 
@@ -70,29 +68,27 @@ export default function ModalRegister({ isModal, setIsModal }) {
 
   const validatePassword = () => {
     if (password !== confirmPassword) {
-      return "Passwords do not match";
+      return "Passwords not match";
     }
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(
-      rgisterAPI({
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
+      ResetPwdAPI({
+        verify_key: resetpassword,
+        verification_code: otp,
         password: password,
-        confirm_password: confirmPassword,
       })
     );
-
     // validatePassword();
-    setError(authRegister?.message);
+
+    setError(authResetPwd?.message);
 
     // setEmail(e.target.value);
   };
   useEffect(() => {
-    console.log(authRegister);
-  }, [authRegister]);
+    console.log(authResetPwd);
+  }, [authResetPwd]);
   const isSubmitDisabled =
     password === "" || confirmPassword === "" || validatePassword();
 
@@ -109,47 +105,22 @@ export default function ModalRegister({ isModal, setIsModal }) {
               <span className="modal-close" onClick={modalClick}>
                 <Image src={ICclose} alt="" />
               </span>
-              <h2>Register</h2>
+              <h2>Reset Password</h2>
               <form onSubmit={handleSubmit}>
-                <div class="row">
-                  <div className="col-12 col-md-6 pe-md-1">
-                    <input
-                      type="name"
-                      value={firstName}
-                      placeholder="First name"
-                      className="form-control"
-                      onChange={handleFirstName}
-                    />
-                    {error && (
-                      <span className="">{authRegister?.first_name}</span>
-                    )}
-                  </div>
-                  <div className="col-12 col-md-6 ps-md-1">
-                    <input
-                      type="name"
-                      value={lastName}
-                      placeholder="Last name"
-                      className="form-control"
-                      onChange={handleLastName}
-                    />
-                    {error && (
-                      <span className="">{authRegister?.last_name}</span>
-                    )}
-                  </div>
-                </div>
-
                 <div>
                   <input
-                    type="name"
-                    value={email}
-                    placeholder="Email"
+                    type="text"
+                    value={otp}
+                    placeholder="Enter OTP"
                     className="form-control"
-                    onChange={handleEmailChange}
+                    onChange={handleOTPChange}
                   />
+                  {otpError && (
+                    <span className="errorMessage">
+                      {authResetPwd?.setOtpError}
+                    </span>
+                  )}
                 </div>
-                {emailError && (
-                  <span className="error-message">{emailError}</span>
-                )}
                 <div>
                   <input
                     type="password"
@@ -159,7 +130,7 @@ export default function ModalRegister({ isModal, setIsModal }) {
                     onChange={handlePasswordChange}
                   />
                   {passwordError && (
-                    <span className="error-message">{passwordError}</span>
+                    <span className="errorMessage">{passwordError}</span>
                   )}
                 </div>
                 <div>
@@ -171,22 +142,24 @@ export default function ModalRegister({ isModal, setIsModal }) {
                     onChange={handleConfirmPasswordChange}
                   />
                   {error && (
-                    <span className="error-message">
-                      {authRegister?.confirmPasswordError}
+                    <span className="errorMessage">
+                      {authResetPwd?.confirmPasswordError}
                     </span>
                   )}
                   {error && (
-                    <span className="">{authRegister?.confirm_password}</span>
+                    <span className="errorMessage">
+                      {authResetPwd?.confirm_password}
+                    </span>
                   )}
                 </div>
-                {authRegister?.message}
+                <span className="errorMessage">{authResetPwd?.message}</span>
                 <div className="">
                   <button
                     className="btn btn-orange-color border-0"
                     type="submit"
                     disabled={isSubmitDisabled}
                   >
-                    Register
+                    Submit
                   </button>
                 </div>
               </form>
