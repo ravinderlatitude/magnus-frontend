@@ -189,10 +189,7 @@ export default function homepage() {
                     />
                   </div>
                   <h6>{data.test_name}</h6>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Etiam dignissim, sem non convallis molestie.
-                  </p>
+                  <p>{data.short_description}</p>
                   {/* <Link
                     href={`/test-detail/${encodeURIComponent(data.slug)}`}
                     className="d-flex text-white justify-content-end"

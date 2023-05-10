@@ -13,6 +13,7 @@ import ModalResetPwd from "./ModalResetPwd";
 import { getTetsList } from "../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/redux/authSlice";
+import ModalOtp from "./ModalOtp";
 
 export default function Header({ href, children }) {
   const dropdown = useRef(null);
@@ -20,6 +21,10 @@ export default function Header({ href, children }) {
   const router = useRouter();
   const { resetpassword } = router.query;
   console.log(resetpassword);
+  const { login } = router.query;
+  console.log(login);
+  const { verifiedregister } = router.query;
+  console.log(verifiedregister);
 
   // menu toggle page for menu
   const [isActive, setIsActive] = useState(false);
@@ -38,6 +43,8 @@ export default function Header({ href, children }) {
   const [isModal, setIsModal] = useState(false);
   const [isModalRegister, setIsModalRegister] = useState(false);
   const [isModalResetpwd, setIsModalResetPwd] = useState(false);
+  const [isModalVerifyuser, setIsModalVerifyuser] = useState(false);
+
   // useOutsideClick(handelModal, () => setIsModal(false));
   // const modalClick = (event) => {
   //   setIsModal((current) => !current);
@@ -49,6 +56,29 @@ export default function Header({ href, children }) {
   const testList = useSelector((state) => state.testList.data);
   const loading = useSelector((state) => state.testList.loading);
   const error = useSelector((state) => state.testList.error);
+  const authRegister = useSelector((state) => state.authRegister.user);
+  const verifyUser = useSelector((state) => state.verifyUser.user);
+
+  useEffect(() => {
+    console.log("authRegister", authRegister);
+    if (authRegister && authRegister.status == 200) {
+      setInterval(() => {
+        setIsModalRegister(false);
+      }, 1000 * 2);
+    }
+  }, [authRegister]);
+
+  useEffect(() => {
+    // console.log("authRegister", authRegister);
+    if (verifyUser && verifyUser.status == 200) {
+      setInterval(() => {
+        setIsModalVerifyuser(false);
+        window.location.href = "/";
+        // setIsModal(true);
+      }, 1000 * 2);
+    }
+  }, [verifyUser]);
+
   useEffect(() => {
     const user = localStorage.getItem("userData");
     if (user) {
@@ -62,7 +92,13 @@ export default function Header({ href, children }) {
     if (resetpassword) {
       setIsModalResetPwd(true);
     }
-  }, [resetpassword]);
+    if (login) {
+      setIsModal(true);
+    }
+    if (verifiedregister) {
+      setIsModalVerifyuser(true);
+    }
+  }, [resetpassword, login, verifiedregister]);
 
   const handleLogout = (e) => {
     localStorage.removeItem("userData");
@@ -206,6 +242,12 @@ export default function Header({ href, children }) {
                 <ModalResetPwd
                   isModal={isModalResetpwd}
                   setIsModal={setIsModalResetPwd}
+                />
+              </div>
+              <div>
+                <ModalOtp
+                  isModal={isModalVerifyuser}
+                  setIsModal={setIsModalVerifyuser}
                 />
               </div>
             </div>

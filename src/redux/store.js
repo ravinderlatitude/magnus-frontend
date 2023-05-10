@@ -5,6 +5,7 @@ import authSlice from "./authSlice";
 import authRegisterSlice from "./authRegisterSlice";
 import authForgotPwdSlice from "./authForgotPwdSlice";
 import authResetPwdSlice from "./authResetPwdSlice";
+import verifyUserSlice from "./verifyUserSlice";
 
 export default configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
     authRegister: authRegisterSlice,
     authForgotPwd: authForgotPwdSlice,
     authResetPwd: authResetPwdSlice,
+    verifyUser: verifyUserSlice,
   },
 });

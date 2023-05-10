@@ -176,10 +176,12 @@ export default function ModalRegister({ isModal, setIsModal }) {
                     </span>
                   )}
                   {error && (
-                    <span className="">{authRegister?.confirm_password}</span>
+                    <span className="error-message">
+                      {authRegister?.confirm_password}
+                    </span>
                   )}
                 </div>
-                {authRegister?.message}
+                <span className="error-message">{authRegister?.message}</span>
                 <div className="">
                   <button
                     className="btn btn-orange-color border-0"
