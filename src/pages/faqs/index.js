@@ -17,7 +17,7 @@ import { getFaqList } from "../../../apiServices/services";
 
 import Testimonials from "@/components/Testimonials";
 
-const faqs = () => {
+const Faq = () => {
   const [faqData, setfaqData] = useState([]);
   useEffect(() => {
     (async () => {
@@ -91,4 +91,4 @@ const faqs = () => {
     </div>
   );
 };
-export default faqs;
+export default Faq;

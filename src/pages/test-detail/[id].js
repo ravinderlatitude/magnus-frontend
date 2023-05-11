@@ -11,7 +11,7 @@ import { getTetsListDetail } from "../../../apiServices/services";
 import { useRouter } from "next/router";
 import ImgNotFound from "../../assets/images/ImgNotFound.svg";
 
-export default function testDetails() {
+const TestDetails = () => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -86,4 +86,5 @@ export default function testDetails() {
       )}
     </div>
   );
-}
+};
+export default TestDetails;

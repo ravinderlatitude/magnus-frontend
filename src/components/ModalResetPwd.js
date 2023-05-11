@@ -125,7 +125,7 @@ export default function ModalResetPwd({ isModal, setIsModal }) {
                   <input
                     type="password"
                     value={password}
-                    placeholder="Password"
+                    placeholder="New Password"
                     className="form-control"
                     onChange={handlePasswordChange}
                   />
@@ -137,7 +137,7 @@ export default function ModalResetPwd({ isModal, setIsModal }) {
                   <input
                     type="password"
                     value={confirmPassword}
-                    placeholder="Confirm Password"
+                    placeholder="Confirm New Password"
                     className="form-control"
                     onChange={handleConfirmPasswordChange}
                   />

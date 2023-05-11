@@ -74,11 +74,19 @@ export const loginAPI = createAsyncThunk("auth/login", async (body) => {
   return response;
 });
 
+//post Call verify-user API
+export const VerifyUserAPI = createAsyncThunk(
+  "auth/verify-user",
+  async (body) => {
+    const response = await axiosClient.post("/verify-user", body);
+    return response;
+  }
+);
+
 //post Call Register API
 
 export const rgisterAPI = createAsyncThunk("auth/register", async (body) => {
   const response = await axiosClient.post("/register", body);
-  localStorage.setItem("userRgisterData", JSON.stringify(response));
   return response;
 });
 
@@ -87,7 +95,6 @@ export const forgotPwdAPI = createAsyncThunk(
   "auth/forgot-password",
   async (body) => {
     const response = await axiosClient.post("/forgot-password", body);
-    localStorage.setItem("forgotPasswordData", JSON.stringify(response));
     return response;
   }
 );
@@ -97,7 +104,6 @@ export const ResetPwdAPI = createAsyncThunk(
   "auth/reset-password",
   async (body) => {
     const response = await axiosClient.post("/reset-password", body);
-    localStorage.setItem("forgotPasswordData", JSON.stringify(response));
     return response;
   }
 );

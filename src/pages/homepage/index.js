@@ -28,7 +28,7 @@ import Testimonials from "@/components/Testimonials";
 
 import { useSelector } from "react-redux";
 
-export default function homepage() {
+export default function Homepage() {
   const auth = useSelector((state) => state.auth.user);
 
   const [isModalRegister, setIsModalRegister] = useState(false);
@@ -56,10 +56,10 @@ export default function homepage() {
           <div className="row align-items-center">
             <div className="col-md-6 col-12 ">
               <h6>
-                Let’s <span>Begins</span>
+                Let&apos;s <span>Begins</span>
               </h6>
               <h2>
-                Let's Find The <span>Right Test </span>For you
+                Let&apos;s Find The <span>Right Test </span>For you
               </h2>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
@@ -189,10 +189,7 @@ export default function homepage() {
                     />
                   </div>
                   <h6>{data.test_name}</h6>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Etiam dignissim, sem non convallis molestie.
-                  </p>
+                  <p>{data.short_description}</p>
                   {/* <Link
                     href={`/test-detail/${encodeURIComponent(data.slug)}`}
                     className="d-flex text-white justify-content-end"

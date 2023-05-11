@@ -7,6 +7,7 @@ import useOutsideClick from "../hooks/useOutsideClick";
 import { useDispatch, useSelector } from "react-redux";
 
 import { loginAPI, forgotPwdAPI } from "../../apiServices/services";
+import { useRouter } from "next/router";
 
 export default function ModalLogin({ isModal, setIsModal }) {
   const modelRef = useRef(null);
@@ -112,6 +113,7 @@ export default function ModalLogin({ isModal, setIsModal }) {
       forgotPwdAPI({
         // first_name: firstName,
         // last_name: lastName,
+
         email: email,
         // password: password,
         // confirm_password: confirmPassword,

@@ -15,7 +15,7 @@ import Testimonials from "@/components/Testimonials";
 import { useSelector } from "react-redux";
 
 // import LOGO from "../assets/images/logo.svg";
-export default function aboutus() {
+const Aboutus = () => {
   const auth = useSelector((state) => state.auth.user);
   const [isModalRegister, setIsModalRegister] = useState(false);
 
@@ -134,4 +134,5 @@ export default function aboutus() {
       </div>
     </div>
   );
-}
+};
+export default Aboutus;
