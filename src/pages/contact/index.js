@@ -29,7 +29,7 @@ import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 
 // import LOGO from "../assets/images/logo.svg";
-export default function contact() {
+const Contact = (props) => {
   const [isModalRegister, setIsModalRegister] = useState(false);
 
   return (
@@ -105,4 +105,5 @@ export default function contact() {
       </div>
     </div>
   );
-}
+};
+export default Contact;
