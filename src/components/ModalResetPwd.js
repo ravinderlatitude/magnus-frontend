@@ -36,7 +36,7 @@ export default function ModalResetPwd({ isModal, setIsModal }) {
     const { value } = event.target;
     setOtp(value);
 
-    // email validation
+    // OTP validation
     const otpRegex = /[0-9a-zA-Z]{6,}/;
     if (!otpRegex.test(value)) {
       setOtpError("OTP is an Invalid");

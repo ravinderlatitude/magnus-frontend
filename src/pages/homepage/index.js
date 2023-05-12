@@ -189,7 +189,11 @@ export default function Homepage() {
                     />
                   </div>
                   <h6>{data.test_name}</h6>
-                  <p>{data.short_description}</p>
+                  <p>
+                    {" "}
+                    {data.sort_description.substring(0, 50)}
+                    {data.sort_description.length >= 50 && "..."}
+                  </p>
                   {/* <Link
                     href={`/test-detail/${encodeURIComponent(data.slug)}`}
                     className="d-flex text-white justify-content-end"

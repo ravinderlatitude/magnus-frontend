@@ -45,6 +45,9 @@ export default function ModalRegister({ isModal, setIsModal }) {
     } else {
       setEmailError("");
     }
+    if (value.length < 1) {
+      setEmailError("");
+    }
   };
 
   const handlePasswordChange = (event) => {
