@@ -108,6 +108,12 @@ export const ResetPwdAPI = createAsyncThunk(
   }
 );
 
+//post Call contact-us API
+export const ContacUsAPI = createAsyncThunk("auth/contact-us", async (body) => {
+  const response = await axiosClient.post("/contact-us", body);
+  return response;
+});
+
 // Get Test List Detail
 export const getTetsListDetail = async (id) => {
   return await axiosClient.get(`/test-detail/${id}`);

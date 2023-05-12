@@ -14,7 +14,6 @@ import Image from "next/image";
 
 // import LOGO from "../assets/images/logo.svg";
 import { getFaqList } from "../../../apiServices/services";
-
 import Testimonials from "@/components/Testimonials";
 
 const Faq = () => {

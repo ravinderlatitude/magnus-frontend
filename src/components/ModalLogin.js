@@ -81,6 +81,9 @@ export default function ModalLogin({ isModal, setIsModal }) {
     } else {
       setEmailError("");
     }
+    if (value.length < 1) {
+      setEmailError("");
+    }
   };
 
   const handlePasswordChange = (event) => {
@@ -134,6 +137,9 @@ export default function ModalLogin({ isModal, setIsModal }) {
     if (!emailRegex.test(value)) {
       setEmailError("Invalid email address");
     } else {
+      setEmailError("");
+    }
+    if (value.length < 1) {
       setEmailError("");
     }
   };
