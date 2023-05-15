@@ -17,13 +17,13 @@ export default function ModalLogin({ isModal, setIsModal }) {
   const modalOpen = (event) => {
     setIsModalForgot(!isModalForgot);
     setIsModal(!isModal);
-    console.log(isModalForgot, "Forgormodal");
+    // console.log(isModalForgot, "Forgormodal");
   };
 
   const modalClose = (event) => {
     setIsModalForgot(false);
     setIsModal(false);
-    console.log(isModalForgot, "modal");
+    // console.log(isModalForgot, "modal");
   };
   useOutsideClick(modelRef, modalClose);
 

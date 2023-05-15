@@ -32,9 +32,11 @@ const Aboutus = () => {
               <h6>Know More</h6>
               <h3>We offer a carefully and planned test.</h3>
               <p>
-                Facilisis tempor aenean lectus elementum malsuada estibuls
-                magnis interdum eget mattis pretium ulvinar. Facilisis tempor
-                aenean lectus.
+                we are dedicated to helping individuals gain a deeper
+                understanding of themselves through our comprehensive and
+                insightful personality test. Our mission is to provide a
+                reliable and accurate assessment that empowers individuals to
+                unlock their true potential and live more fulfilling lives.
               </p>
               <div className="numbersblock">
                 <div>
@@ -76,8 +78,8 @@ const Aboutus = () => {
                 <h6 className="text-orange">TEST WE HAVE</h6>
                 <h3 className="text-white">Easy Way Access Test</h3>
                 <p className="col-12 col-md-6 mx-auto mb-5 text-white">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-                  dignissim, sem non convallis molestie.
+                  Follow the steps below to avail the right path to accessing
+                  the test.
                 </p>
               </div>
             </div>
@@ -89,7 +91,7 @@ const Aboutus = () => {
                   <Image alt="" src={ICSetUp} />
                 </div>
                 <h6>Set Up an Account</h6>
-                <p>Lorem ipsum dolor sit amet, consectetur.</p>
+                <p>Sign up with your details and make an account.</p>
               </div>
             </div>
             <div className="col-md-3 col-sm-6 col-12">
@@ -98,7 +100,7 @@ const Aboutus = () => {
                   <Image alt="" src={ICVarify} />
                 </div>
                 <h6>Verified User Sign in</h6>
-                <p>Lorem ipsum dolor sit amet, consectetur.</p>
+                <p>Complete the process with the verification. </p>
               </div>
             </div>
             <div className="col-md-3 col-sm-6 col-12">
@@ -107,7 +109,7 @@ const Aboutus = () => {
                   <Image alt="" src={ICChoose} />
                 </div>
                 <h6>Choose the ideal test</h6>
-                <p>Lorem ipsum dolor sit amet, consectetur.</p>
+                <p>Select the ideal test as per your need and requirement.</p>
               </div>
             </div>
             <div className="col-md-3 col-sm-6 col-12">
@@ -116,7 +118,7 @@ const Aboutus = () => {
                   <Image alt="" src={ICPay} />
                 </div>
                 <h6>Pay to access the test.</h6>
-                <p>Lorem ipsum dolor sit amet, consectetur.</p>
+                <p>Make the final payment to buy the test.</p>
               </div>
             </div>
           </div>
@@ -125,10 +127,12 @@ const Aboutus = () => {
       <div className="testimonial-block">
         <div className="container">
           <div className="row">
-            <div className="title-text text-center">
-              <h2>Testimonials</h2>
+            <div className="col-12">
+              <div className="title-text text-center">
+                <h2>Testimonials</h2>
+              </div>
+              <Testimonials />
             </div>
-            <Testimonials />
           </div>
         </div>
       </div>

@@ -17,7 +17,7 @@ export const contactSlice = createSlice({
       return state;
     });
     builder.addCase(ContacUsAPI.fulfilled, (state, action) => {
-      console.log(action);
+      // console.log(action);
       state.status = "succeeded";
       state.user = action.payload;
       return state;

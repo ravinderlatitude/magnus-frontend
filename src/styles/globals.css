@@ -305,6 +305,7 @@ p {
   position: relative;
   overflow: hidden;
   border: 0.2px solid #0a6eb0;
+  border-radius: 8px;
   /* box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.1); */
 }
 .top-right-corner {
@@ -332,6 +333,9 @@ p {
   height: 48px;
   width: 48px;
   margin-right: 20px;
+  border-radius: 48px;
+  background: #ccc;
+  overflow: hidden;
 }
 
 .user-img img {
@@ -451,9 +455,10 @@ h6.text-blue {
   padding: 15px;
 }
 .accordion_item h5 {
-  font-size: 28px;
+  font-size: 24px;
   color: var(--colorDarkBlue);
   font-family: var(--titleFont);
+  text-transform: capitalize;
 }
 @media (max-width: 576px) {
   .accordion_item h5 {
@@ -476,6 +481,7 @@ h6.text-blue {
 }
 .accordion_item button .control {
   display: flex;
+  margin-top: 8px;
 }
 .accordion_item.active {
   background-color: var(--colorBlue);
@@ -564,7 +570,7 @@ h6.text-blue {
   background-color: var(--colorOrange);
   margin-bottom: 2%;
   padding: 15px;
-  border-radius: 16px;
+  border-radius: 8px;
 }
 .fourbox h6 {
   color: var(--bs-white);
@@ -646,6 +652,27 @@ h6.text-blue {
 .contactuspage .form-control {
   font-size: 14px;
 }
+.username {
+  font-weight: bold;
+  color: var(--colorBlue);
+}
+.follow-us {
+}
+.follow-us ul {
+  flex-direction: column;
+  display: flex;
+}
+
+.follow-us ul li {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.follow-us ul li a:hover img {
+  filter: invert(54%) sepia(99%) saturate(933%) hue-rotate(344deg)
+    brightness(96%) contrast(91%);
+}
 
 @media (max-width: 991px) {
   .fourbox:nth-child(odd) {
@@ -697,6 +724,22 @@ h6.text-blue {
     /* styles to apply if the content contains audio OR video */
     background-color: var(--colorOrange);
   }
+  .btn-logout {
+    position: absolute;
+    right: 70px;
+    top: 30px;
+    font-size: 0px;
+    padding: 5px;
+  }
+  .btn-logout img {
+    margin-right: 0px;
+  }
+  .username {
+    position: absolute;
+    font-size: 14px;
+    right: 110px;
+    top: 35px;
+  }
 }
 @media (max-width: 767px) {
   .fourbox {
@@ -711,6 +754,15 @@ h6.text-blue {
   }
 }
 @media (max-width: 576px) {
+  .control img {
+    width: 18px;
+  }
+  .btn-logout {
+    right: 50px;
+  }
+  .username {
+    right: 90px;
+  }
   .testimonial-block {
     max-width: 480px;
     margin: 0 auto;
@@ -745,6 +797,72 @@ h6.text-blue {
   }
   .header-main .btn-block {
     right: 55px;
-    top: 30px;
+    top: 21px;
+  }
+  .navbar-brand img {
+    width: 108px;
+    margin-top: -5px;
+  }
+  .weltxt {
+    display: none;
+  }
+  .navbar {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .navbar-toggler {
+    top: 18px;
+  }
+  .btn-logout {
+    top: 20px;
+  }
+  .username {
+    top: 24px;
+  }
+  .banner-bg {
+    height: 150px;
+  }
+  body {
+    padding-top: 73px;
+  }
+  .banner-bg h1 {
+    font-size: 28px;
+  }
+  .title-text h3 {
+    font-size: 22px;
+  }
+  .numbersblock {
+    margin-top: 20px;
+  }
+  .numbersblock h6.text-blue {
+    white-space: nowrap;
+  }
+  .title-text h2 {
+    font-size: 24px;
+  }
+  .testimonial-block {
+    padding: 30px 0;
+  }
+  .testimonial-block h2 {
+    margin-bottom: 10px;
+  }
+  .testi-blcok {
+    padding: 15px;
+    border-radius: 8px;
+  }
+  .user-img {
+    height: 48px;
+    width: 48px;
+    margin-right: 10px;
+  }
+  .top-right-corner {
+    top: -70px;
+    right: -70px;
+  }
+  .testi-blcok {
+    margin: 15px;
+  }
+  .user-info h4 {
+    font-size: 14px;
   }
 }

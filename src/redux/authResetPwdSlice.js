@@ -25,7 +25,7 @@ const authResetPwdSlice = createSlice({
       return state;
     });
     builder.addCase(ResetPwdAPI.fulfilled, (state, action) => {
-      console.log(action);
+      // console.log(action);
       state.status = "succeeded";
       state.user = action.payload;
       return state;

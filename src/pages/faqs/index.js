@@ -23,7 +23,7 @@ const Faq = () => {
       try {
         let faqList = await getFaqList();
         setfaqData(faqList.data);
-        console.log("faqList=======", faqList);
+        // console.log("faqList=======", faqList);
       } catch (ee) {
         console.error(ee.data);
       }
@@ -61,7 +61,7 @@ const Faq = () => {
         <div className="container">
           <div className="row align-items-center">
             <div className="container">
-              <div className="col-md-8 col-12 mx-auto mb-5">
+              <div className="col-md-7 col-12 mx-auto mb-5">
                 <ul>
                   {faqData?.map((faq, index) => (
                     <AccordionItem
@@ -80,10 +80,12 @@ const Faq = () => {
       <div className="testimonial-block">
         <div className="container">
           <div className="row">
-            <div className="title-text text-center">
-              <h2>Testimonials</h2>
+            <div className="col-12">
+              <div className="title-text text-center">
+                <h2>Testimonials</h2>
+              </div>
+              <Testimonials />
             </div>
-            <Testimonials />
           </div>
         </div>
       </div>

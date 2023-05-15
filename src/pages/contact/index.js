@@ -90,9 +90,9 @@ const Contact = () => {
               <h6>Reach out us</h6>
               <h3>Contact us if you have any questions.</h3>
               <p>
-                Facilisis tempor aenean lectus elementum malsuada estibuls
-                magnis interdum eget mattis pretium ulvinar. Facilisis tempor
-                aenean lectus.
+                We are always ready to assist queries of our users. Share your
+                message or enquiry and our team will connect you as soon as
+                possible.
               </p>
             </div>
             <div className="col-md-6 col-12">

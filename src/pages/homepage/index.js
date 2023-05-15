@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,13 +12,7 @@ import ICAccessible from "../../assets/images/ICAccessible.svg";
 import ICReputable from "../../assets/images/ICReputable.svg";
 import ICDiscreet from "../../assets/images/ICDiscreet.svg";
 import ICLearning from "../../assets/images/ICLearning.svg";
-import ICStream from "../../assets/images/ICStream.svg";
-import ICIdeal from "../../assets/images/ICIdeal.svg";
-import ICPersonality from "../../assets/images/ICPersonality.svg";
-import ICMultiple from "../../assets/images/ICMultiple.svg";
-import ICHumanities from "../../assets/images/ICHumanities.svg";
-import ICCommerce from "../../assets/images/ICCommerce.svg";
-import ICEngineering from "../../assets/images/ICEngineering.svg";
+
 import ICArrow from "../../assets/images/Arrow.svg";
 
 import ModalRegister from "@/components/ModalRegister";
@@ -35,19 +28,6 @@ export default function Homepage() {
   const [isModal, setIsModal] = useState(false);
 
   const testList = useSelector((state) => state.testList.data);
-  // const [testListData, setTestListData] = useState([]);
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       let testList = await getTetsList();
-  //       setTestListData(testList.data);
-  //     } catch (ee) {
-  //       console.error("hftygfy hfyfdchdfg", ee);
-  //     }
-  //   })();
-  // }, []);
-
-  // console.log(testList);
 
   return (
     <div>
@@ -62,8 +42,9 @@ export default function Homepage() {
                 Let&apos;s Find The <span>Right Test </span>For you
               </h2>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-                dignissim, sem non convallis molestie.
+                Discovering more about yourself is an exciting journey, and
+                choosing the right test can be a crucial step in that process.
+                With our wide range of personality tests.
               </p>
               {/* <div className="btn-block">
                 <button
@@ -115,8 +96,9 @@ export default function Homepage() {
                 <h6>WHY US?</h6>
                 <h3>Why you Purchase test?</h3>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-                  dignissim, sem non convallis molestie.
+                  We offer high quality tests for everyone to gain self
+                  awareness, identify areas of improvement and uncover the
+                  hidden strengths.
                 </p>
               </div>
             </div>
@@ -129,8 +111,8 @@ export default function Homepage() {
                     </div>
                     <h6>Easy to Accessible</h6>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Etiam dignissim, sem non convallis molestie.
+                      Grab the simple accessibility of the personality testing
+                      that will take less time to offer you the desired test.
                     </p>
                   </div>
                 </div>
@@ -141,8 +123,8 @@ export default function Homepage() {
                     </div>
                     <h6>Reputable Portal</h6>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Etiam dignissim, sem non convallis molestie.
+                      Magnus Latitude is a reputable platform to get the
+                      personality test.
                     </p>
                   </div>
                 </div>
@@ -153,8 +135,8 @@ export default function Homepage() {
                     </div>
                     <h6>Discreet Payment</h6>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Etiam dignissim, sem non convallis molestie.
+                      We offer a decent and transparent payment system for your
+                      convenience.
                     </p>
                   </div>
                 </div>
@@ -171,8 +153,8 @@ export default function Homepage() {
               <h6>AVAILABLE FOR YOU</h6>
               <h3>Find The Right Test</h3>
               <p className="col-12 col-md-6 mx-auto mb-5">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-                dignissim, sem non convallis molestie.
+                Here are the number of tests. Choose the right test of your
+                choice and get the result.
               </p>
             </div>
           </div>
@@ -379,10 +361,7 @@ export default function Homepage() {
               <h3 className="text-white">
                 People Talking About Magnus Latitude
               </h3>
-              <p className="text-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-                dignissim, sem non convallis molestie.
-              </p>
+              <p className="text-white">Check out the number of users.</p>
 
               <div className="numbersblock">
                 <div>
@@ -417,10 +396,12 @@ export default function Homepage() {
       <div className="testimonial-block">
         <div className="container">
           <div className="row">
-            <div className="title-text text-center">
-              <h2>Testimonials</h2>
+            <div className="col-12">
+              <div className="title-text text-center">
+                <h2>Testimonials</h2>
+              </div>
+              <Testimonials />
             </div>
-            <Testimonials />
           </div>
         </div>
       </div>
