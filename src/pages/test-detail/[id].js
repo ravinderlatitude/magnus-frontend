@@ -27,7 +27,7 @@ const TestDetails = () => {
         let testDetailsData = await getTetsListDetail(id);
         setTestListDetails(testDetailsData);
 
-        console.log("testDetailsData==========:", testDetailsData);
+        // console.log("testDetailsData==========:", testDetailsData);
       } catch (ee) {
         console.error(ee.data);
       }

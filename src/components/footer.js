@@ -66,7 +66,9 @@ export default function Footer() {
                 <h4>Contact Us</h4>
                 <ul>
                   <li>
-                    <Link href="/"> manglat@domain.com</Link>
+                    <Link href="/" className="text-lowercase">
+                      manglat@domain.com
+                    </Link>
                   </li>
                 </ul>
               </div>

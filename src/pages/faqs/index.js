@@ -23,7 +23,7 @@ const Faq = () => {
       try {
         let faqList = await getFaqList();
         setfaqData(faqList.data);
-        console.log("faqList=======", faqList);
+        // console.log("faqList=======", faqList);
       } catch (ee) {
         console.error(ee.data);
       }

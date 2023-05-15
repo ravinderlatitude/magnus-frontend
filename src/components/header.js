@@ -20,11 +20,11 @@ export default function Header({ href, children }) {
 
   const router = useRouter();
   const { resetpassword } = router.query;
-  console.log(resetpassword);
+  // console.log(resetpassword);
   const { login } = router.query;
-  console.log(login);
+  // console.log(login);
   const { verifiedregister } = router.query;
-  console.log(verifiedregister);
+  // console.log(verifiedregister);
 
   // menu toggle page for menu
   const [isActive, setIsActive] = useState(false);
@@ -60,7 +60,7 @@ export default function Header({ href, children }) {
   const verifyUser = useSelector((state) => state.verifyUser.user);
 
   useEffect(() => {
-    console.log("authRegister", authRegister);
+    // console.log("authRegister", authRegister);
     if (authRegister && authRegister.status == 200) {
       setInterval(() => {
         setIsModalRegister(false);
