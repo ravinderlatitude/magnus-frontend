@@ -4,6 +4,8 @@ import { useEffect } from "react";
 
 // local images
 import FOOTER_LOGO from "../assets/images/Flogo.svg";
+import IcFacebook from "../assets/images/IcFacebook.svg";
+import IcInstagram from "../assets/images/IcInstagram.svg";
 import { getTetsList } from "../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -25,9 +27,9 @@ export default function Footer() {
               <Image alt="" src={FOOTER_LOGO} />
             </Link>
             <p className="mt-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-              mollis, justo nec porttitor auctor, erat sapien faucibus lectus,
-              vel tempor dolor augue et lectus.
+              At our personality test website, we are dedicated to providing you
+              with an enriching and insightful experience that helps you better
+              understand yourself and unlock your true potential.
             </p>
           </div>
           <div className="col-lg-8 col-sm-12 col-12">
@@ -62,12 +64,31 @@ export default function Footer() {
                   ))}
                 </ul>
               </div>
-              <div className="col-auto">
-                <h4>Contact Us</h4>
+              <div className="col-auto follow-us">
+                <h4>Follow us</h4>
                 <ul>
                   <li>
-                    <Link href="/" className="text-lowercase">
-                      manglat@domain.com
+                    <Link
+                      href="https://www.facebook.com/people/Education_By_Magnitude/100091586467348/"
+                      className="text-lowercase"
+                      target="_blank"
+                    >
+                      <Image src={IcFacebook} className="me-2" alt="facebook" />
+                      facebook
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="https://www.instagram.com/educationbymagnitude/?next=%2F"
+                      className="text-lowercase"
+                      target="_blank"
+                    >
+                      <Image
+                        src={IcInstagram}
+                        className="me-2"
+                        alt="Instagram"
+                      />
+                      Instagram
                     </Link>
                   </li>
                 </ul>

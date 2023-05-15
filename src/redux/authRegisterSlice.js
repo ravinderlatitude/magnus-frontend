@@ -25,7 +25,7 @@ const authRegisterSlice = createSlice({
       return state;
     });
     builder.addCase(rgisterAPI.fulfilled, (state, action) => {
-      console.log(action);
+      // console.log(action);
       state.status = "succeeded";
       state.user = action.payload;
       return state;

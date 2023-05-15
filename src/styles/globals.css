@@ -333,6 +333,9 @@ p {
   height: 48px;
   width: 48px;
   margin-right: 20px;
+  border-radius: 48px;
+  background: #ccc;
+  overflow: hidden;
 }
 
 .user-img img {
@@ -452,9 +455,10 @@ h6.text-blue {
   padding: 15px;
 }
 .accordion_item h5 {
-  font-size: 28px;
+  font-size: 24px;
   color: var(--colorDarkBlue);
   font-family: var(--titleFont);
+  text-transform: capitalize;
 }
 @media (max-width: 576px) {
   .accordion_item h5 {
@@ -477,6 +481,7 @@ h6.text-blue {
 }
 .accordion_item button .control {
   display: flex;
+  margin-top: 8px;
 }
 .accordion_item.active {
   background-color: var(--colorBlue);
@@ -651,6 +656,23 @@ h6.text-blue {
   font-weight: bold;
   color: var(--colorBlue);
 }
+.follow-us {
+}
+.follow-us ul {
+  flex-direction: column;
+  display: flex;
+}
+
+.follow-us ul li {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.follow-us ul li a:hover img {
+  filter: invert(54%) sepia(99%) saturate(933%) hue-rotate(344deg)
+    brightness(96%) contrast(91%);
+}
 
 @media (max-width: 991px) {
   .fourbox:nth-child(odd) {
@@ -775,7 +797,7 @@ h6.text-blue {
   }
   .header-main .btn-block {
     right: 55px;
-    top: 30px;
+    top: 21px;
   }
   .navbar-brand img {
     width: 108px;
