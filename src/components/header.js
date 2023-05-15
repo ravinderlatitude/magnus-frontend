@@ -253,7 +253,10 @@ export default function Header({ href, children }) {
             </div>
           ) : (
             <>
-              {auth?.data?.first_name}
+              <div className="username">
+                <span className="weltxt">Welcome,</span>
+                <span className="ps-1">{auth?.data?.first_name}</span>
+              </div>
               <a
                 className="btn-orange-color btn-logout"
                 onClick={() => handleLogout()}
