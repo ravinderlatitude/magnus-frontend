@@ -32,7 +32,7 @@ const Aboutus = () => {
               <h6>Know More</h6>
               <h3>We offer a carefully and planned test.</h3>
               <p>
-                we are dedicated to helping individuals gain a deeper
+                We are dedicated to helping individuals gain a deeper
                 understanding of themselves through our comprehensive and
                 insightful personality test. Our mission is to provide a
                 reliable and accurate assessment that empowers individuals to
