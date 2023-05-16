@@ -361,7 +361,13 @@ export default function Homepage() {
               <h3 className="text-white">
                 People Talking About Magnus Latitude
               </h3>
-              <p className="text-white">Check out the number of users.</p>
+              <p className="text-white">
+                Our user-friendly platform offers a range of comprehensive and
+                thought-provoking assessments designed to uncover the depths of
+                your personality. Gain valuable insights into your strengths,
+                weaknesses, and unique traits as you embark on a journey of
+                self-reflection and exploration.
+              </p>
 
               <div className="numbersblock">
                 <div>
