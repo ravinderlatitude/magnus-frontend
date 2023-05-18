@@ -205,7 +205,7 @@ export default function Header({ href, children }) {
               </li>
               <li className="nav-item">
                 <ActiveLink href="/faqs" onClick={handleClick}>
-                  Faq
+                  FAQ
                 </ActiveLink>
               </li>
               <li className="nav-item">
