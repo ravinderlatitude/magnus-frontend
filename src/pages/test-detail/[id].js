@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,8 +10,13 @@ import ICquestion from "../../assets/images/ICquestion.svg";
 import { getTetsListDetail } from "../../../apiServices/services";
 import { useRouter } from "next/router";
 import ImgNotFound from "../../assets/images/ImgNotFound.svg";
+import { useSelector } from "react-redux";
+import ModalLogin from "../../components/ModalLogin";
+import useRazorpay from "react-razorpay";
 
 const TestDetails = () => {
+  const [isModal, setIsModal] = useState(false);
+  const auth = useSelector((state) => state.auth.user);
   const router = useRouter();
   const { id } = router.query;
 
@@ -20,7 +25,10 @@ const TestDetails = () => {
   //   console.log("ListDetails________ : ", ListDetails);
   // };
   const [testListDetails, setTestListDetails] = useState([]);
-
+  const modalClose = (event) => {
+    setIsModal(false);
+    // console.log(isModalForgot, "modal");
+  };
   useEffect(() => {
     (async () => {
       try {
@@ -32,8 +40,39 @@ const TestDetails = () => {
         console.error(ee.data);
       }
     })();
+    if (auth == 200) {
+      modalClose();
+    }
   }, [id]);
 
+  // const Razorpay = useRazorpay();
+  // const handlePayment = useCallback(async () => {
+  //   // const order = await createOrder(params);
+
+  //   const options = {
+  //     key: "rzp_test_xK1MoOvDIdPJiX",
+  //     amount: "3000",
+  //     handler: (res) => {
+  //       console.log(res);
+  //     },
+  //     theme: {
+  //       color: "#3399cc",
+  //     },
+  //   };
+
+  //   const rzpay = new Razorpay(options);
+
+  //   // rzpay.on("payment.failed", function (response) {
+  //   //   alert(response.error.code);
+  //   //   alert(response.error.description);
+  //   //   alert(response.error.source);
+  //   //   alert(response.error.step);
+  //   //   alert(response.error.reason);
+  //   //   alert(response.error.metadata.order_id);
+  //   //   alert(response.error.metadata.payment_id);
+  //   // });
+  //   rzpay.open();
+  // }, [Razorpay]);
   return (
     <div>
       {testListDetails?.status === 400 || testListDetails?.status === 404 ? (
@@ -76,9 +115,33 @@ const TestDetails = () => {
                     __html: testListDetails.data?.description,
                   }}
                 ></span>
-                <Link className="btn btn-orange-color" href="/">
+                {/* <Link className="btn btn-orange-color" href="/">
                   Buy Test
-                </Link>
+                </Link> */}
+
+                {!auth?.data ? (
+                  <div className="btn-block">
+                    <button
+                      className="btn btn-orange-color border-0"
+                      onClick={() => setIsModal((current) => !current)}
+                    >
+                      Log in
+                    </button>
+                  </div>
+                ) : (
+                  // <button
+                  //   className="btn btn-orange-color"
+                  //   onClick={handlePayment}
+                  // >
+                  //   Buy Test
+                  // </button>
+                  <Link className="btn btn-orange-color" href="/">
+                    Buy Test
+                  </Link>
+                )}
+              </div>
+              <div>
+                <ModalLogin isModal={isModal} setIsModal={setIsModal} />
               </div>
             </div>
           </div>
