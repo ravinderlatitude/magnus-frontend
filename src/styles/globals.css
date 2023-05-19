@@ -523,11 +523,13 @@ h6.text-blue {
 .test-details {
   margin-top: 50px;
 }
-.test-details h2 {
+.test-details h2,
+.test-details h2 strong,
+.test-details h2 b {
   font-family: var(--titleFont);
   color: var(--colorBlue);
   font-weight: 400;
-  font-size: 32px;
+  font-size: 28px;
   margin-bottom: 10px;
 }
 .test-time {
@@ -657,8 +659,6 @@ h6.text-blue {
   font-weight: bold;
   color: var(--colorBlue);
 }
-.follow-us {
-}
 .follow-us ul {
   flex-direction: column;
   display: flex;
@@ -674,7 +674,14 @@ h6.text-blue {
   filter: invert(54%) sepia(99%) saturate(933%) hue-rotate(344deg)
     brightness(96%) contrast(91%);
 }
-
+.terms-page h3 {
+  font-family: var(--titleFont);
+  font-size: 22px;
+  color: var(--colorBlue);
+}
+.terms-page p {
+  font-size: 14px;
+}
 @media (max-width: 991px) {
   .fourbox:nth-child(odd) {
     background-color: var(--colorOrange) !important;
