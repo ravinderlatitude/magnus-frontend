@@ -2,28 +2,39 @@ import authSlice from "@/redux/authSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-let headers = "";
-if (
-  typeof window !== "undefined" &&
-  localStorage.getItem("authToken") != null &&
-  localStorage.getItem("authToken") != undefined
-) {
-  headers = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + localStorage.getItem("authToken"),
-  };
-} else {
-  headers = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  };
-}
+// let headers = "";
+
+// if (typeof window !== "undefined" && localStorage.getItem("userData")) {
+//   const userData = JSON.parse(localStorage.getItem("userData"));
+//   headers = {
+//     Accept: "application/json",
+//     "Content-Type": "application/json",
+//     Authorization: "Bearer " + userData.data.token,
+//   };
+// } else {
+//   headers = {
+//     Accept: "application/json",
+//     "Content-Type": "application/json",
+//   };
+// }
 
 const axiosClient = axios.create({
   baseURL: "https://testyourapp.online/magnus-latitude/api",
   //   baseURL: "https://reqres.in/api",
-  headers: headers,
+  headers: { "Content-Type": "application/json" },
+  transformRequest: [
+    function (data, headers) {
+      if (typeof window !== "undefined" && localStorage.getItem("userData")) {
+        const userData = JSON.parse(localStorage.getItem("userData"));
+        headers.Authorization = `Bearer ${userData?.data?.token}`;
+      }
+      if (data && data._parts) {
+        return data;
+      } else {
+        return JSON.stringify(data);
+      }
+    },
+  ],
 });
 
 axiosClient.interceptors.response.use(
@@ -117,4 +128,9 @@ export const ContacUsAPI = createAsyncThunk("auth/contact-us", async (body) => {
 // Get Test List Detail
 export const getTetsListDetail = async (id) => {
   return await axiosClient.get(`/test-detail/${id}`);
+};
+
+//post Payment API
+export const PaymentAPI = async (body) => {
+  return await axiosClient.post("/razorpay-payment/capture", body);
 };
