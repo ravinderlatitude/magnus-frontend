@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ModalLogin from "../../components/ModalLogin";
 import ModalSuccess from "../../components/ModalSuccess";
 import useRazorpay from "react-razorpay";
+import ModalRegister from "../../components/ModalRegister";
 
 const TestDetails = () => {
   const dispatch = useDispatch();
@@ -155,7 +156,7 @@ const TestDetails = () => {
                       className="btn btn-orange-color border-0"
                       onClick={() => setIsModal((current) => !current)}
                     >
-                      Log in
+                      Buy Test
                     </button>
                   </div>
                 ) : (
@@ -171,7 +172,7 @@ const TestDetails = () => {
                 )}
               </div>
               <div>
-                <ModalLogin isModal={isModal} setIsModal={setIsModal} />
+                <ModalRegister isModal={isModal} setIsModal={setIsModal} />
               </div>
               <div>
                 <ModalSuccess

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import IcRight from "../assets/images/IcRight.svg";
+// import IcLoader from "../assets/images/IcLoader.gif";
 import useOutsideClick from "../hooks/useOutsideClick";
 
 export default function ModalSuccess({ loading, isModal, setIsModal }) {
@@ -30,9 +31,19 @@ export default function ModalSuccess({ loading, isModal, setIsModal }) {
                 <Image src={ICclose} alt="" />
               </span> */}
             {loading ? (
-              <p className="text-white">
-                Your Payment Is Under Process Don't Close
-              </p>
+              <>
+                <div className="text-center">
+                  <div className="loader--ring">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <p className="text-white">
+                    Your Payment Is Under Process Don't Close This Tab
+                  </p>
+                </div>
+              </>
             ) : (
               <div className="text-center">
                 <Image src={IcRight} alt="Payment Success" width={110} />
