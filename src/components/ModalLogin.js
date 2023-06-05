@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 export default function ModalLogin({ isModal, setIsModal }) {
   const modelRef = useRef(null);
   const [isModalForgot, setIsModalForgot] = useState(false);
+  // const [isModalLogin, setIsModalLogin] = useState(false);
 
   // for Modal
   const modalOpen = (event) => {
@@ -192,9 +193,9 @@ export default function ModalLogin({ isModal, setIsModal }) {
                     )}
                   </div>
                   <div className="w-100 text-end">
-                    <Link href="/" className="modal-links" onClick={modalOpen}>
+                    <button className="modal-links" onClick={modalOpen}>
                       Forgot Password?
-                    </Link>
+                    </button>
                   </div>
                   <div>
                     <button

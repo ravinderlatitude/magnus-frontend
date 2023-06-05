@@ -90,6 +90,7 @@ export const VerifyUserAPI = createAsyncThunk(
   "auth/verify-user",
   async (body) => {
     const response = await axiosClient.post("/verify-user", body);
+    localStorage.setItem("userData", JSON.stringify(response));
     return response;
   }
 );

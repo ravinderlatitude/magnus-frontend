@@ -159,17 +159,17 @@ const TestDetails = () => {
                       Buy Test
                     </button>
                   </div>
-                ) : (
-                  <button
-                    className="btn btn-orange-color"
-                    onClick={handlePayment}
-                  >
-                    Buy Test
-                  </button>
-                  // <Link className="btn btn-orange-color" href="/">
-                  //   Buy Test
-                  // </Link>
-                )}
+                ) : /**
+                 *! Commented Buy Test button code uncomment one payment methode integrated
+                 **/
+
+                // <button
+                //   className="btn btn-orange-color"
+                //   onClick={handlePayment}
+                // >
+                //   Buy Test
+                // </button>
+                null}
               </div>
               <div>
                 <ModalRegister isModal={isModal} setIsModal={setIsModal} />
