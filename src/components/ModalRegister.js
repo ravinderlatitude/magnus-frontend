@@ -6,12 +6,33 @@ import useOutsideClick from "../hooks/useOutsideClick";
 
 import { rgisterAPI } from "../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
+import ModalLogin from "./../components/ModalLogin";
+import ModalOtp from "./ModalOtp";
+import { useRouter } from "next/router";
+import { setCredentials } from "@/redux/authRegisterSlice";
 
 export default function ModalRegister({ isModal, setIsModal }) {
+  const modelRef = useRef(null);
+  const [isModalLogin, setIsModalLogin] = useState(false);
+  const [isModalOTP, setIsModalOTP] = useState(false);
+
   // for Modal
   const modalClick = (event) => {
     setIsModal((current) => !current);
   };
+
+  const modalOpen = (event) => {
+    setIsModalLogin(!isModalLogin);
+    setIsModal(!isModal);
+    // console.log(isModalLogin, "isModalLogin");
+  };
+
+  const modalClose = (event) => {
+    setIsModalLogin(false);
+    setIsModal(false);
+    // console.log(isModalLogin, "modal");
+  };
+  useOutsideClick(modelRef, modalClose);
 
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState(null);
@@ -24,6 +45,10 @@ export default function ModalRegister({ isModal, setIsModal }) {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const authRegister = useSelector((state) => state.authRegister.user);
+  const router = useRouter();
+  const { id } = router.query;
+
+  // const authRegisterstatus = useSelector((state) => state.authRegister.status);
 
   const handleFirstName = (event) => {
     const { value } = event.target;
@@ -93,8 +118,23 @@ export default function ModalRegister({ isModal, setIsModal }) {
 
     // setEmail(e.target.value);
   };
+
   useEffect(() => {
     console.log(authRegister);
+    if (authRegister?.status === 200 && authRegister?.data?.verify_key) {
+      setIsModal(false);
+      dispatch(setCredentials(null));
+      // let data = undefined;
+      if (id) {
+        router.push(
+          `/test-detail/${encodeURIComponent(id)}?verifiedregister=${
+            authRegister?.data?.verify_key
+          }`
+        );
+      } else {
+        router.push(`?verifiedregister=${authRegister?.data?.verify_key}`);
+      }
+    }
   }, [authRegister]);
   const isSubmitDisabled =
     password === "" || confirmPassword === "" || validatePassword();
@@ -185,6 +225,11 @@ export default function ModalRegister({ isModal, setIsModal }) {
                   )}
                 </div>
                 <span className="error-message">{authRegister?.message}</span>
+                <div className="w-100 text-end">
+                  <button className="modal-links" onClick={modalOpen}>
+                    Back to Login
+                  </button>
+                </div>
                 <div className="">
                   <button
                     className="btn btn-orange-color border-0"
@@ -199,6 +244,8 @@ export default function ModalRegister({ isModal, setIsModal }) {
           </div>
         </div>
       ) : null}
+      <ModalLogin isModal={isModalLogin} setIsModal={setIsModalLogin} />
+      <ModalOtp isModal={isModalOTP} setIsModal={setIsModalOTP} />
     </div>
   );
 }

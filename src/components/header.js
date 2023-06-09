@@ -13,18 +13,14 @@ import ModalResetPwd from "./ModalResetPwd";
 import { getTetsList } from "../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/redux/authSlice";
+import { setCredentials as setCredentialsVerifyUser } from "@/redux/verifyUserSlice";
 import ModalOtp from "./ModalOtp";
 
 export default function Header({ href, children }) {
   const dropdown = useRef(null);
 
   const router = useRouter();
-  const { resetpassword } = router.query;
-  // console.log(resetpassword);
-  const { login } = router.query;
-  // console.log(login);
-  const { verifiedregister } = router.query;
-  // console.log(verifiedregister);
+  const { resetpassword, login, verifiedregister, id } = router.query;
 
   // menu toggle page for menu
   const [isActive, setIsActive] = useState(false);
@@ -62,19 +58,27 @@ export default function Header({ href, children }) {
   useEffect(() => {
     // console.log("authRegister", authRegister);
     if (authRegister && authRegister.status == 200) {
-      setInterval(() => {
+      setTimeout(() => {
         setIsModalRegister(false);
       }, 1000 * 2);
     }
   }, [authRegister]);
 
   useEffect(() => {
-    // console.log("authRegister", authRegister);
+    console.log("verifyUser", verifyUser);
     if (verifyUser && verifyUser.status == 200) {
-      setInterval(() => {
+      dispatch(setCredentials(verifyUser));
+      dispatch(setCredentialsVerifyUser(null));
+      setTimeout(() => {
         setIsModalVerifyuser(false);
-        window.location.href = "/";
+        // window.location.reload();
+        // window.location.href = "/";
         // setIsModal(true);
+        if (id) {
+          router.push(`/test-detail/${encodeURIComponent(id)}`);
+        } else {
+          router.push(`/`);
+        }
       }, 1000 * 2);
     }
   }, [verifyUser]);
@@ -144,7 +148,7 @@ export default function Header({ href, children }) {
   // console.log("auth=====", auth);
   const [isLogin, setIsLogin] = useState(false);
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="header-loader">Loading...</div>;
   }
 
   if (error) {

@@ -72,7 +72,7 @@ a:hover {
   box-shadow: none;
 }
 p {
-  font-size: 16px;
+  font-size: 14px;
   color: #2f2f2f;
 }
 
@@ -397,6 +397,9 @@ p {
 .modal-main .modal-links {
   color: var(--colorOrange);
   font-size: 14px;
+  background-color: transparent;
+  outline: none;
+  border: none;
 }
 .modal-main .form-input {
   background: #ffffff;
@@ -873,4 +876,64 @@ h6.text-blue {
   .user-info h4 {
     font-size: 14px;
   }
+  .bx-block {
+    min-height: unset;
+  }
+}
+
+.loader--ring {
+  display: inline-block;
+  position: relative;
+  height: 64px;
+  width: 64px;
+}
+
+.loader--ring div {
+  display: block;
+  position: absolute;
+  animation: loader--ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border: 6px solid #fff;
+  border-radius: 50%;
+  box-sizing: border-box;
+  margin: 6px;
+  height: 51px;
+  width: 51px;
+}
+
+.loader--ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.loader--ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.loader--ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes loader--ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.header-loader {
+  text-align: center;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ea8127;
+  border-radius: 20px;
+  top: 0;
+  color: #fff;
+  font-size: 14px;
+  padding: 3px 25px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 50px);
 }

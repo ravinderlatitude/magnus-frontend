@@ -39,7 +39,6 @@ export default function ModalOtp({ isModal, setIsModal }) {
       })
     );
     setError(verifyUser?.message);
-    // console.log(verifiedregister);
   };
   // console.log(first);
 
