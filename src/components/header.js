@@ -148,7 +148,7 @@ export default function Header({ href, children }) {
   // console.log("auth=====", auth);
   const [isLogin, setIsLogin] = useState(false);
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="header-loader">Loading...</div>;
   }
 
   if (error) {

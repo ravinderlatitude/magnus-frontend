@@ -235,9 +235,9 @@ export default function ModalLogin({ isModal, setIsModal }) {
                     )}
                   </div>
                   <div className="w-100 text-end">
-                    <Link href="/" className="modal-links" onClick={modalOpen}>
+                    <button className="modal-links" onClick={modalOpen}>
                       Go Back to Login
-                    </Link>
+                    </button>
                   </div>
                   <div className="">
                     <button className="btn btn-orange-color border-0">

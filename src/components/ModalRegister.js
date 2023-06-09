@@ -226,9 +226,9 @@ export default function ModalRegister({ isModal, setIsModal }) {
                 </div>
                 <span className="error-message">{authRegister?.message}</span>
                 <div className="w-100 text-end">
-                  <Link href="/" className="modal-links" onClick={modalOpen}>
+                  <button className="modal-links" onClick={modalOpen}>
                     Back to Login
-                  </Link>
+                  </button>
                 </div>
                 <div className="">
                   <button

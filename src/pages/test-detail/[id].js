@@ -40,15 +40,15 @@ const TestDetails = () => {
         let testDetailsData = await getTetsListDetail(id);
         setTestListDetails(testDetailsData);
 
-        console.log("testDetailsData==========:", testDetailsData);
-        console.log("testDetailsData==========:", testListDetails.data.id);
+        // console.log("testDetailsData==========:", testDetailsData);
+        // console.log("testDetailsData==========:", testListDetails.data.id);
       } catch (ee) {
         console.error(ee.data);
       }
     })();
   }, [id]);
   useEffect(() => {
-    console.log(auth);
+    // console.log(auth);
     if (auth?.status == 200) {
       modalClose();
     }
@@ -59,20 +59,22 @@ const TestDetails = () => {
     // const order = await createOrder(params);
 
     const options = {
-      key: "rzp_test_xK1MoOvDIdPJiX",
-      amount: "3000",
+      // key: "rzp_test_xK1MoOvDIdPJiX", // test Key
+      key: "rzp_live_LUSwPzW9PsEcdw", // Live Key
+      // amount: "3000",
+      amount: testListDetails.data.test_price * 100,
       handler: async (res) => {
-        console.log(res.razorpay_payment_id, testListDetails);
+        // console.log(res.razorpay_payment_id, testListDetails);
         try {
           setLoading(true);
           setIsModalSuccess(true);
           let payment_result = await PaymentAPI({
-            amount: 3000,
+            // amount: testListDetails.data.test_price,
             currency: "INR",
             razor_pay_id: res.razorpay_payment_id,
             test_id: testListDetails.data.id,
           });
-          console.log(payment_result);
+          // console.log(payment_result);
           if (payment_result?.data?.status === "captured") {
             // alert("Success");
             setLoading(false);
@@ -82,11 +84,11 @@ const TestDetails = () => {
           }, 1000 * 4);
         } catch (err) {
           setIsModalSuccess(false);
-          console.log(err);
+          // console.log(err);
         }
       },
       theme: {
-        color: "#3399cc",
+        color: "#ea8127",
       },
     };
 
@@ -150,26 +152,30 @@ const TestDetails = () => {
                 Buy Test
               </Link> */}
 
-                {!auth?.data ? (
-                  <div className="btn-block">
+                {
+                  !auth?.data ? (
+                    <div className="btn-block">
+                      <button
+                        className="btn btn-orange-color border-0"
+                        onClick={() => setIsModal((current) => !current)}
+                      >
+                        Buy Test
+                      </button>
+                    </div>
+                  ) : (
+                    /**
+                     *! Commented Buy Test button code uncomment one payment methode integrated
+                     **/
+
                     <button
-                      className="btn btn-orange-color border-0"
-                      onClick={() => setIsModal((current) => !current)}
+                      className="btn btn-orange-color"
+                      onClick={handlePayment}
                     >
                       Buy Test
                     </button>
-                  </div>
-                ) : /**
-                 *! Commented Buy Test button code uncomment one payment methode integrated
-                 **/
-
-                // <button
-                //   className="btn btn-orange-color"
-                //   onClick={handlePayment}
-                // >
-                //   Buy Test
-                // </button>
-                null}
+                  )
+                  // null
+                }
               </div>
               <div>
                 <ModalRegister isModal={isModal} setIsModal={setIsModal} />
