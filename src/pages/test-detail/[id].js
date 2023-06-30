@@ -127,7 +127,7 @@ const TestDetails = () => {
                 <div className="test-banner">
                   <Image src={PlacehoderImage} alt="" />
                 </div>
-                <h2>About Assessment</h2>
+                {/* <h2>About Assessment</h2>
                 <div className="test-time">
                   <div className="d-flex align-items-center">
                     <span>
@@ -141,7 +141,7 @@ const TestDetails = () => {
                     </span>
                     <p>{testListDetails.data?.question_count} Questions</p>
                   </div>
-                </div>
+                </div> */}
 
                 <span
                   dangerouslySetInnerHTML={{
