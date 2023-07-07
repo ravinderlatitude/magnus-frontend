@@ -4,14 +4,12 @@ import Link from "next/link";
 
 import Banner from "../../components/banner";
 import PlacehoderImage from "../../assets/images/testplaceholder.png";
-import ICtime from "../../assets/images/ICtime.svg";
-import ICquestion from "../../assets/images/ICquestion.svg";
 
 import { PaymentAPI, getTetsListDetail } from "../../../apiServices/services";
 import { useRouter } from "next/router";
 import ImgNotFound from "../../assets/images/ImgNotFound.svg";
 import { useDispatch, useSelector } from "react-redux";
-import ModalLogin from "../../components/ModalLogin";
+
 import ModalSuccess from "../../components/ModalSuccess";
 import useRazorpay from "react-razorpay";
 import ModalRegister from "../../components/ModalRegister";
@@ -124,8 +122,15 @@ const TestDetails = () => {
           <div className="test-details">
             <div className="container">
               <div className="col-md-8 col-12 mx-auto mb-5">
-                <div className="test-banner">
-                  <Image src={PlacehoderImage} alt="" />
+                <div
+                  className="test-banner"
+                  style={{
+                    backgroundImage: testListDetails.data?.test_banner
+                      ? `url(${testListDetails.data?.test_banner})`
+                      : `url(${PlacehoderImage.src})`,
+                  }}
+                >
+                  {/* <Image src={PlacehoderImage} alt="" /> */}
                 </div>
                 {/* <h2>About Assessment</h2>
                 <div className="test-time">
