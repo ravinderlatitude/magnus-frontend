@@ -568,6 +568,8 @@ h6.text-blue {
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 20px;
+  background-size: cover;
+  background-position: center center;
 }
 .test-banner img {
   height: 100%;
