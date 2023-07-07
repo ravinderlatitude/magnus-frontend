@@ -122,7 +122,7 @@ const PrivacyPolicy = () => {
                   href="/contact"
                 >
                   {" "}
-                  contact us{" "}
+                  contact us
                 </Link>
                 . We are here to assist you and ensure your satisfaction with
                 our personality test services.
