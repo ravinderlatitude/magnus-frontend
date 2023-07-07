@@ -210,6 +210,13 @@ p {
 .btn-link-blue-color:hover {
   color: var(--colorOrange);
 }
+.btn-link-orange-color {
+  font-size: 16px;
+  color: var(--colorOrange);
+}
+.btn-link-orange-color:hover {
+  color: var(--colorBlue);
+}
 .why-us {
   padding: 60px 0px;
   background-color: var(--lightBlue);

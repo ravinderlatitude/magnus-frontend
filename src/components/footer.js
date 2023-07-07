@@ -46,6 +46,12 @@ export default function Footer() {
                   <li>
                     <Link href="/terms"> Terms and Conditons</Link>
                   </li>
+                  <li>
+                    <Link href="/privacy-policy"> Privacy Policy</Link>
+                  </li>
+                  <li>
+                    <Link href="/refund-policy"> Refund Policy</Link>
+                  </li>
                 </ul>
               </div>
               <div className="col-md-4">
