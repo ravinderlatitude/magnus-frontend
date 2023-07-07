@@ -125,9 +125,9 @@ const PrivacyPolicy = () => {
                   href="/contact"
                 >
                   {" "}
-                  contact us{" "}
-                </Link>
-                . Your privacy matters to us, and we are committed to ensuring a
+                  contact us.
+                </Link>{" "}
+                Your privacy matters to us, and we are committed to ensuring a
                 safe and secure environment for all our users.
               </p>
             </div>
