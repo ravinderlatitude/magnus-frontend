@@ -171,7 +171,7 @@ const Contact = () => {
             </div>
             <div className="col-md-4 col-12 title-text mt-xs-0 mt-sm-0 mt-3">
               <div className="col-auto follow-us">
-                <h6>Email and Contact</h6>
+                <h6>Contact Details</h6>
                 <ul>
                   <li>
                     <p className="d-flex">
