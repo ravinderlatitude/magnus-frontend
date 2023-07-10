@@ -9,8 +9,14 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 
+import IcMobile from "../../assets/images/ic_mobile.svg";
+import IcEmail from "../../assets/images/ic_email.svg";
+import IcAddress from "../../assets/images/ic_address.svg";
+
 import { ContacUsAPI } from "../../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
+import Image from "next/image";
 
 const Contact = () => {
   const dispatch = useDispatch();
@@ -85,16 +91,17 @@ const Contact = () => {
       <Banner title={"Contact"} />
       <div className="about-block contactuspage">
         <div className="container">
-          <div className="row ">
-            <div className="col-md-6 col-12 title-text mt-md-5 mt-0">
-              <h6>Reach out us</h6>
-              <h3>Contact us if you have any questions.</h3>
-              <p>
-                We are always ready to assist queries of our users. Share your
-                message or enquiry and our team will connect you as soon as
-                possible.
-              </p>
-            </div>
+          <div className="col-md-6 col-12 title-text text-center mx-auto">
+            <h6>Reach out us</h6>
+            <h3>Contact us if you have any questions.</h3>
+            <p>
+              We are always ready to assist queries of our users. Share your
+              message or enquiry and our team will connect you as soon as
+              possible.
+            </p>
+          </div>
+
+          <div className="row mt-md-5 mt-0 justify-content-center">
             <div className="col-md-6 col-12">
               <form onSubmit={handleSubmit}>
                 <div class="row mb-2">
@@ -161,6 +168,38 @@ const Contact = () => {
                   </div>
                 </div>
               </form>
+            </div>
+            <div className="col-md-4 col-12 title-text mt-xs-0 mt-sm-0 mt-3">
+              <div className="col-auto follow-us">
+                <h6>Email and Contact</h6>
+                <ul>
+                  <li>
+                    <p className="d-flex">
+                      <Image src={IcAddress} className="me-2" alt="facebook" />
+                      FF 122 SHRIDHAR ORAM, NR SHIVALAY PARISAR, Kudasan,
+                      Gandhinagar 382421, Gujarat
+                    </p>
+                  </li>
+                  <li className="d-flex">
+                    <Link
+                      href="mailto:magnuslatitude@gmail.com"
+                      className="text-lowercase d-flex align-items-center"
+                    >
+                      <Image src={IcEmail} className="me-2" alt="facebook" />
+                      <p className="m-0">magnuslatitude@gmail.com</p>
+                    </Link>
+                  </li>
+                  <li className="d-flex">
+                    <Link
+                      href="tel:+919979432166"
+                      className="text-lowercase d-flex align-items-center"
+                    >
+                      <Image src={IcMobile} className="me-2" />
+                      <p className="m-0">+91 9979432166</p>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
