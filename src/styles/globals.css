@@ -774,6 +774,9 @@ h6.text-blue {
   }
 }
 @media (max-width: 576px) {
+  .test-banner {
+    height: 250px;
+  }
   .control img {
     width: 18px;
   }
