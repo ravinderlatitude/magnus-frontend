@@ -10,7 +10,7 @@ import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
 import Link from "next/link";
 
-const PrivacyPolicy = () => {
+const RefundPolicy = () => {
   return (
     <div>
       <Banner title={"Refund Policy"} />
@@ -38,9 +38,17 @@ const PrivacyPolicy = () => {
               <p>
                 If you encounter technical difficulties that prevent you from
                 accessing or completing the personality test, please contact our
-                support team within [specified timeframe] of your purchase for
-                assistance. We will make reasonable efforts to resolve the issue
-                and provide access to the test.
+                support team for assistance at
+                <Link
+                  className="btn-link-orange-color"
+                  style={{ fontSize: "unset" }}
+                  href="/contact"
+                >
+                  {" "}
+                  https://magnuslatitude.in/contact
+                </Link>
+                . We will make reasonable efforts to resolve the issue and
+                provide access to the test.
               </p>
 
               <h3>Unavailability of Service:</h3>
@@ -70,7 +78,7 @@ const PrivacyPolicy = () => {
 
               <h3>Refund Decisions:</h3>
               <p>
-                Refund requests will be processed within a reasonable timeframe,
+                Refund requests will be processed within 4 to 5 working days,
                 and we will notify you of the outcome via the contact
                 information you provided. Approved refunds will be issued
                 through the original payment method used for the purchase.
@@ -115,17 +123,17 @@ const PrivacyPolicy = () => {
 
               <p>
                 If you have any questions or need further clarification
-                regarding our Refund Policy, please
+                regarding our Refund Policy, please contact us at
                 <Link
                   className="btn-link-orange-color"
                   style={{ fontSize: "unset" }}
                   href="/contact"
                 >
                   {" "}
-                  contact us.
-                </Link>{" "}
-                We are here to assist you and ensure your satisfaction with our
-                personality test services.
+                  https://magnuslatitude.in/contact
+                </Link>
+                . We are here to assist you and ensure your satisfaction with
+                our personality test services.
               </p>
             </div>
           </div>
@@ -134,4 +142,4 @@ const PrivacyPolicy = () => {
     </div>
   );
 };
-export default PrivacyPolicy;
+export default RefundPolicy;

@@ -191,11 +191,11 @@ const Contact = () => {
                   </li>
                   <li className="d-flex">
                     <Link
-                      href="tel:+919979432166"
+                      href="tel:+919898332166"
                       className="text-lowercase d-flex align-items-center"
                     >
                       <Image src={IcMobile} className="me-2" />
-                      <p className="m-0">+91 9979432166</p>
+                      <p className="m-0">+91 9898332166</p>
                     </Link>
                   </li>
                 </ul>

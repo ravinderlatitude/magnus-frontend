@@ -48,9 +48,10 @@ const PrivacyPolicy = () => {
               <br />
               <h3>Personal Information:</h3>
               <p>
-                We use the personal information you provide to deliver and
-                improve our services, personalize your experience, communicate
-                with you, and provide relevant recommendations.
+                We at Magnus Latitude, use the personal information you provide
+                to deliver and improve our services, personalize your
+                experience, communicate with you, and provide relevant
+                recommendations.
               </p>
               <h3>Non-Personal Information:</h3>
               <p>
@@ -117,17 +118,16 @@ const PrivacyPolicy = () => {
               </p>
 
               <p>
-                If you have any questions or concerns about our Privacy Policy,
-                please{" "}
+                If you have any questions or concerns about our Privacy Policy
+                of Magnus Latitude, please contact us at{" "}
                 <Link
                   className="btn-link-orange-color"
                   style={{ fontSize: "unset" }}
                   href="/contact"
                 >
-                  {" "}
-                  contact us.
-                </Link>{" "}
-                Your privacy matters to us, and we are committed to ensuring a
+                  https://magnuslatitude.in/contact
+                </Link>
+                . Your privacy matters to us, and we are committed to ensuring a
                 safe and secure environment for all our users.
               </p>
             </div>

@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import FOOTER_LOGO from "../assets/images/Flogo.svg";
 import IcFacebook from "../assets/images/IcFacebook.svg";
 import IcInstagram from "../assets/images/IcInstagram.svg";
+import IcMobile from "../assets/images/ic_mobile.svg";
 import { getTetsList } from "../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -95,6 +96,14 @@ export default function Footer() {
                         alt="Instagram"
                       />
                       Instagram
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="tel:+919898332166"
+                      className="btn btn-orange-color px-3"
+                    >
+                      Call us 9898332166
                     </Link>
                   </li>
                 </ul>
