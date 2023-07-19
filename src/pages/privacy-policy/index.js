@@ -119,13 +119,14 @@ const PrivacyPolicy = () => {
 
               <p>
                 If you have any questions or concerns about our Privacy Policy
-                of Magnus Latitude, please contact us at{" "}
+                of Magnus Latitude, please
                 <Link
                   className="btn-link-orange-color"
                   style={{ fontSize: "unset" }}
                   href="/contact"
                 >
-                  https://magnuslatitude.in/contact
+                  {" "}
+                  contact us
                 </Link>
                 . Your privacy matters to us, and we are committed to ensuring a
                 safe and secure environment for all our users.

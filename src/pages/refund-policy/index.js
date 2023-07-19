@@ -45,7 +45,7 @@ const RefundPolicy = () => {
                   href="/contact"
                 >
                   {" "}
-                  https://magnuslatitude.in/contact
+                  contact us
                 </Link>
                 . We will make reasonable efforts to resolve the issue and
                 provide access to the test.
@@ -123,14 +123,14 @@ const RefundPolicy = () => {
 
               <p>
                 If you have any questions or need further clarification
-                regarding our Refund Policy, please contact us at
+                regarding our Refund Policy, please
                 <Link
                   className="btn-link-orange-color"
                   style={{ fontSize: "unset" }}
                   href="/contact"
                 >
                   {" "}
-                  https://magnuslatitude.in/contact
+                  contact us
                 </Link>
                 . We are here to assist you and ensure your satisfaction with
                 our personality test services.
