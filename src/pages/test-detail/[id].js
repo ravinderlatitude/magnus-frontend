@@ -103,6 +103,10 @@ const TestDetails = () => {
     // });
     rzpay.open();
   }, [Razorpay, testListDetails]);
+
+  const testFees = testListDetails.data?.test_price;
+  const testFeestruncatedNumber = Math.trunc(testFees);
+
   return (
     <div>
       {testListDetails?.status === 400 || testListDetails?.status === 404 ? (
@@ -156,8 +160,15 @@ const TestDetails = () => {
                 Buy Test
               </Link> */}
 
-                <div style={{ fontSize: "14px;", marginBottom: "10px" }}>
-                  Buy Now For{" "}
+                <div
+                  style={{
+                    fontSize: "22px;",
+                    marginBottom: "10px",
+                    color: "#0a6eb0",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Buy Now For
                   <span
                     style={{
                       textDecoration: "line-through",
@@ -167,7 +178,8 @@ const TestDetails = () => {
                     {" "}
                     5000
                   </span>{" "}
-                  {testListDetails.data?.test_price} Rs
+                  {/* {testListDetails.data?.test_price} Rs */}
+                  {testFeestruncatedNumber} Rs
                 </div>
                 {
                   !auth?.data ? (
