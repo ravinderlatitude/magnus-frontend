@@ -32,8 +32,8 @@ const Aboutus = () => {
               <h6>Know More</h6>
               <h3>We offer a carefully and planned test.</h3>
               <p>
-                We are dedicated to helping individuals gain a deeper
-                understanding of themselves through our comprehensive and
+                Magnus Latitude is dedicated to helping individuals gain a
+                deeper understanding of themselves through our comprehensive and
                 insightful personality test. Our mission is to provide a
                 reliable and accurate assessment that empowers individuals to
                 unlock their true potential and live more fulfilling lives.

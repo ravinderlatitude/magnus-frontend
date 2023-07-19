@@ -118,7 +118,6 @@ const TestDetails = () => {
       ) : (
         <>
           <Banner title={testListDetails.data?.title} />
-
           <div className="test-details">
             <div className="container">
               <div className="col-md-8 col-12 mx-auto mb-5">
@@ -157,6 +156,19 @@ const TestDetails = () => {
                 Buy Test
               </Link> */}
 
+                <div style={{ fontSize: "14px;", marginBottom: "10px" }}>
+                  Buy Now For{" "}
+                  <span
+                    style={{
+                      textDecoration: "line-through",
+                      color: "#b35b0f",
+                    }}
+                  >
+                    {" "}
+                    5000
+                  </span>{" "}
+                  {testListDetails.data?.test_price} Rs
+                </div>
                 {
                   !auth?.data ? (
                     <div className="btn-block">
@@ -164,7 +176,7 @@ const TestDetails = () => {
                         className="btn btn-orange-color border-0"
                         onClick={() => setIsModal((current) => !current)}
                       >
-                        Buy Test
+                        Buy Now
                       </button>
                     </div>
                   ) : (
@@ -176,7 +188,7 @@ const TestDetails = () => {
                       className="btn btn-orange-color"
                       onClick={handlePayment}
                     >
-                      Buy Test
+                      Buy Now
                     </button>
                   )
                   // null

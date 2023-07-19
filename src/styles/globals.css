@@ -949,3 +949,8 @@ h6.text-blue {
   left: 50%;
   transform: translate(-50%, 50px);
 }
+
+.follow-us .btn-orange-color:hover {
+  background-color: var(--colorBlue);
+  color: var(--bs-white) !important;
+}
