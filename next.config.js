@@ -8,15 +8,3 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-
-// next.config.js
-module.exports = {
-    async rewrites() {
-        return [
-          {
-            source: '/:path*',
-            destination: 'https://api.magnuslatitude.com/api:path*',
-          },
-        ]
-      },
-  };
