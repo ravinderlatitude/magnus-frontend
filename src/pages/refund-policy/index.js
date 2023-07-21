@@ -19,10 +19,10 @@ const RefundPolicy = () => {
           <div className="row ">
             <div className="col-md-8 col-12 title-text mx-auto mt-md-3 mt-0">
               <p>
-                At Magnus Latitude, we strive to provide a satisfying and
-                valuable experience for our users. This Refund Policy outlines
-                our guidelines regarding refunds for our personality test
-                services. Please read this policy carefully before making a
+                At Magnus Latitude Pvt Ltd, we strive to provide a satisfying
+                and valuable experience for our users. This Refund Policy
+                outlines our guidelines regarding refunds for our personality
+                test services. Please read this policy carefully before making a
                 purchase, as it explains the circumstances under which refunds
                 may be granted.
               </p>
@@ -66,8 +66,9 @@ const RefundPolicy = () => {
               <h3>Contacting Support:</h3>
               <p>
                 To request a refund, please contact our customer support team at
-                Magnus Latitude and provide the necessary details of your
-                purchase and the reason for your refund request.
+                Magnus Latitude Pvt Ltd Pvt Ltd Pvt Ltd Pvt Ltd and provide the
+                necessary details of your purchase and the reason for your
+                refund request.
               </p>
               <h3>Evaluation of Refund Request:</h3>
               <p>

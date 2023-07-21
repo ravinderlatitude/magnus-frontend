@@ -45,7 +45,7 @@ export default function Home() {
         <meta
           name="description"
           content="
-        Magnus Latitude offers a self-assessment platform. Discover yourself and unlock your true potential with our various personality tests."
+        Magnus Latitude Pvt Ltd offers a self-assessment platform. Discover yourself and unlock your true potential with our various personality tests."
         />
         <meta
           name="viewport"
