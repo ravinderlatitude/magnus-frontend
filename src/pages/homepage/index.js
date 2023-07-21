@@ -123,8 +123,8 @@ export default function Homepage() {
                     </div>
                     <h6>Reputable Portal</h6>
                     <p>
-                      Magnus Latitude is a reputable platform to get the
-                      personality test.
+                      Magnus Latitude Pvt Ltd Pvt Ltd is a reputable platform to
+                      get the personality test.
                     </p>
                   </div>
                 </div>
@@ -359,7 +359,7 @@ export default function Homepage() {
             <div className="col-md-6 col-12 title-text">
               <h6>TEST WE HAVE</h6>
               <h3 className="text-white">
-                People Talking About Magnus Latitude
+                People Talking About Magnus Latitude Pvt Ltd
               </h3>
               <p className="text-white">
                 Our user-friendly platform offers a range of comprehensive and

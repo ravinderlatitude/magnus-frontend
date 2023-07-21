@@ -19,10 +19,11 @@ const Terms = () => {
             <div className="col-md-8 col-12 title-text mx-auto mt-md-3 mt-0">
               <p>
                 This page is introducing us to the terms and conditions of our
-                Magnus Latitude website. These terms and conditions are subject
-                to agreement between us and our users. By following these terms
-                you are agreeing to our particulars to use our website/service.
-                If you do not agree with it then kindly do not use our services.
+                Magnus Latitude Pvt Ltd Pvt Ltd Pvt Ltd website. These terms and
+                conditions are subject to agreement between us and our users. By
+                following these terms you are agreeing to our particulars to use
+                our website/service. If you do not agree with it then kindly do
+                not use our services.
               </p>
               <h3>Accuracy of Information:</h3>
               <p>
