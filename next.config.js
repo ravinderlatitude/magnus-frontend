@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+/*const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ["magnuslatitude.com"],
@@ -7,4 +7,16 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = nextConfig; */
+
+// next.config.js
+module.exports = {
+    async rewrites() {
+        return [
+          {
+            source: '/:path*',
+            destination: 'https://api.magnuslatitude.com/api:path*',
+          },
+        ]
+      },
+  };
