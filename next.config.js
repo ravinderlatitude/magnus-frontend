@@ -2,7 +2,8 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ["magnuslatitude.com"],
+    domains: ["testyourapp.online"],
+    // domains: ["magnuslatitude.com"],
     unoptimized: true,
   },
 };

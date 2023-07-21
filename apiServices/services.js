@@ -19,7 +19,8 @@ import axios from "axios";
 // }
 
 const axiosClient = axios.create({
-  baseURL: "https://api.magnuslatitude.com/api",
+  baseURL: "https://testyourapp.online/magnus-latitude/api",
+  // baseURL: "https://api.magnuslatitude.com/api",
   //   baseURL: "https://reqres.in/api",
   headers: { "Content-Type": "application/json" },
   transformRequest: [
