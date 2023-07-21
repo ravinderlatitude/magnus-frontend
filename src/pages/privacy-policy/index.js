@@ -19,11 +19,11 @@ const PrivacyPolicy = () => {
           <div className="row ">
             <div className="col-md-8 col-12 title-text mx-auto mt-md-3 mt-0">
               <p>
-                At Magnus Latitude, we value and prioritize the privacy of our
-                users. This Privacy Policy outlines the types of information we
-                collect, how we use it, and the measures we take to protect your
-                personal data. By using our website and services, you consent to
-                the practices described below.
+                At Magnus Latitude Pvt Ltd, we value and prioritize the privacy
+                of our users. This Privacy Policy outlines the types of
+                information we collect, how we use it, and the measures we take
+                to protect your personal data. By using our website and
+                services, you consent to the practices described below.
               </p>
               <h3>Information Collection:</h3>
               <br />
@@ -48,8 +48,8 @@ const PrivacyPolicy = () => {
               <br />
               <h3>Personal Information:</h3>
               <p>
-                We at Magnus Latitude, use the personal information you provide
-                to deliver and improve our services, personalize your
+                We at Magnus Latitude Pvt Ltd, use the personal information you
+                provide to deliver and improve our services, personalize your
                 experience, communicate with you, and provide relevant
                 recommendations.
               </p>
@@ -119,7 +119,7 @@ const PrivacyPolicy = () => {
 
               <p>
                 If you have any questions or concerns about our Privacy Policy
-                of Magnus Latitude, please
+                of Magnus Latitude Pvt Ltd, please
                 <Link
                   className="btn-link-orange-color"
                   style={{ fontSize: "unset" }}
