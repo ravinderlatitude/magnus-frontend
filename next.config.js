@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-/*const nextConfig = {
+const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ["magnuslatitude.com"],
@@ -7,7 +7,7 @@
   },
 };
 
-module.exports = nextConfig; */
+module.exports = nextConfig;
 
 // next.config.js
 module.exports = {
