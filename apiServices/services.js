@@ -77,6 +77,9 @@ export const getTetsList = createAsyncThunk(
     return await axiosClient.get("/test-list");
   }
 );
+export const getTetsLists = async () => {
+  return await axiosClient.get("/test-list");
+};
 
 //post Call Login API
 
@@ -135,4 +138,15 @@ export const getTetsListDetail = async (id) => {
 //post Payment API
 export const PaymentAPI = async (body) => {
   return await axiosClient.post("/razorpay-payment/capture", body);
+};
+
+//post Payment PayGAPI
+// export const PaymentPayGAPI = async (body) => {
+//   return await axiosClient.post("/payg-payment", body);
+// };
+
+export const PaymentPayGAPI = async (body) => {
+  const response = await axiosClient.post("/payg-payment", body);
+  localStorage.setItem("PaygData", JSON.stringify(response));
+  return response;
 };
