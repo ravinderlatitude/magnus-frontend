@@ -18,4 +18,8 @@ function getEnvConfig() {
   } catch (err) {
     return require("./env.json");
   }
-}
+};
+
+module.exports = {
+  basePath: 'https://magnuslatitude.com', // Replace 'your-base-path' with your actual base path.
+};
