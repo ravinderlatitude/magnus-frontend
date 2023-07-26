@@ -255,3 +255,19 @@ const TestDetails = () => {
   );
 };
 export default TestDetails;
+
+export async function getStaticProps({ params }) {
+  return {
+    props: {
+      id: params?.slug || null,
+    },
+  };
+}
+
+export async function getStaticPaths() {
+  const allPosts = await getTetsLists();
+  return {
+    paths: allPosts?.data?.map((post) => `/test-detail/${post.slug}`) || [],
+    fallback: true,
+  };
+}
