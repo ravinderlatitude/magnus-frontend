@@ -123,7 +123,7 @@ const TestDetails = () => {
 
     try {
       let paygUrl = await PaymentPayGAPI({ test_id: testListDetails.data.id });
-      console.log("paygUrl====>", paygUrl);
+      // console.log("paygUrl====>", paygUrl);
       setPaygUrl(paygUrl);
 
       if (paygUrl.status == 200) {
