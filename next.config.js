@@ -18,8 +18,4 @@ function getEnvConfig() {
   } catch (err) {
     return require("./env.json");
   }
-};
-
-module.exports = {
-  basePath: '/', // Replace 'your-base-path' with your actual base path.
-};
+}
