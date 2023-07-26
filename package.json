@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "npm run build-production",
     "build-production": "cross-env TARGET_ENV=production npm run build-export",
+    "build-export": "next build",
     "start": "next start",
     "lint": "next lint"
   },
