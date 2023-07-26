@@ -954,3 +954,6 @@ h6.text-blue {
   background-color: var(--colorBlue);
   color: var(--bs-white) !important;
 }
+.font-red {
+  color: red;
+}

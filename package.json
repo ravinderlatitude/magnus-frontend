@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export -o build",
+    "build": "npm run build-development",
+    "build-development": "cross-env TARGET_ENV=development npm run build-export",
+    "build-production": "npm run build-export",
+    "build-export": "next build && next export -o build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -21,5 +24,8 @@
     "redux": "^4.2.1",
     "sharp": "^0.32.1",
     "swiper": "^9.1.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
