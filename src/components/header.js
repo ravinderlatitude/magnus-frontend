@@ -79,6 +79,7 @@ export default function Header({ href, children }) {
         const res = await PaymentDetailPayGAPI({
           OrderKeyId: PaygData.data.order_key_id,
         });
+        console.log("Test-ID===>", res);
         setIsModalLoading(false);
 
         setIsModalRes(res);
@@ -86,7 +87,7 @@ export default function Header({ href, children }) {
           setIsModalSuccess(false);
         }, 3000);
         localStorage.removeItem("PaygData");
-        console.log(res);
+        // console.log(res);
       }
     }
   }, []);
