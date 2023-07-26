@@ -21,5 +21,5 @@ function getEnvConfig() {
 };
 
 module.exports = {
-  basePath: 'https://magnuslatitude.com', // Replace 'your-base-path' with your actual base path.
+  basePath: '/', // Replace 'your-base-path' with your actual base path.
 };
