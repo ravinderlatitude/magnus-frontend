@@ -10,11 +10,12 @@ import LOGO from "../assets/images/logo.svg";
 import ModalLogin from "./ModalLogin";
 import ModalRegister from "./ModalRegister";
 import ModalResetPwd from "./ModalResetPwd";
-import { getTetsList } from "../../apiServices/services";
+import { PaymentDetailPayGAPI, getTetsList } from "../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/redux/authSlice";
 import { setCredentials as setCredentialsVerifyUser } from "@/redux/verifyUserSlice";
 import ModalOtp from "./ModalOtp";
+import ModalSuccess from "./ModalSuccess";
 
 export default function Header({ href, children }) {
   const dropdown = useRef(null);
@@ -40,6 +41,9 @@ export default function Header({ href, children }) {
   const [isModalRegister, setIsModalRegister] = useState(false);
   const [isModalResetpwd, setIsModalResetPwd] = useState(false);
   const [isModalVerifyuser, setIsModalVerifyuser] = useState(false);
+  const [isModalSuccess, setIsModalSuccess] = useState(false);
+  const [isModalLoading, setIsModalLoading] = useState(false);
+  const [isModalRes, setIsModalRes] = useState(null);
 
   // useOutsideClick(handelModal, () => setIsModal(false));
   // const modalClick = (event) => {
@@ -63,6 +67,29 @@ export default function Header({ href, children }) {
       }, 1000 * 2);
     }
   }, [authRegister]);
+
+  useEffect(async () => {
+    const LPaygData = localStorage.getItem("PaygData");
+    if (LPaygData) {
+      setIsModalSuccess(true);
+      setIsModalLoading(true);
+      const PaygData = JSON.parse(LPaygData);
+      console.log(PaygData);
+      if (PaygData?.data?.order_key_id) {
+        const res = await PaymentDetailPayGAPI({
+          OrderKeyId: PaygData.data.order_key_id,
+        });
+        setIsModalLoading(false);
+
+        setIsModalRes(res);
+        setTimeout(() => {
+          setIsModalSuccess(false);
+        }, 3000);
+        localStorage.removeItem("PaygData");
+        console.log(res);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     console.log("verifyUser", verifyUser);
@@ -270,6 +297,14 @@ export default function Header({ href, children }) {
               </a>
             </>
           )}
+        </div>
+        <div>
+          <ModalSuccess
+            res={isModalRes}
+            loading={isModalLoading}
+            isModal={isModalSuccess}
+            setIsModal={setIsModalSuccess}
+          />
         </div>
       </nav>
     </div>

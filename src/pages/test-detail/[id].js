@@ -15,21 +15,71 @@ import { useRouter } from "next/router";
 import ImgNotFound from "../../assets/images/ImgNotFound.svg";
 import { useDispatch, useSelector } from "react-redux";
 
-import ModalSuccess from "../../components/ModalSuccess";
 import useRazorpay from "react-razorpay";
 import ModalRegister from "../../components/ModalRegister";
 
-export async function generateStaticParams() {
-  const posts = await getTetsLists();
-  return posts.map((post) => ({
-    id: post.slug,
-  }));
-}
+// export async function generateStaticParams() {
+//   const posts = await getTetsLists();
+//   return posts.map((post) => ({
+//     id: post.slug,
+//   }));
+// }
+
+// This function gets called at build time
+// export async function getStaticPaths() {
+//   return {
+//     // Only `/posts/1` and `/posts/2` are generated at build time
+//     paths: [{ params: { id: "ideal-career-3" } }],
+//     // Enable statically generating additional pages
+//     // For example: `/posts/3`
+//     fallback: true,
+//   };
+// }
+
+// // This also gets called at build time
+// export async function getStaticProps({ params }) {
+//   // params contains the post `id`.
+//   // If the route is like /posts/1, then params.id is 1
+//   const res = await getTetsListDetail(params.id);
+//   console.log("res test-details", params.id, res);
+//   // Pass post data to the page via props
+//   return {
+//     props: { res },
+//     // Re-generate the post at most once per second
+//     // if a request comes in
+//     revalidate: 1,
+//   };
+// }
+
+// export async function getStaticPaths() {
+//   // When this is true (in preview environments) don't
+//   // prerender any static pages
+//   // (faster builds, but slower initial page load)
+//   if (process.env.SKIP_BUILD_STATIC_GENERATION) {
+//     return {
+//       paths: [],
+//       fallback: "blocking",
+//     };
+//   }
+
+//   // Call an external API endpoint to get posts
+//   const res = await getTetsLists();
+//   console.log("res test-details", res);
+
+//   // Get the paths we want to prerender based on posts
+//   // In production environments, prerender all pages
+//   // (slower builds, but faster initial page load)
+//   const paths = res.data.map((post) => ({
+//     params: { id: post.slug },
+//   }));
+
+//   // { fallback: false } means other routes should 404
+//   return { paths, fallback: false };
+// }
 
 const TestDetails = () => {
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
-  const [isModalSuccess, setIsModalSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [paygUrl, setPaygUrl] = useState({ data: [] });
   const [isLoading, setIsLoading] = useState(false);
@@ -196,13 +246,6 @@ const TestDetails = () => {
               </div>
               <div>
                 <ModalRegister isModal={isModal} setIsModal={setIsModal} />
-              </div>
-              <div>
-                <ModalSuccess
-                  loading={loading}
-                  isModal={isModalSuccess}
-                  setIsModal={setIsModalSuccess}
-                />
               </div>
             </div>
           </div>

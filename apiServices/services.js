@@ -1,4 +1,3 @@
-import authSlice from "@/redux/authSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -18,7 +17,7 @@ import axios from "axios";
 //   };
 // }
 
-const axiosClient = axios.create({
+export const axiosClient = axios.create({
   baseURL: "https://testyourapp.online/magnus-latitude/api",
   //baseURL: "https://api.magnuslatitude.com/api",
   //   baseURL: "https://reqres.in/api",
@@ -37,21 +36,6 @@ const axiosClient = axios.create({
     },
   ],
 });
-
-axiosClient.interceptors.response.use(
-  function (response) {
-    return response.data;
-  },
-  function (error) {
-    // let res = error.response;
-    // if (res.status == 401) {
-    //   window.location.href = "/";
-    // }
-    // console.log(error);
-    //   console.error(“Looks like there was a problem. Status Code: “ + res.status);
-    return Promise.reject(error);
-  }
-);
 
 // Get Faq List
 export const getFaqList = async () => {
@@ -148,5 +132,10 @@ export const PaymentAPI = async (body) => {
 export const PaymentPayGAPI = async (body) => {
   const response = await axiosClient.post("/payg-payment", body);
   localStorage.setItem("PaygData", JSON.stringify(response));
+  return response;
+};
+
+export const PaymentDetailPayGAPI = async (body) => {
+  const response = await axiosClient.post("/payg-detail", body);
   return response;
 };

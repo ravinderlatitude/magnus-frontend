@@ -6,6 +6,7 @@ const nextConfig = {
     // domains: ["magnuslatitude.com"],
     unoptimized: true,
   },
+  trailingSlash: true,
 };
 
 module.exports = nextConfig;

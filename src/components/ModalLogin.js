@@ -63,6 +63,12 @@ export default function ModalLogin({ isModal, setIsModal }) {
 
   const auth = useSelector((state) => state.auth.user);
   const authForgotPwd = useSelector((state) => state.authForgotPwd.user);
+  useEffect(() => {
+    // console.log(auth);
+    if (auth?.status == 200) {
+      modalClose();
+    }
+  }, [auth]);
 
   // const handleClick = async (e) => {
   //   e.preventDefault();
