@@ -5,20 +5,85 @@ import Link from "next/link";
 import Banner from "../../components/banner";
 import PlacehoderImage from "../../assets/images/testplaceholder.png";
 
-import { PaymentAPI, getTetsListDetail } from "../../../apiServices/services";
+import {
+  PaymentAPI,
+  getTetsListDetail,
+  PaymentPayGAPI,
+  getTetsLists,
+} from "../../../apiServices/services";
 import { useRouter } from "next/router";
 import ImgNotFound from "../../assets/images/ImgNotFound.svg";
 import { useDispatch, useSelector } from "react-redux";
 
-import ModalSuccess from "../../components/ModalSuccess";
 import useRazorpay from "react-razorpay";
 import ModalRegister from "../../components/ModalRegister";
+
+// export async function generateStaticParams() {
+//   const posts = await getTetsLists();
+//   return posts.map((post) => ({
+//     id: post.slug,
+//   }));
+// }
+
+// This function gets called at build time
+// export async function getStaticPaths() {
+//   return {
+//     // Only `/posts/1` and `/posts/2` are generated at build time
+//     paths: [{ params: { id: "ideal-career-3" } }],
+//     // Enable statically generating additional pages
+//     // For example: `/posts/3`
+//     fallback: true,
+//   };
+// }
+
+// // This also gets called at build time
+// export async function getStaticProps({ params }) {
+//   // params contains the post `id`.
+//   // If the route is like /posts/1, then params.id is 1
+//   const res = await getTetsListDetail(params.id);
+//   console.log("res test-details", params.id, res);
+//   // Pass post data to the page via props
+//   return {
+//     props: { res },
+//     // Re-generate the post at most once per second
+//     // if a request comes in
+//     revalidate: 1,
+//   };
+// }
+
+// export async function getStaticPaths() {
+//   // When this is true (in preview environments) don't
+//   // prerender any static pages
+//   // (faster builds, but slower initial page load)
+//   if (process.env.SKIP_BUILD_STATIC_GENERATION) {
+//     return {
+//       paths: [],
+//       fallback: "blocking",
+//     };
+//   }
+
+//   // Call an external API endpoint to get posts
+//   const res = await getTetsLists();
+//   console.log("res test-details", res);
+
+//   // Get the paths we want to prerender based on posts
+//   // In production environments, prerender all pages
+//   // (slower builds, but faster initial page load)
+//   const paths = res.data.map((post) => ({
+//     params: { id: post.slug },
+//   }));
+
+//   // { fallback: false } means other routes should 404
+//   return { paths, fallback: false };
+// }
 
 const TestDetails = () => {
   const dispatch = useDispatch();
   const [isModal, setIsModal] = useState(false);
-  const [isModalSuccess, setIsModalSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [paygUrl, setPaygUrl] = useState({ data: [] });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const auth = useSelector((state) => state.auth.user);
   const router = useRouter();
   const { id } = router.query;
@@ -45,6 +110,7 @@ const TestDetails = () => {
       }
     })();
   }, [id]);
+
   useEffect(() => {
     // console.log(auth);
     if (auth?.status == 200) {
@@ -52,57 +118,22 @@ const TestDetails = () => {
     }
   }, [auth]);
 
-  const Razorpay = useRazorpay();
-  const handlePayment = useCallback(async () => {
-    // const order = await createOrder(params);
+  const handlePayNow = async () => {
+    setIsLoading(true);
 
-    const options = {
-      // key: "rzp_test_xK1MoOvDIdPJiX", // test Key
-      key: "rzp_live_LUSwPzW9PsEcdw", // Live Key
-      // amount: "3000",
-      amount: testListDetails.data.test_price * 100,
-      handler: async (res) => {
-        // console.log(res.razorpay_payment_id, testListDetails);
-        try {
-          setLoading(true);
-          setIsModalSuccess(true);
-          let payment_result = await PaymentAPI({
-            // amount: testListDetails.data.test_price,
-            currency: "INR",
-            razor_pay_id: res.razorpay_payment_id,
-            test_id: testListDetails.data.id,
-          });
-          // console.log(payment_result);
-          if (payment_result?.data?.status === "captured") {
-            // alert("Success");
-            setLoading(false);
-          }
-          setInterval(() => {
-            setIsModalSuccess(false);
-          }, 1000 * 4);
-        } catch (err) {
-          setIsModalSuccess(false);
-          // console.log(err);
-        }
-      },
-      theme: {
-        color: "#ea8127",
-      },
-    };
+    try {
+      let paygUrl = await PaymentPayGAPI({ test_id: testListDetails.data.id });
+      // console.log("paygUrl====>", paygUrl);
+      setPaygUrl(paygUrl);
 
-    const rzpay = new Razorpay(options);
-
-    // rzpay.on("payment.failed", function (response) {
-    //   alert(response.error.code);
-    //   alert(response.error.description);
-    //   alert(response.error.source);
-    //   alert(response.error.step);
-    //   alert(response.error.reason);
-    //   alert(response.error.metadata.order_id);
-    //   alert(response.error.metadata.payment_id);
-    // });
-    rzpay.open();
-  }, [Razorpay, testListDetails]);
+      if (paygUrl.status == 200) {
+        window.location.assign(paygUrl?.data.payment_url);
+      }
+    } catch (ee) {
+      console.error(ee.data);
+    }
+    setError(paygUrl?.message);
+  };
 
   const testFees = testListDetails.data?.test_price;
   const testFeestruncatedNumber = Math.trunc(testFees);
@@ -159,7 +190,6 @@ const TestDetails = () => {
                 {/* <Link className="btn btn-orange-color" href="/">
                 Buy Test
               </Link> */}
-
                 <div
                   style={{
                     fontSize: "22px;",
@@ -181,6 +211,7 @@ const TestDetails = () => {
                   {/* {testListDetails.data?.test_price} Rs */}
                   {testFeestruncatedNumber} Rs
                 </div>
+
                 {
                   !auth?.data ? (
                     <div className="btn-block">
@@ -196,25 +227,25 @@ const TestDetails = () => {
                      *! Commented Buy Test button code uncomment one payment methode integrated
                      **/
 
-                    <button
-                      className="btn btn-orange-color"
-                      onClick={handlePayment}
-                    >
-                      Buy Now
-                    </button>
+                    <>
+                      <button
+                        className="btn btn-orange-color"
+                        onClick={handlePayNow}
+                      >
+                        Buy Now
+                      </button>
+                      {paygUrl.status !== 200 && (
+                        <span className="errorMessage font-red mt-4">
+                          {paygUrl?.message}
+                        </span>
+                      )}
+                    </>
                   )
                   // null
                 }
               </div>
               <div>
                 <ModalRegister isModal={isModal} setIsModal={setIsModal} />
-              </div>
-              <div>
-                <ModalSuccess
-                  loading={loading}
-                  isModal={isModalSuccess}
-                  setIsModal={setIsModalSuccess}
-                />
               </div>
             </div>
           </div>

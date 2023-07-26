@@ -2,9 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["magnuslatitude.com"],
+    domains: ["testyourapp.online"],
+    // domains: ["magnuslatitude.com"],
     unoptimized: true,
   },
+  trailingSlash: true,
 };
 
 module.exports = nextConfig;
