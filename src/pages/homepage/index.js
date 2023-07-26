@@ -123,8 +123,8 @@ export default function Homepage() {
                     </div>
                     <h6>Reputable Portal</h6>
                     <p>
-                      Magnus Latitude Pvt Ltd Pvt Ltd is a reputable platform to
-                      get the personality test.
+                      Magnus Latitude Pvt Ltd is a reputable platform to get the
+                      personality test.
                     </p>
                   </div>
                 </div>
