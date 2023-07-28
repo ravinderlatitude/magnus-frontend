@@ -1,4 +1,5 @@
 {
     "BASE_URL": "https://testyourapp.online/magnus-latitude/api",
+    "BASE_LIVE_URL": "https://api.magnuslatitude.com/api",
     "DOMAIN": "testyourapp.online"
 }
