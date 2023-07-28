@@ -25,7 +25,6 @@ export default store;
 
 axiosClient.interceptors.response.use(
   function (response) {
-    console.log("response", response.data);
     if (response?.data?.status == 401) {
       localStorage.removeItem("userData");
       store.dispatch(setCredentials(null));
