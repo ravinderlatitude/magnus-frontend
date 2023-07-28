@@ -21,7 +21,7 @@ export const axiosClient = axios.create({
   // baseURL: "https://testyourapp.online/magnus-latitude/api",
   // baseURL: "https://api.magnuslatitude.com/api",
   // baseURL: "https://reqres.in/api",
-  baseURL: process.env-production.BASE_URL,
+  baseURL: process.env.BASE_URL,
   headers: { "Content-Type": "application/json" },
   transformRequest: [
     function (data, headers) {
