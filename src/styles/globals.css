@@ -389,6 +389,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 .modal-main h2 {
   font-family: var(--titleFont);

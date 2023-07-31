@@ -80,8 +80,8 @@ export default function ModalResetPwd({ isModal, setIsModal }) {
         password: password,
       })
     );
-    // validatePassword();
 
+    // validatePassword();
     setError(authResetPwd?.message);
 
     // setEmail(e.target.value);
@@ -95,13 +95,13 @@ export default function ModalResetPwd({ isModal, setIsModal }) {
   return (
     <div>
       {isModal ? (
-        <div className="modal-bg-overlay" onClick={modalClick}>
+        <div className="modal-bg-overlay">
           <div
             className={" " + (!isModal ? "d-none" : "d-flex")}
             id="exampleModal"
             tabindex="-1"
           >
-            <div className="modal-main" onClick={modalClick}>
+            <div className="modal-main">
               <span className="modal-close" onClick={modalClick}>
                 <Image src={ICclose} alt="" />
               </span>

@@ -26,7 +26,7 @@ export default function ModalLogin({ isModal, setIsModal }) {
     setIsModal(false);
     // console.log(isModalForgot, "modal");
   };
-  useOutsideClick(modelRef, modalClose);
+  // useOutsideClick(modelRef, modalClose);
 
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
@@ -199,7 +199,11 @@ export default function ModalLogin({ isModal, setIsModal }) {
                     )}
                   </div>
                   <div className="w-100 text-end">
-                    <button className="modal-links" onClick={modalOpen}>
+                    <button
+                      type="button"
+                      className="modal-links"
+                      onClick={modalOpen}
+                    >
                       Forgot Password?
                     </button>
                   </div>
@@ -241,7 +245,11 @@ export default function ModalLogin({ isModal, setIsModal }) {
                     )}
                   </div>
                   <div className="w-100 text-end">
-                    <button className="modal-links" onClick={modalOpen}>
+                    <button
+                      type="button"
+                      className="modal-links"
+                      onClick={modalOpen}
+                    >
                       Go Back to Login
                     </button>
                   </div>

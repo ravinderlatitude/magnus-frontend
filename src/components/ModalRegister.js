@@ -82,7 +82,7 @@ export default function ModalRegister({ isModal, setIsModal }) {
     // password validation
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,191}$/;
-    if (!passwordRegex.test(value)) {
+    if (!passwordRegex.test(value) && value.length > 0) {
       setPasswordError(
         "Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character."
       );
@@ -94,6 +94,11 @@ export default function ModalRegister({ isModal, setIsModal }) {
   const handleConfirmPasswordChange = (event) => {
     const { value } = event.target;
     setConfirmPassword(value);
+    if (password !== value) {
+      setConfirmPasswordError("Passwords do not match");
+    } else {
+      setConfirmPasswordError("");
+    }
   };
 
   const validatePassword = () => {
@@ -101,6 +106,7 @@ export default function ModalRegister({ isModal, setIsModal }) {
       return "Passwords do not match";
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(
@@ -142,13 +148,13 @@ export default function ModalRegister({ isModal, setIsModal }) {
   return (
     <div>
       {isModal ? (
-        <div className="modal-bg-overlay" onClick={modalClick}>
+        <div className="modal-bg-overlay">
           <div
             className={" " + (!isModal ? "d-none" : "d-flex")}
             id="exampleModal"
             tabindex="-1"
           >
-            <div className="modal-main" onClick={modalClick}>
+            <div className="modal-main">
               <span className="modal-close" onClick={modalClick}>
                 <Image src={ICclose} alt="" />
               </span>
@@ -213,6 +219,11 @@ export default function ModalRegister({ isModal, setIsModal }) {
                     className="form-control"
                     onChange={handleConfirmPasswordChange}
                   />
+                  {confirmPasswordError && (
+                    <span className="error-message">
+                      {confirmPasswordError}
+                    </span>
+                  )}
                   {error && (
                     <span className="error-message">
                       {authRegister?.confirmPasswordError}
@@ -226,7 +237,11 @@ export default function ModalRegister({ isModal, setIsModal }) {
                 </div>
                 <span className="error-message">{authRegister?.message}</span>
                 <div className="w-100 text-end">
-                  <button className="modal-links" onClick={modalOpen}>
+                  <button
+                    type="button"
+                    className="modal-links"
+                    onClick={modalOpen}
+                  >
                     Back to Login
                   </button>
                 </div>
@@ -234,7 +249,7 @@ export default function ModalRegister({ isModal, setIsModal }) {
                   <button
                     className="btn btn-orange-color border-0"
                     type="submit"
-                    disabled={isSubmitDisabled}
+                    // disabled={isSubmitDisabled}
                   >
                     Register
                   </button>
