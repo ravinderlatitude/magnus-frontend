@@ -34,6 +34,11 @@ export default function Header({ href, children }) {
   const handleClickSubMenu = (event) => {
     setIsSubmenu((current) => !current);
   };
+
+  const [isToggleMenu, setIsToggleMenu] = useState(false);
+  const handleClickToggleMenu = (event) => {
+    setIsActive(false);
+  };
   // for Modal
   // const handelModal = useRef(null);
 
@@ -212,6 +217,7 @@ export default function Header({ href, children }) {
               <li
                 className={"nav-item dropdown " + (isSubmenu ? "active" : "")}
                 onMouseLeave={() => setIsSubmenu(false)}
+                onClick={() => setIsToggleMenu(false)}
               >
                 <span
                   className="nav-link dropdown-toggle"
@@ -220,7 +226,7 @@ export default function Header({ href, children }) {
                 >
                   Self Assessment
                 </span>
-                <ul className="dropdown-menu">
+                <ul className="dropdown-menu" onClick={handleClickToggleMenu}>
                   {testList?.map((data, index) => (
                     <li key={index.toString()}>
                       {/* {console.log("LI data=====", data)} */}

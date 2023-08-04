@@ -64,6 +64,11 @@ export default function ModalResetPwd({ isModal, setIsModal }) {
   const handleConfirmPasswordChange = (event) => {
     const { value } = event.target;
     setConfirmPassword(value);
+    if (password !== value) {
+      setConfirmPasswordError("Passwords do not match");
+    } else {
+      setConfirmPasswordError("");
+    }
   };
 
   const validatePassword = () => {
@@ -141,6 +146,11 @@ export default function ModalResetPwd({ isModal, setIsModal }) {
                     className="form-control"
                     onChange={handleConfirmPasswordChange}
                   />
+                  {confirmPasswordError && (
+                    <span className="error-message">
+                      {confirmPasswordError}
+                    </span>
+                  )}
                   {error && (
                     <span className="errorMessage">
                       {authResetPwd?.confirmPasswordError}
@@ -157,7 +167,7 @@ export default function ModalResetPwd({ isModal, setIsModal }) {
                   <button
                     className="btn btn-orange-color border-0"
                     type="submit"
-                    disabled={isSubmitDisabled}
+                    // disabled={isSubmitDisabled}
                   >
                     Submit
                   </button>
