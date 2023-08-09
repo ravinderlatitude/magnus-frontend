@@ -83,6 +83,8 @@ const TestDetails = () => {
   const [loading, setLoading] = useState(false);
   const [paygUrl, setPaygUrl] = useState({ data: [] });
   const [isLoading, setIsLoading] = useState(false);
+  const [couponCode, setcouponCode] = useState("");
+  const [isValid, setIsValid] = useState("");
   const [error, setError] = useState(false);
   const auth = useSelector((state) => state.auth.user);
   const router = useRouter();
@@ -97,6 +99,21 @@ const TestDetails = () => {
     setIsModal(false);
     // console.log(isModalForgot, "modal");
   };
+
+  const handleValidateCoupon = async (event) => {
+    const { value } = event.target;
+    setcouponCode(value);
+
+    if (value == "ABC") {
+      setIsValid("Coupon code Applied");
+    } else {
+      setIsValid("Coupon code Invalide");
+    }
+    if (value.length < 1) {
+      setIsValid("");
+    }
+  };
+
   useEffect(() => {
     (async () => {
       try {
@@ -122,7 +139,9 @@ const TestDetails = () => {
     setIsLoading(true);
 
     try {
-      let paygUrl = await PaymentPayGAPI({ test_id: testListDetails.data.id });
+      let paygUrl = await PaymentPayGAPI({
+        test_id: testListDetails.data.id,
+      });
       // console.log("paygUrl====>", paygUrl);
       setPaygUrl(paygUrl);
 
@@ -192,7 +211,6 @@ const TestDetails = () => {
               </Link> */}
                 <div
                   style={{
-                    fontSize: "22px;",
                     marginBottom: "10px",
                     color: "#0a6eb0",
                     fontWeight: "bold",
@@ -212,6 +230,18 @@ const TestDetails = () => {
                   {testFeestruncatedNumber} Rs
                 </div>
 
+                <div>
+                  <form>
+                    <input
+                      type="text"
+                      value={couponCode}
+                      placeholder="Enter Coupon Code"
+                      className="coupon-code"
+                      onChange={handleValidateCoupon}
+                    />
+                    {isValid}
+                  </form>
+                </div>
                 {
                   !auth?.data ? (
                     <div className="btn-block">

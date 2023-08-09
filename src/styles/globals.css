@@ -958,3 +958,13 @@ h6.text-blue {
 .font-red {
   color: red;
 }
+
+.coupon-code {
+  outline: none;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  width: 320px;
+}
