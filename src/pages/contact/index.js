@@ -17,74 +17,79 @@ import { ContacUsAPI } from "../../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
+import { contactFormValidation } from "@/utils/form";
+import { ThreeDots } from "react-loader-spinner";
 
 const Contact = () => {
   const dispatch = useDispatch();
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [contactnumber, setIsContactNumber] = useState(null);
-  const [textmessage, setIsTextMessage] = useState(null);
-  const [emailError, setEmailError] = useState("");
-  const [error, setError] = useState(null);
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    contact_number: "",
+    contact_message: "",
+  });
+  const [errors, setErrors] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    contact_number: "",
+    contact_message: "",
+  });
 
-  const contact = useSelector((state) => state.contact.user);
+  const { user: contact, status } = useSelector((state) => state.contact);
   const authError = useSelector((state) => state.contact.error);
+  const auth = useSelector((state) => state.auth.user);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setErrors({
+      ...errors,
+      [name]: contactFormValidation(name, value),
+    });
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(
-      ContacUsAPI({
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        contact_number: contactnumber,
-        contact_message: textmessage,
-      })
-    );
-    setError(contact?.message);
-    // console.log("message======>", contact);
-  };
-
-  const handleFirstName = (event) => {
-    const { value } = event.target;
-    setFirstName(value);
-  };
-
-  const handleLastName = (event) => {
-    const { value } = event.target;
-    setLastName(value);
-  };
-
-  const handleContactChange = (event) => {
-    const { value } = event.target;
-    setIsContactNumber(value);
-  };
-
-  const handeTextAreaChange = (event) => {
-    const { value } = event.target;
-    setIsTextMessage(value);
-  };
-
-  const handleEmailChange = (event) => {
-    const { value } = event.target;
-    setEmail(value);
-
-    // email validation
-    const emailRegex = /^[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(value)) {
-      setEmailError("Invalid email address");
-    } else {
-      setEmailError("");
+    let validationErrors = {};
+    Object.keys(formData).forEach((name) => {
+      const error = contactFormValidation(name, formData[name]);
+      if (error && error.length > 0) {
+        validationErrors[name] = error;
+      }
+    });
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
     }
-    if (value.length < 1) {
-      setEmailError("");
+    if (Object.keys(validationErrors).length === 0) {
+      dispatch(ContacUsAPI(formData));
     }
   };
 
   useEffect(() => {
     console.log(contact);
-  }, [contact]);
+    if (contact.status == 200) {
+      if (auth?.data) {
+        setFormData({
+          first_name: auth.data.first_name,
+          last_name: auth.data.last_name,
+          email: auth.data.email,
+          contact_number: "",
+          contact_message: "",
+        });
+      } else {
+        setFormData({
+          first_name: "",
+          last_name: "",
+          email: "",
+          contact_number: "",
+          contact_message: "",
+        });
+      }
+    }
+  }, [contact, auth]);
 
   return (
     <div>
@@ -108,45 +113,66 @@ const Contact = () => {
                   <div class="col">
                     <input
                       type="text"
-                      value={firstName}
+                      name="first_name"
+                      value={formData.first_name}
                       class="form-control"
                       placeholder="First name"
-                      onChange={handleFirstName}
+                      onChange={handleChange}
                     />
+                    {errors?.first_name && (
+                      <span className="error-message font-red">
+                        {errors?.first_name}
+                      </span>
+                    )}
                   </div>
                   <div class="col">
                     <input
                       type="text"
-                      value={lastName}
+                      name="last_name"
+                      value={formData.last_name}
                       class="form-control"
                       placeholder="Last name"
-                      onChange={handleLastName}
+                      onChange={handleChange}
                     />
+                    {errors?.last_name && (
+                      <span className="error-message font-red">
+                        {errors?.last_name}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div class="row mb-2">
                   <div class="col">
                     <input
                       type="text"
-                      value={email}
+                      name="email"
+                      value={formData.email}
                       class="form-control"
                       placeholder="Email"
-                      onChange={handleEmailChange}
+                      onChange={handleChange}
                     />
+                    {errors?.email && (
+                      <span className="error-message font-red">
+                        {errors?.email}
+                      </span>
+                    )}
                   </div>
-                  {emailError && (
-                    <span className="errorMessage">{emailError}</span>
-                  )}
                 </div>
                 <div class="row mb-2">
                   <div class="col">
                     <input
                       type="text"
-                      value={contactnumber}
+                      name="contact_number"
+                      value={formData.contact_number}
                       class="form-control"
                       placeholder="Contact Number"
-                      onChange={handleContactChange}
+                      onChange={handleChange}
                     />
+                    {errors?.contact_number && (
+                      <span className="error-message font-red">
+                        {errors?.contact_number}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div class="row mb-2">
@@ -154,17 +180,32 @@ const Contact = () => {
                     <textarea
                       type="text"
                       rows={4}
-                      value={textmessage}
+                      name={"contact_message"}
+                      value={formData.contact_message}
                       class="form-control"
                       placeholder="Message"
-                      onChange={handeTextAreaChange}
+                      onChange={handleChange}
                     ></textarea>
+                    {errors?.contact_message && (
+                      <span className="error-message font-red">
+                        {errors?.contact_message}
+                      </span>
+                    )}
                   </div>
                 </div>
-                <span className="errorMessage">{contact?.message}</span>
+                {/* <span className="errorMessage">{contact?.message}</span> */}
                 <div class="row mb-2">
                   <div class="col">
-                    <button className="btn btn-orange-color">Submit</button>
+                    <button
+                      className="btn btn-orange-color"
+                      disabled={status == "loading"}
+                    >
+                      {status == "loading" ? (
+                        <ThreeDots height="24" width="56" color="#FFF" />
+                      ) : (
+                        "Submit"
+                      )}
+                    </button>
                   </div>
                 </div>
               </form>

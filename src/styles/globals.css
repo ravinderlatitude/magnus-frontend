@@ -633,7 +633,7 @@ h6.text-blue {
   color: var(--colorDarkBlue) !important;
 }
 .error-message {
-  font-size: 14px;
+  font-size: 12px;
   position: relative;
   top: -10px;
   color: #fff;
@@ -667,6 +667,7 @@ h6.text-blue {
 }
 .contactuspage .form-control {
   font-size: 14px;
+  margin-bottom: 10px;
 }
 .username {
   font-weight: bold;
@@ -819,6 +820,13 @@ h6.text-blue {
   .btn-block button {
     font-size: 12px;
   }
+  .btn-orange-color:hover{
+    background-color: var(--colorOrange);
+  }
+  .register-loading{ width: 48px; height: 18px; align-items: center;}
+  .otp-loading{ width: 63px; height: 18px; align-items: center;}
+  .login-loading{ width: 32px; height: 18px; align-items: center;}
+  .forgotpassword-loading{ width: 42px; height: 18px; align-items: center;}
   .header-main .btn-block {
     right: 55px;
     top: 21px;
@@ -964,7 +972,15 @@ h6.text-blue {
   border-radius: 8px;
   border: 1px solid #ccc;
   padding: 10px;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   font-size: 14px;
-  width: 320px;
+  width: 220px;
+}
+.coupon-error{
+  font-size: 14px;
+  color: red;
+}
+.coupon-success{
+  font-size: 14px;
+  color: green;
 }

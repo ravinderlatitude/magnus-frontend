@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import ICclose from "../assets/images/ICclose.svg";
 import useOutsideClick from "../hooks/useOutsideClick";
 
@@ -10,6 +9,9 @@ import ModalLogin from "./../components/ModalLogin";
 import ModalOtp from "./ModalOtp";
 import { useRouter } from "next/router";
 import { setCredentials } from "@/redux/authRegisterSlice";
+import { Input } from "./Input";
+import { registerValidation } from "@/utils/form";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function ModalRegister({ isModal, setIsModal }) {
   const modelRef = useRef(null);
@@ -35,94 +37,59 @@ export default function ModalRegister({ isModal, setIsModal }) {
   useOutsideClick(modelRef, modalClose);
 
   const dispatch = useDispatch();
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [confirmPassword, setConfirmPassword] = useState(null);
-  const [error, setError] = useState(null);
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  const authRegister = useSelector((state) => state.authRegister.user);
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+  });
+  const [errors, setErrors] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+  });
+  const { user: authRegister, status } = useSelector(
+    (state) => state.authRegister
+  );
   const router = useRouter();
   const { id } = router.query;
 
   // const authRegisterstatus = useSelector((state) => state.authRegister.status);
 
-  const handleFirstName = (event) => {
-    const { value } = event.target;
-    setFirstName(value);
-  };
-
-  const handleLastName = (event) => {
-    const { value } = event.target;
-    setLastName(value);
-  };
-  const handleEmailChange = (event) => {
-    const { value } = event.target;
-    setEmail(value);
-
-    // email validation
-    const emailRegex = /^[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(value)) {
-      setEmailError("Invalid email address");
-    } else {
-      setEmailError("");
-    }
-    if (value.length < 1) {
-      setEmailError("");
-    }
-  };
-
-  const handlePasswordChange = (event) => {
-    const { value } = event.target;
-    setPassword(value);
-
-    // password validation
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,191}$/;
-    if (!passwordRegex.test(value) && value.length > 0) {
-      setPasswordError(
-        "Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character."
-      );
-    } else {
-      setPasswordError("");
-    }
-  };
-
-  const handleConfirmPasswordChange = (event) => {
-    const { value } = event.target;
-    setConfirmPassword(value);
-    if (password !== value) {
-      setConfirmPasswordError("Passwords do not match");
-    } else {
-      setConfirmPasswordError("");
-    }
-  };
-
-  const validatePassword = () => {
-    if (password !== confirmPassword) {
-      return "Passwords do not match";
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setErrors({
+      ...errors,
+      [name]:
+        name == "confirm_password"
+          ? registerValidation(name, value, formData.password)
+          : registerValidation(name, value),
+    });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(
-      rgisterAPI({
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        password: password,
-        confirm_password: confirmPassword,
-      })
-    );
-
-    // validatePassword();
-    setError(authRegister?.message);
-
-    // setEmail(e.target.value);
+    let validationErrors = {};
+    Object.keys(formData).forEach((name) => {
+      const error =
+        name == "confirm_password"
+          ? registerValidation(name, formData[name], formData.password)
+          : registerValidation(name, formData[name]);
+      if (error && error.length > 0) {
+        validationErrors[name] = error;
+      }
+    });
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    if (Object.keys(validationErrors).length === 0) {
+      dispatch(rgisterAPI(formData));
+    }
   };
 
   useEffect(() => {
@@ -142,8 +109,6 @@ export default function ModalRegister({ isModal, setIsModal }) {
       }
     }
   }, [authRegister]);
-  const isSubmitDisabled =
-    password === "" || confirmPassword === "" || validatePassword();
 
   return (
     <div>
@@ -162,80 +127,57 @@ export default function ModalRegister({ isModal, setIsModal }) {
               <form onSubmit={handleSubmit}>
                 <div class="row">
                   <div className="col-12 col-md-6 pe-md-1">
-                    <input
+                    <Input
                       type="name"
-                      value={firstName}
+                      name={"first_name"}
+                      value={formData.first_name}
                       placeholder="First name"
-                      className="form-control"
-                      onChange={handleFirstName}
+                      onChange={handleChange}
+                      error={errors?.first_name}
                     />
-                    {error && (
-                      <span className="">{authRegister?.first_name}</span>
-                    )}
                   </div>
                   <div className="col-12 col-md-6 ps-md-1">
-                    <input
+                    <Input
                       type="name"
-                      value={lastName}
+                      name={"last_name"}
+                      value={formData.last_name}
                       placeholder="Last name"
-                      className="form-control"
-                      onChange={handleLastName}
+                      onChange={handleChange}
+                      error={errors?.last_name}
                     />
-                    {error && (
-                      <span className="">{authRegister?.last_name}</span>
-                    )}
                   </div>
                 </div>
 
                 <div>
-                  <input
+                  <Input
                     type="name"
-                    value={email}
+                    name={"email"}
+                    value={formData.email}
                     placeholder="Email"
-                    className="form-control"
-                    onChange={handleEmailChange}
+                    onChange={handleChange}
+                    error={errors?.email}
                   />
                 </div>
-                {emailError && (
-                  <span className="error-message">{emailError}</span>
-                )}
                 <div>
-                  <input
+                  <Input
                     type="password"
-                    value={password}
+                    name={"password"}
+                    value={formData.password}
                     placeholder="Password"
-                    className="form-control"
-                    onChange={handlePasswordChange}
+                    onChange={handleChange}
+                    error={errors?.password}
                   />
-                  {passwordError && (
-                    <span className="error-message">{passwordError}</span>
-                  )}
                 </div>
                 <div>
-                  <input
+                  <Input
                     type="password"
-                    value={confirmPassword}
+                    name={"confirm_password"}
+                    value={formData.confirm_password}
                     placeholder="Confirm Password"
-                    className="form-control"
-                    onChange={handleConfirmPasswordChange}
+                    onChange={handleChange}
+                    error={errors?.confirm_password}
                   />
-                  {confirmPasswordError && (
-                    <span className="error-message">
-                      {confirmPasswordError}
-                    </span>
-                  )}
-                  {error && (
-                    <span className="error-message">
-                      {authRegister?.confirmPasswordError}
-                    </span>
-                  )}
-                  {error && (
-                    <span className="error-message">
-                      {authRegister?.confirm_password}
-                    </span>
-                  )}
                 </div>
-                <span className="error-message">{authRegister?.message}</span>
                 <div className="w-100 text-end">
                   <button
                     type="button"
@@ -249,9 +191,18 @@ export default function ModalRegister({ isModal, setIsModal }) {
                   <button
                     className="btn btn-orange-color border-0"
                     type="submit"
-                    // disabled={isSubmitDisabled}
+                    disabled={status == "loading"}
                   >
-                    Register
+                    {status == "loading" ? (
+                      <ThreeDots
+                        height="24"
+                        width="65"
+                        color="#FFF"
+                        wrapperClass="register-loading"
+                      />
+                    ) : (
+                      "Register"
+                    )}
                   </button>
                 </div>
               </form>

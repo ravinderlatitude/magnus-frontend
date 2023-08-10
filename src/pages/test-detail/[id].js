@@ -10,6 +10,7 @@ import {
   getTetsListDetail,
   PaymentPayGAPI,
   getTetsLists,
+  ApplyCouponCodeAPI,
 } from "../../../apiServices/services";
 import { useRouter } from "next/router";
 import ImgNotFound from "../../assets/images/ImgNotFound.svg";
@@ -17,6 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useRazorpay from "react-razorpay";
 import ModalRegister from "../../components/ModalRegister";
+import { ThreeDots } from "react-loader-spinner";
+import { toast } from "react-toastify";
 
 // export async function generateStaticParams() {
 //   const posts = await getTetsLists();
@@ -84,6 +87,7 @@ const TestDetails = () => {
   const [paygUrl, setPaygUrl] = useState({ data: [] });
   const [isLoading, setIsLoading] = useState(false);
   const [couponCode, setcouponCode] = useState("");
+  const [isCLoading, setIsCLoading] = useState(false);
   const [isValid, setIsValid] = useState("");
   const [error, setError] = useState(false);
   const auth = useSelector((state) => state.auth.user);
@@ -101,16 +105,22 @@ const TestDetails = () => {
   };
 
   const handleValidateCoupon = async (event) => {
-    const { value } = event.target;
-    setcouponCode(value);
-
-    if (value == "ABC") {
-      setIsValid("Coupon code Applied");
-    } else {
-      setIsValid("Coupon code Invalide");
-    }
-    if (value.length < 1) {
-      setIsValid("");
+    try {
+      const { value } = event.target;
+      setcouponCode(value);
+      if (value.trim().length == 5) {
+        setIsCLoading(true);
+        const couponRes = await ApplyCouponCodeAPI({ coupon_code: value });
+        setIsCLoading(false);
+        setIsValid(couponRes.message);
+        if (couponRes.status != 200) {
+          setError(true);
+        } else {
+          setError(false);
+        }
+      }
+    } catch (err) {
+      setIsCLoading(false);
     }
   };
 
@@ -137,21 +147,22 @@ const TestDetails = () => {
 
   const handlePayNow = async () => {
     setIsLoading(true);
-
     try {
       let paygUrl = await PaymentPayGAPI({
         test_id: testListDetails.data.id,
+        coupon_code: couponCode,
       });
-      // console.log("paygUrl====>", paygUrl);
-      setPaygUrl(paygUrl);
-
       if (paygUrl.status == 200) {
+        localStorage.setItem("PaygData", JSON.stringify(paygUrl));
         window.location.assign(paygUrl?.data.payment_url);
+      } else {
+        setIsLoading(false);
+        toast.error(paygUrl.message);
       }
     } catch (ee) {
+      setIsLoading(false);
       console.error(ee.data);
     }
-    setError(paygUrl?.message);
   };
 
   const testFees = testListDetails.data?.test_price;
@@ -231,16 +242,21 @@ const TestDetails = () => {
                 </div>
 
                 <div>
-                  <form>
-                    <input
-                      type="text"
-                      value={couponCode}
-                      placeholder="Enter Coupon Code"
-                      className="coupon-code"
-                      onChange={handleValidateCoupon}
-                    />
-                    {isValid}
-                  </form>
+                  <input
+                    type="text"
+                    value={couponCode}
+                    placeholder="Enter Coupon Code"
+                    className="coupon-code"
+                    maxLength={5}
+                    onChange={handleValidateCoupon}
+                  />
+                  {isCLoading ? (
+                    <ThreeDots height="24" width="67" color="#ea8127" />
+                  ) : (
+                    <div className={error ? "coupon-error" : "coupon-success"}>
+                      {isValid}
+                    </div>
+                  )}
                 </div>
                 {
                   !auth?.data ? (
@@ -257,19 +273,18 @@ const TestDetails = () => {
                      *! Commented Buy Test button code uncomment one payment methode integrated
                      **/
 
-                    <>
-                      <button
-                        className="btn btn-orange-color"
-                        onClick={handlePayNow}
-                      >
-                        Buy Now
-                      </button>
-                      {paygUrl.status !== 200 && (
-                        <span className="errorMessage font-red mt-4">
-                          {paygUrl?.message}
-                        </span>
+                    <button
+                      className="btn btn-orange-color"
+                      style={{ marginTop: 15 }}
+                      onClick={handlePayNow}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <ThreeDots height="24" width="67" color="#FFF" />
+                      ) : (
+                        "Buy Now"
                       )}
-                    </>
+                    </button>
                   )
                   // null
                 }

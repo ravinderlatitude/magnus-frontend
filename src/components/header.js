@@ -16,12 +16,13 @@ import { setCredentials } from "@/redux/authSlice";
 import { setCredentials as setCredentialsVerifyUser } from "@/redux/verifyUserSlice";
 import ModalOtp from "./ModalOtp";
 import ModalSuccess from "./ModalSuccess";
+import { resetResetPwd } from "@/redux/authResetPwdSlice";
 
 export default function Header({ href, children }) {
   const dropdown = useRef(null);
 
   const router = useRouter();
-  const { resetpassword, login, verifiedregister, id } = router.query;
+  const { resetkey, resetcode, login, verifiedregister, id } = router.query;
 
   // menu toggle page for menu
   const [isActive, setIsActive] = useState(false);
@@ -63,6 +64,7 @@ export default function Header({ href, children }) {
   const error = useSelector((state) => state.testList.error);
   const authRegister = useSelector((state) => state.authRegister.user);
   const verifyUser = useSelector((state) => state.verifyUser.user);
+  const authResetPwd = useSelector((state) => state.authResetPwd.user);
 
   useEffect(() => {
     // console.log("authRegister", authRegister);
@@ -72,6 +74,13 @@ export default function Header({ href, children }) {
       }, 1000 * 2);
     }
   }, [authRegister]);
+
+  useEffect(() => {
+    if (authResetPwd && authResetPwd.status == 200) {
+      setIsModal((current) => !current);
+      dispatch(resetResetPwd());
+    }
+  }, [authResetPwd]);
 
   useEffect(async () => {
     const LPaygData = localStorage.getItem("PaygData");
@@ -126,7 +135,7 @@ export default function Header({ href, children }) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (resetpassword) {
+    if (resetkey) {
       setIsModalResetPwd(true);
     }
     if (login) {
@@ -135,7 +144,7 @@ export default function Header({ href, children }) {
     if (verifiedregister) {
       setIsModalVerifyuser(true);
     }
-  }, [resetpassword, login, verifiedregister]);
+  }, [resetkey, login, verifiedregister]);
 
   const handleLogout = (e) => {
     localStorage.removeItem("userData");
@@ -217,18 +226,22 @@ export default function Header({ href, children }) {
               <li
                 className={"nav-item dropdown " + (isSubmenu ? "active" : "")}
                 onMouseLeave={() => setIsSubmenu(false)}
-                onClick={() => setIsToggleMenu(false)}
               >
                 <span
                   className="nav-link dropdown-toggle"
                   onClick={handleClickSubMenu}
-                  onMouseOver={() => setIsSubmenu(true)}
+                  onMouseOver={() =>
+                    window.innerWidth > 900 && setIsSubmenu(true)
+                  }
                 >
                   Self Assessment
                 </span>
                 <ul className="dropdown-menu" onClick={handleClickToggleMenu}>
                   {testList?.map((data, index) => (
-                    <li key={index.toString()}>
+                    <li
+                      key={index.toString()}
+                      onClick={() => setIsSubmenu(false)}
+                    >
                       {/* {console.log("LI data=====", data)} */}
                       {/* <ActiveLink href="/test-detail" className="dropdown-item"> */}
                       <ActiveLink
