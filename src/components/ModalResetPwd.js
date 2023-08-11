@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import ICclose from "../assets/images/ICclose.svg";
-import useOutsideClick from "../hooks/useOutsideClick";
 
 import { ResetPwdAPI } from "../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { Input } from "./Input";
+import { resetPasswordValidation } from "@/utils/form";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function ModalResetPwd({ isModal, setIsModal }) {
   // for Modal
@@ -15,87 +16,90 @@ export default function ModalResetPwd({ isModal, setIsModal }) {
   };
 
   const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    otp: "",
+    password: "",
+    confirm_password: "",
+  });
+  const [errors, setErrors] = useState({
+    otp: "",
+    password: "",
+    confirm_password: "",
+  });
 
-  const [otp, setOtp] = useState(null);
-  const [verificationcode, setVerificationcode] = useState(null);
-  const [otpError, setOtpError] = useState("");
-  const [password, setPassword] = useState(null);
-  const [confirmPassword, setConfirmPassword] = useState(null);
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [error, setError] = useState(null);
+  const { user: authResetPwd, status } = useSelector(
+    (state) => state.authResetPwd
+  );
 
-  const authResetPwd = useSelector((state) => state.authResetPwd.user);
-
-  // console.log("authResetPwd==============", authResetPwd);
   const router = useRouter();
-  const { resetpassword } = router.query;
-  // console.log(resetpassword);
+  const { resetkey, resetcode } = router.query;
 
-  const handleOTPChange = (event) => {
-    const { value } = event.target;
-    setOtp(value);
-
-    // OTP validation
-    const otpRegex = /[0-9a-zA-Z]{6,}/;
-    if (!otpRegex.test(value)) {
-      setOtpError("OTP is an Invalid");
-    } else {
-      setOtpError("");
+  useEffect(() => {
+    if (isModal) {
+      setFormData({
+        otp: "",
+        password: "",
+        confirm_password: "",
+      });
+      setErrors({
+        otp: "",
+        password: "",
+        confirm_password: "",
+      });
     }
+  }, [isModal]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setErrors({
+      ...errors,
+      [name]:
+        name == "confirm_password"
+          ? resetPasswordValidation(name, value, formData.password)
+          : resetPasswordValidation(name, value),
+    });
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handlePasswordChange = (event) => {
-    const { value } = event.target;
-    setPassword(value);
-
-    // password validation
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,191}$/;
-    if (!passwordRegex.test(value)) {
-      setPasswordError(
-        "Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character."
-      );
-    } else {
-      setPasswordError("");
+  useEffect(() => {
+    if (resetcode) {
+      handleChange({ target: { name: "otp", value: resetcode } });
     }
-  };
+  }, [resetcode]);
 
-  const handleConfirmPasswordChange = (event) => {
-    const { value } = event.target;
-    setConfirmPassword(value);
-    if (password !== value) {
-      setConfirmPasswordError("Passwords do not match");
-    } else {
-      setConfirmPasswordError("");
+  useEffect(() => {
+    if (authResetPwd?.status == 200) {
+      modalClick();
+      router.push("/");
     }
-  };
+  }, [authResetPwd]);
 
-  const validatePassword = () => {
-    if (password !== confirmPassword) {
-      return "Passwords not match";
-    }
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(
-      ResetPwdAPI({
-        verify_key: resetpassword,
-        verification_code: otp,
-        password: password,
-      })
-    );
-
-    // validatePassword();
-    setError(authResetPwd?.message);
-
-    // setEmail(e.target.value);
+    let validationErrors = {};
+    Object.keys(formData).forEach((name) => {
+      const error =
+        name == "confirm_password"
+          ? resetPasswordValidation(name, formData[name], formData.password)
+          : resetPasswordValidation(name, formData[name]);
+      if (error && error.length > 0) {
+        validationErrors[name] = error;
+      }
+    });
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    if (Object.keys(validationErrors).length === 0) {
+      dispatch(
+        ResetPwdAPI({
+          verify_key: resetkey,
+          verification_code: formData.otp,
+          password: formData.password,
+        })
+      );
+    }
   };
-  useEffect(() => {
-    console.log(authResetPwd);
-  }, [authResetPwd]);
-  const isSubmitDisabled =
-    password === "" || confirmPassword === "" || validatePassword();
 
   return (
     <div>
@@ -113,63 +117,53 @@ export default function ModalResetPwd({ isModal, setIsModal }) {
               <h2>Reset Password</h2>
               <form onSubmit={handleSubmit}>
                 <div>
-                  <input
-                    type="text"
-                    value={otp}
+                  <Input
+                    type="name"
+                    name={"otp"}
+                    value={formData.otp}
                     placeholder="Enter OTP"
-                    className="form-control"
-                    onChange={handleOTPChange}
+                    onChange={handleChange}
+                    maxLength={6}
+                    error={errors?.otp}
                   />
-                  {otpError && (
-                    <span className="errorMessage">
-                      {authResetPwd?.setOtpError}
-                    </span>
-                  )}
                 </div>
                 <div>
-                  <input
+                  <Input
                     type="password"
-                    value={password}
+                    name={"password"}
+                    value={formData.password}
                     placeholder="New Password"
-                    className="form-control"
-                    onChange={handlePasswordChange}
+                    onChange={handleChange}
+                    maxLength={50}
+                    error={errors?.password}
                   />
-                  {passwordError && (
-                    <span className="errorMessage">{passwordError}</span>
-                  )}
                 </div>
                 <div>
-                  <input
+                  <Input
                     type="password"
-                    value={confirmPassword}
+                    name={"confirm_password"}
+                    value={formData.confirm_password}
                     placeholder="Confirm New Password"
-                    className="form-control"
-                    onChange={handleConfirmPasswordChange}
+                    onChange={handleChange}
+                    maxLength={50}
+                    error={errors?.confirm_password}
                   />
-                  {confirmPasswordError && (
-                    <span className="error-message">
-                      {confirmPasswordError}
-                    </span>
-                  )}
-                  {error && (
-                    <span className="errorMessage">
-                      {authResetPwd?.confirmPasswordError}
-                    </span>
-                  )}
-                  {error && (
-                    <span className="errorMessage">
-                      {authResetPwd?.confirm_password}
-                    </span>
-                  )}
                 </div>
-                <span className="errorMessage">{authResetPwd?.message}</span>
                 <div className="">
                   <button
                     className="btn btn-orange-color border-0"
-                    type="submit"
-                    // disabled={isSubmitDisabled}
+                    disabled={status == "loading"}
                   >
-                    Submit
+                    {status == "loading" ? (
+                      <ThreeDots
+                        height="24"
+                        width="56"
+                        color="#FFF"
+                        wrapperClass="forgotpassword-loading"
+                      />
+                    ) : (
+                      "Submit"
+                    )}
                   </button>
                 </div>
               </form>

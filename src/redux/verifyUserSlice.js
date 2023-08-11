@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { VerifyUserAPI } from "../../apiServices/services";
+import { toast } from "react-toastify";
 
 const verifyUserSlice = createSlice({
   name: "verifyUser",
@@ -26,6 +27,12 @@ const verifyUserSlice = createSlice({
     });
     builder.addCase(VerifyUserAPI.fulfilled, (state, action) => {
       // console.log(action);
+      if (action.payload.status != 200) {
+        toast.error(action.payload.message);
+      } else {
+        toast.success(action.payload.message);
+        localStorage.setItem("userData", JSON.stringify(action.payload));
+      }
       state.status = "succeeded";
       state.user = action.payload;
       return state;

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ResetPwdAPI } from "../../apiServices/services";
+import { toast } from "react-toastify";
 
 const authResetPwdSlice = createSlice({
   name: "authResetPwd",
@@ -16,6 +17,13 @@ const authResetPwdSlice = createSlice({
     setLogout: (state, { payload }) => {
       state.user = payload;
     },
+    resetResetPwd: (state) => {
+      state = {
+        user: null,
+        status: "idle",
+        error: null,
+      };
+    },
   },
   extraReducers: (builder) => {
     // Handle login action
@@ -26,6 +34,11 @@ const authResetPwdSlice = createSlice({
     });
     builder.addCase(ResetPwdAPI.fulfilled, (state, action) => {
       // console.log(action);
+      if (action.payload.status != 200) {
+        toast.error(action.payload.message);
+      } else {
+        toast.success(action.payload.message);
+      }
       state.status = "succeeded";
       state.user = action.payload;
       return state;
@@ -38,6 +51,7 @@ const authResetPwdSlice = createSlice({
   },
 });
 
-export const { setCredentials, setLogout } = authResetPwdSlice.actions;
+export const { setCredentials, setLogout, resetResetPwd } =
+  authResetPwdSlice.actions;
 
 export default authResetPwdSlice.reducer;

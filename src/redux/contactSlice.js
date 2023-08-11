@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ContacUsAPI } from "../../apiServices/services";
+import { toast } from "react-toastify";
 export const contactSlice = createSlice({
   name: "contact",
   initialState: {
@@ -18,6 +19,11 @@ export const contactSlice = createSlice({
     });
     builder.addCase(ContacUsAPI.fulfilled, (state, action) => {
       // console.log(action);
+      if (action.payload.status != 200) {
+        toast.error(action.payload.message);
+      } else {
+        toast.success(action.payload.message);
+      }
       state.status = "succeeded";
       state.user = action.payload;
       return state;

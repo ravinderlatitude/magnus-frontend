@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { rgisterAPI } from "../../apiServices/services";
+import { toast } from "react-toastify";
 
 const authRegisterSlice = createSlice({
   name: "authRegister",
@@ -25,12 +26,17 @@ const authRegisterSlice = createSlice({
       return state;
     });
     builder.addCase(rgisterAPI.fulfilled, (state, action) => {
-      // console.log(action);
+      if (action.payload.status != 200) {
+        toast.error(action.payload.message);
+      } else {
+        toast.success(action.payload.message);
+      }
       state.status = "succeeded";
       state.user = action.payload;
       return state;
     });
     builder.addCase(rgisterAPI.rejected, (state, action) => {
+      toast.error(action.error.message);
       state.status = "failed";
       state.error = action.error.message;
       return state;

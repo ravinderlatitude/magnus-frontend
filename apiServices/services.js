@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 // let headers = "";
 
@@ -38,6 +39,19 @@ export const axiosClient = axios.create({
   ],
 });
 
+// axiosClient.interceptors.response.use(
+//   (response) => {
+//     // console.log(response);
+//     if (response.data.status != 200) {
+//       toast.error(response.data.message);
+//     }
+//     return response;
+//   },
+//   (error) => {
+//     return Promise.reject(error.message);
+//   }
+// );
+
 // Get Faq List
 export const getFaqList = async () => {
   return await axiosClient.get("/faq-list");
@@ -70,7 +84,6 @@ export const getTetsLists = async () => {
 
 export const loginAPI = createAsyncThunk("auth/login", async (body) => {
   const response = await axiosClient.post("/login", body);
-  localStorage.setItem("userData", JSON.stringify(response));
   return response;
 });
 
@@ -79,7 +92,6 @@ export const VerifyUserAPI = createAsyncThunk(
   "auth/verify-user",
   async (body) => {
     const response = await axiosClient.post("/verify-user", body);
-    localStorage.setItem("userData", JSON.stringify(response));
     return response;
   }
 );
@@ -132,11 +144,15 @@ export const PaymentAPI = async (body) => {
 
 export const PaymentPayGAPI = async (body) => {
   const response = await axiosClient.post("/payg-payment", body);
-  localStorage.setItem("PaygData", JSON.stringify(response));
   return response;
 };
 
 export const PaymentDetailPayGAPI = async (body) => {
   const response = await axiosClient.post("/payg-detail", body);
+  return response;
+};
+
+export const ApplyCouponCodeAPI = async (body) => {
+  const response = await axiosClient.post("/apply-coupon", body);
   return response;
 };
