@@ -19,6 +19,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { contactFormValidation } from "@/utils/form";
 import { ThreeDots } from "react-loader-spinner";
+import Head from "next/head";
 
 const Contact = () => {
   const dispatch = useDispatch();
@@ -70,7 +71,7 @@ const Contact = () => {
 
   useEffect(() => {
     console.log(contact);
-    if (contact.status == 200) {
+    if (contact?.status == 200) {
       if (auth?.data) {
         setFormData({
           first_name: auth.data.first_name,
@@ -93,6 +94,9 @@ const Contact = () => {
 
   return (
     <div>
+      <Head>
+        <title>Contact - Latitude Magnus</title>
+      </Head>
       <Banner title={"Contact"} />
       <div className="about-block contactuspage">
         <div className="container">
@@ -118,6 +122,7 @@ const Contact = () => {
                       class="form-control"
                       placeholder="First name"
                       onChange={handleChange}
+                      maxLength={50}
                     />
                     {errors?.first_name && (
                       <span className="error-message font-red">
@@ -133,6 +138,7 @@ const Contact = () => {
                       class="form-control"
                       placeholder="Last name"
                       onChange={handleChange}
+                      maxLength={50}
                     />
                     {errors?.last_name && (
                       <span className="error-message font-red">
@@ -150,6 +156,7 @@ const Contact = () => {
                       class="form-control"
                       placeholder="Email"
                       onChange={handleChange}
+                      maxLength={50}
                     />
                     {errors?.email && (
                       <span className="error-message font-red">
@@ -167,6 +174,7 @@ const Contact = () => {
                       class="form-control"
                       placeholder="Contact Number"
                       onChange={handleChange}
+                      maxLength={13}
                     />
                     {errors?.contact_number && (
                       <span className="error-message font-red">
@@ -185,6 +193,7 @@ const Contact = () => {
                       class="form-control"
                       placeholder="Message"
                       onChange={handleChange}
+                      maxLength={500}
                     ></textarea>
                     {errors?.contact_message && (
                       <span className="error-message font-red">

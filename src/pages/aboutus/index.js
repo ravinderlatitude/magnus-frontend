@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import Head from "next/head";
 
 import AboutImg from "../../assets/images/AboutImg.png";
 import Banner from "../../components/banner";
@@ -12,7 +14,6 @@ import ICChoose from "../../assets/images/ICChoose.svg";
 import ICPay from "../../assets/images/ICPay.svg";
 
 import Testimonials from "@/components/Testimonials";
-import { useSelector } from "react-redux";
 
 // import LOGO from "../assets/images/logo.svg";
 const Aboutus = () => {
@@ -21,6 +22,9 @@ const Aboutus = () => {
 
   return (
     <div>
+      <Head>
+        <title>About Us - Latitude Magnus</title>
+      </Head>
       <Banner title={"About Us"} />
       <div className="about-block">
         <div className="container">

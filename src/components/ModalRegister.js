@@ -58,6 +58,24 @@ export default function ModalRegister({ isModal, setIsModal }) {
   const { id } = router.query;
 
   // const authRegisterstatus = useSelector((state) => state.authRegister.status);
+  useEffect(() => {
+    if (isModal) {
+      setFormData({
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        confirm_password: "",
+      });
+      setErrors({
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        confirm_password: "",
+      });
+    }
+  }, [isModal]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -133,6 +151,7 @@ export default function ModalRegister({ isModal, setIsModal }) {
                       value={formData.first_name}
                       placeholder="First name"
                       onChange={handleChange}
+                      maxLength={50}
                       error={errors?.first_name}
                     />
                   </div>
@@ -143,6 +162,7 @@ export default function ModalRegister({ isModal, setIsModal }) {
                       value={formData.last_name}
                       placeholder="Last name"
                       onChange={handleChange}
+                      maxLength={50}
                       error={errors?.last_name}
                     />
                   </div>
@@ -155,6 +175,7 @@ export default function ModalRegister({ isModal, setIsModal }) {
                     value={formData.email}
                     placeholder="Email"
                     onChange={handleChange}
+                    maxLength={50}
                     error={errors?.email}
                   />
                 </div>
@@ -165,6 +186,7 @@ export default function ModalRegister({ isModal, setIsModal }) {
                     value={formData.password}
                     placeholder="Password"
                     onChange={handleChange}
+                    maxLength={50}
                     error={errors?.password}
                   />
                 </div>
@@ -175,6 +197,7 @@ export default function ModalRegister({ isModal, setIsModal }) {
                     value={formData.confirm_password}
                     placeholder="Confirm Password"
                     onChange={handleChange}
+                    maxLength={50}
                     error={errors?.confirm_password}
                   />
                 </div>

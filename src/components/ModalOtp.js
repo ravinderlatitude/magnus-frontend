@@ -27,6 +27,17 @@ export default function ModalOtp({ isModal, setIsModal }) {
   const router = useRouter();
   const { verifiedregister } = router.query;
 
+  useEffect(() => {
+    if (isModal) {
+      setFormData({
+        otp: "",
+      });
+      setErrors({
+        otp: "",
+      });
+    }
+  }, [isModal]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setErrors({

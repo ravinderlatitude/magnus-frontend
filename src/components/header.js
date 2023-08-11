@@ -228,7 +228,10 @@ export default function Header({ href, children }) {
                 onMouseLeave={() => setIsSubmenu(false)}
               >
                 <span
-                  className="nav-link dropdown-toggle"
+                  className={
+                    "nav-link dropdown-toggle " +
+                    (router.pathname == "/test-detail/[id]" ? "active" : "")
+                  }
                   onClick={handleClickSubMenu}
                   onMouseOver={() =>
                     window.innerWidth > 900 && setIsSubmenu(true)

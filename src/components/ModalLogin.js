@@ -48,6 +48,29 @@ export default function ModalLogin({ isModal, setIsModal }) {
     });
     setFFormData({ ...fformData, [name]: value });
   };
+  useEffect(() => {
+    if (isModal) {
+      setFormData({
+        email: "",
+        password: "",
+      });
+      setErrors({
+        email: "",
+        password: "",
+      });
+    }
+  }, [isModal]);
+
+  useEffect(() => {
+    if (isModalForgot) {
+      setFFormData({
+        email: "",
+      });
+      setFErrors({
+        email: "",
+      });
+    }
+  }, [isModalForgot]);
 
   // for Modal
   const modalOpen = (event) => {
@@ -147,6 +170,7 @@ export default function ModalLogin({ isModal, setIsModal }) {
                       value={formData.email}
                       placeholder="Email"
                       onChange={handleChange}
+                      maxLength={50}
                       error={errors?.email}
                     />
                   </div>
@@ -157,6 +181,7 @@ export default function ModalLogin({ isModal, setIsModal }) {
                       value={formData.password}
                       placeholder="Password"
                       onChange={handleChange}
+                      maxLength={50}
                       error={errors?.password}
                     />
                   </div>
@@ -206,6 +231,7 @@ export default function ModalLogin({ isModal, setIsModal }) {
                       value={fformData.email}
                       placeholder="Email"
                       onChange={fhandleChange}
+                      maxLength={50}
                       error={ferrors?.email}
                     />
                   </div>

@@ -20,6 +20,7 @@ import useRazorpay from "react-razorpay";
 import ModalRegister from "../../components/ModalRegister";
 import { ThreeDots } from "react-loader-spinner";
 import { toast } from "react-toastify";
+import Head from "next/head";
 
 // export async function generateStaticParams() {
 //   const posts = await getTetsLists();
@@ -88,7 +89,7 @@ const TestDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [couponCode, setcouponCode] = useState("");
   const [isCLoading, setIsCLoading] = useState(false);
-  const [isValid, setIsValid] = useState("");
+  const [couponRes, setCouponRes] = useState(null);
   const [error, setError] = useState(false);
   const auth = useSelector((state) => state.auth.user);
   const router = useRouter();
@@ -107,17 +108,18 @@ const TestDetails = () => {
   const handleValidateCoupon = async (event) => {
     try {
       const { value } = event.target;
-      setcouponCode(value);
-      if (value.trim().length == 5) {
-        setIsCLoading(true);
-        const couponRes = await ApplyCouponCodeAPI({ coupon_code: value });
-        setIsCLoading(false);
-        setIsValid(couponRes.message);
-        if (couponRes.status != 200) {
-          setError(true);
-        } else {
-          setError(false);
-        }
+      setcouponCode(value.trim().toUpperCase());
+      setIsCLoading(true);
+      const couponResponse = await ApplyCouponCodeAPI({
+        test_slug: id,
+        coupon_code: value.trim().toUpperCase(),
+      });
+      setIsCLoading(false);
+      setCouponRes(couponResponse);
+      if (couponResponse.status != 200) {
+        setError(true);
+      } else {
+        setError(false);
       }
     } catch (err) {
       setIsCLoading(false);
@@ -129,14 +131,16 @@ const TestDetails = () => {
       try {
         let testDetailsData = await getTetsListDetail(id);
         setTestListDetails(testDetailsData);
-
+        setcouponCode("");
+        setCouponRes(null);
+        setError(false);
         // console.log("testDetailsData==========:", testDetailsData);
         // console.log("testDetailsData==========:", testListDetails.data.id);
       } catch (ee) {
         console.error(ee.data);
       }
     })();
-  }, [id]);
+  }, [id, auth]);
 
   useEffect(() => {
     // console.log(auth);
@@ -182,6 +186,11 @@ const TestDetails = () => {
         </div>
       ) : (
         <>
+          <Head>
+            <title>
+              Self Assessment - {testListDetails.data?.title} - Latitude Magnus
+            </title>
+          </Head>
           <Banner title={testListDetails.data?.title} />
           <div className="test-details">
             <div className="container">
@@ -238,9 +247,8 @@ const TestDetails = () => {
                     5000
                   </span>{" "}
                   {/* {testListDetails.data?.test_price} Rs */}
-                  {testFeestruncatedNumber} Rs
+                  {couponRes?.data?.test_price || testFeestruncatedNumber} Rs
                 </div>
-
                 <div>
                   <input
                     type="text"
@@ -254,7 +262,7 @@ const TestDetails = () => {
                     <ThreeDots height="24" width="67" color="#ea8127" />
                   ) : (
                     <div className={error ? "coupon-error" : "coupon-success"}>
-                      {isValid}
+                      {couponRes?.message}
                     </div>
                   )}
                 </div>
@@ -263,6 +271,7 @@ const TestDetails = () => {
                     <div className="btn-block">
                       <button
                         className="btn btn-orange-color border-0"
+                        style={{ marginTop: 15 }}
                         onClick={() => setIsModal((current) => !current)}
                       >
                         Buy Now

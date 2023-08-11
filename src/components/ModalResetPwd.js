@@ -34,6 +34,21 @@ export default function ModalResetPwd({ isModal, setIsModal }) {
   const router = useRouter();
   const { resetkey, resetcode } = router.query;
 
+  useEffect(() => {
+    if (isModal) {
+      setFormData({
+        otp: "",
+        password: "",
+        confirm_password: "",
+      });
+      setErrors({
+        otp: "",
+        password: "",
+        confirm_password: "",
+      });
+    }
+  }, [isModal]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setErrors({
@@ -119,6 +134,7 @@ export default function ModalResetPwd({ isModal, setIsModal }) {
                     value={formData.password}
                     placeholder="New Password"
                     onChange={handleChange}
+                    maxLength={50}
                     error={errors?.password}
                   />
                 </div>
@@ -129,6 +145,7 @@ export default function ModalResetPwd({ isModal, setIsModal }) {
                     value={formData.confirm_password}
                     placeholder="Confirm New Password"
                     onChange={handleChange}
+                    maxLength={50}
                     error={errors?.confirm_password}
                   />
                 </div>
