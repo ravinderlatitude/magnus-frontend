@@ -44,7 +44,6 @@ export default function Homepage() {
               <p>
                 Discovering more about yourself is an exciting journey, and
                 choosing the right test can be a crucial step in that process.
-                With our wide range of personality tests.
               </p>
               {/* <div className="btn-block">
                 <button
