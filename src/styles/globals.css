@@ -820,13 +820,29 @@ h6.text-blue {
   .btn-block button {
     font-size: 12px;
   }
-  .btn-orange-color:hover{
+  .btn-orange-color:hover {
     background-color: var(--colorOrange);
   }
-  .register-loading{ width: 48px; height: 18px; align-items: center;}
-  .otp-loading{ width: 63px; height: 18px; align-items: center;}
-  .login-loading{ width: 32px; height: 18px; align-items: center;}
-  .forgotpassword-loading{ width: 42px; height: 18px; align-items: center;}
+  .register-loading {
+    width: 48px;
+    height: 18px;
+    align-items: center;
+  }
+  .otp-loading {
+    width: 63px;
+    height: 18px;
+    align-items: center;
+  }
+  .login-loading {
+    width: 32px;
+    height: 18px;
+    align-items: center;
+  }
+  .forgotpassword-loading {
+    width: 42px;
+    height: 18px;
+    align-items: center;
+  }
   .header-main .btn-block {
     right: 55px;
     top: 21px;
@@ -976,11 +992,19 @@ h6.text-blue {
   font-size: 14px;
   width: 220px;
 }
-.coupon-error{
+.coupon-error {
   font-size: 14px;
   color: red;
 }
-.coupon-success{
+.coupon-success {
   font-size: 14px;
   color: green;
+}
+
+.test-details ul {
+  margin: 30px 20px;
+}
+.test-details ul li {
+  margin: 5px 10px;
+  list-style: disc;
 }
