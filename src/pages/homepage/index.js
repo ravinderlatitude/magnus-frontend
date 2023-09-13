@@ -39,7 +39,7 @@ export default function Homepage() {
                 Let&apos;s <span>Begins</span>
               </h6>
               <h2>
-                Let&apos;s Find The <span>Right Test </span>For you
+                Let&apos;s Find The <span>Right Personality Test </span>For you
               </h2>
               <p>
                 Discovering more about yourself is an exciting journey, and
@@ -93,7 +93,7 @@ export default function Homepage() {
             <div className="col-md-4 col-12">
               <div className="title-text">
                 <h6>WHY US?</h6>
-                <h3>Why you Purchase test?</h3>
+                <h3>Why Should You Purchase Tests?</h3>
                 <p>
                   We offer high quality tests for everyone to gain self
                   awareness, identify areas of improvement and uncover the
@@ -110,8 +110,8 @@ export default function Homepage() {
                     </div>
                     <h6>Easy to Accessible</h6>
                     <p>
-                      Grab the simple accessibility of the personality testing
-                      that will take less time to offer you the desired test.
+                      Grab the simple accessibility of the personality test that
+                      will take less time to offer you the desired test.
                     </p>
                   </div>
                 </div>

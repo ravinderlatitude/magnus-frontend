@@ -34,7 +34,7 @@ const Aboutus = () => {
             </div>
             <div className="col-md-6 col-12 title-text mt-md-0 mt-4">
               <h6>Know More</h6>
-              <h3>We offer a carefully and planned test.</h3>
+              <h3>We Offer Well Planned Test For You</h3>
               <p>
                 Magnus Latitude Pvt Ltd is dedicated to helping individuals gain
                 a deeper understanding of themselves through our comprehensive
@@ -121,7 +121,7 @@ const Aboutus = () => {
                 <div className="bx-icon box_blue">
                   <Image alt="" src={ICPay} />
                 </div>
-                <h6>Pay to access the test.</h6>
+                <h6>Pay and access the test</h6>
                 <p>Make the final payment to buy the test.</p>
               </div>
             </div>
