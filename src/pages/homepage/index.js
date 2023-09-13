@@ -108,7 +108,7 @@ export default function Homepage() {
                     <div className="bx-icon">
                       <Image alt="" src={ICAccessible} />
                     </div>
-                    <h6>Easy to Accessible</h6>
+                    <h6>Easy to Access</h6>
                     <p>
                       Grab the simple accessibility of the personality test that
                       will take less time to offer you the desired test.
