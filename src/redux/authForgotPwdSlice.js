@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { forgotPwdAPI } from "../../apiServices/services";
+import { toast } from "react-toastify";
 
 const authForgotPwdSlice = createSlice({
   name: "authForgotPwd",
@@ -27,6 +28,11 @@ const authForgotPwdSlice = createSlice({
     builder.addCase(forgotPwdAPI.fulfilled, (state, action) => {
       // console.log(action);
       state.status = "succeeded";
+      if (action.payload.status != 200) {
+        toast.error(action.payload.message);
+      } else {
+        toast.success(action.payload.message);
+      }
       state.user = action.payload;
       return state;
     });

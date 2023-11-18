@@ -15,6 +15,7 @@ import Image from "next/image";
 // import LOGO from "../assets/images/logo.svg";
 import { getFaqList } from "../../../apiServices/services";
 import Testimonials from "@/components/Testimonials";
+import Head from "next/head";
 
 const Faq = () => {
   const [faqData, setfaqData] = useState([]);
@@ -56,6 +57,9 @@ const Faq = () => {
 
   return (
     <div>
+      <Head>
+        <title>FAQs - Latitude Magnus</title>
+      </Head>
       <Banner title={"FAQs"} />
       <div className="faq-block">
         <div className="container">

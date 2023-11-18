@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { loginAPI } from "../../apiServices/services";
+import { toast } from "react-toastify";
 
 const authSlice = createSlice({
   name: "auth",
@@ -26,6 +27,12 @@ const authSlice = createSlice({
     });
     builder.addCase(loginAPI.fulfilled, (state, action) => {
       state.status = "succeeded";
+      if (action.payload.status != 200) {
+        toast.error(action.payload.message);
+      } else {
+        toast.success(action.payload.message);
+        localStorage.setItem("userData", JSON.stringify(action.payload));
+      }
       state.user = action.payload;
       return state;
     });

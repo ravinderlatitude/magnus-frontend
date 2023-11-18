@@ -1,18 +1,76 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import ICclose from "../assets/images/ICclose.svg";
-import ic_cross from "../assets/images/ic_cross.svg";
-import useOutsideClick from "../hooks/useOutsideClick";
 import { useDispatch, useSelector } from "react-redux";
 
 import { loginAPI, forgotPwdAPI } from "../../apiServices/services";
 import { useRouter } from "next/router";
+import { forgotValidation, loginValidation } from "@/utils/form";
+import { Input } from "./Input";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function ModalLogin({ isModal, setIsModal }) {
   const modelRef = useRef(null);
   const [isModalForgot, setIsModalForgot] = useState(false);
-  // const [isModalLogin, setIsModalLogin] = useState(false);
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [fformData, setFFormData] = useState({
+    email: "",
+  });
+  const [ferrors, setFErrors] = useState({
+    email: "",
+  });
+  const router = useRouter();
+  const { id } = router.query;
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setErrors({
+      ...errors,
+      [name]: loginValidation(name, value),
+    });
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const fhandleChange = (e) => {
+    const { name, value } = e.target;
+    setFErrors({
+      ...errors,
+      [name]: forgotValidation(name, value),
+    });
+    setFFormData({ ...fformData, [name]: value });
+  };
+  useEffect(() => {
+    if (isModal) {
+      setFormData({
+        email: "",
+        password: "",
+      });
+      setErrors({
+        email: "",
+        password: "",
+      });
+    }
+  }, [isModal]);
+
+  useEffect(() => {
+    if (isModalForgot) {
+      setFFormData({
+        email: "",
+      });
+      setFErrors({
+        email: "",
+      });
+    }
+  }, [isModalForgot]);
 
   // for Modal
   const modalOpen = (event) => {
@@ -26,43 +84,14 @@ export default function ModalLogin({ isModal, setIsModal }) {
     setIsModal(false);
     // console.log(isModalForgot, "modal");
   };
-  useOutsideClick(modelRef, modalClose);
-
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-
-  // const handleClick = async () => {
-  //   // console.log(JSON.stringify({ email, password }));
-
-  //   // if (response.status == 200) {
-  //   //   setIsModal(false);
-  //   // } else {
-  //   //   null;
-  //   // }
-  //   try {
-  //     let body = JSON.stringify({ email, password });
-  //     const response = await loginAPI(body);
-
-  //     console.log("login success response=====================");
-  //     console.log(response);
-  //     if (response.status == 200) {
-  //       modalClose();
-  //     }
-  //     console.log(response.data.email);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   const dispatch = useDispatch();
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [error, setError] = useState(null);
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
 
-  const auth = useSelector((state) => state.auth.user);
-  const authForgotPwd = useSelector((state) => state.authForgotPwd.user);
+  const { user: auth, status } = useSelector((state) => state.auth);
+  const { user: authForgotPwd, status: fstatus } = useSelector(
+    (state) => state.authForgotPwd
+  );
+
   useEffect(() => {
     // console.log(auth);
     if (auth?.status == 200) {
@@ -70,91 +99,57 @@ export default function ModalLogin({ isModal, setIsModal }) {
     }
   }, [auth]);
 
-  // const handleClick = async (e) => {
-  //   e.preventDefault();
-  //   dispatch(loginAPI({ email, password }));
-  //   // setIsModal(false);
-  // };
-
-  const handleEmailChange = (event) => {
-    const { value } = event.target;
-
-    setEmail(value);
-
-    // email validation
-    const emailRegex = /^[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(value)) {
-      setEmailError("Invalid email address");
-    } else {
-      setEmailError("");
+  useEffect(() => {
+    console.log(authForgotPwd);
+    if (authForgotPwd?.status === 200 && authForgotPwd?.data?.verify_key) {
+      modalClose();
+      if (id) {
+        router.push(
+          `/test-detail/${encodeURIComponent(id)}?resetkey=${
+            authForgotPwd?.data?.verify_key
+          }`
+        );
+      } else {
+        router.push(`?resetkey=${authForgotPwd?.data?.verify_key}`);
+      }
     }
-    if (value.length < 1) {
-      setEmailError("");
-    }
-  };
-
-  const handlePasswordChange = (event) => {
-    const { value } = event.target;
-    setPassword(value);
-
-    // password validation
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,191}$/;
-    if (!passwordRegex.test(value)) {
-      setPasswordError(
-        "Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character."
-      );
-    } else {
-      setPasswordError("");
-    }
-  };
+  }, [authForgotPwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(loginAPI({ email, password }));
-    setError(auth?.message);
-
-    // setEmail(e.target.value);
+    let validationErrors = {};
+    Object.keys(formData).forEach((name) => {
+      const error = loginValidation(name, formData[name]);
+      if (error && error.length > 0) {
+        validationErrors[name] = error;
+      }
+    });
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    if (Object.keys(validationErrors).length === 0) {
+      dispatch(loginAPI(formData));
+    }
   };
 
   const handleForgotPasswordSubmit = async (e) => {
     e.preventDefault();
-    dispatch(
-      forgotPwdAPI({
-        // first_name: firstName,
-        // last_name: lastName,
-
-        email: email,
-        // password: password,
-        // confirm_password: confirmPassword,
-      })
-    );
-    setError(authForgotPwd?.message);
-
-    // setEmail(e.target.value);
-  };
-
-  const handleForgotPasswordEmailChange = (event) => {
-    const { value } = event.target;
-
-    setEmail(value);
-
-    // email validation
-    const emailRegex = /^[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(value)) {
-      setEmailError("Invalid email address");
-    } else {
-      setEmailError("");
+    let validationErrors = {};
+    Object.keys(fformData).forEach((name) => {
+      const error = loginValidation(name, fformData[name]);
+      if (error && error.length > 0) {
+        validationErrors[name] = error;
+      }
+    });
+    if (Object.keys(validationErrors).length > 0) {
+      setFErrors(validationErrors);
+      return;
     }
-    if (value.length < 1) {
-      setEmailError("");
+    if (Object.keys(validationErrors).length === 0) {
+      dispatch(forgotPwdAPI({ email: fformData.email }));
     }
   };
-
-  // useEffect(() => {
-  //   dispatch(forgotPwdAPI({ email }));
-  // }, [error]);
-  // console.log(error, password, email, auth, ">>");
 
   return (
     <div>
@@ -168,47 +163,52 @@ export default function ModalLogin({ isModal, setIsModal }) {
                 </span>
                 <h2>Login</h2>
                 <form onSubmit={handleSubmit}>
-                  {/* {status === "failed" && <div>{error}</div>} */}
                   <div>
-                    <input
+                    <Input
                       type="name"
-                      value={email}
+                      name={"email"}
+                      value={formData.email}
                       placeholder="Email"
-                      className="form-control"
-                      onChange={handleEmailChange}
+                      onChange={handleChange}
+                      maxLength={50}
+                      error={errors?.email}
                     />
-                    {emailError && (
-                      <span className="errorMessage">{emailError}</span>
-                    )}
                   </div>
                   <div>
-                    <input
+                    <Input
                       type="password"
-                      value={password}
+                      name={"password"}
+                      value={formData.password}
                       placeholder="Password"
-                      className="form-control"
-                      onChange={handlePasswordChange}
+                      onChange={handleChange}
+                      maxLength={50}
+                      error={errors?.password}
                     />
-                  </div>
-                  <div className="d-flex flex-column">
-                    {passwordError && (
-                      <span className="errorMessage">{passwordError}</span>
-                    )}
-                    {error && (
-                      <span className="errorMessage">{auth?.message}</span>
-                    )}
                   </div>
                   <div className="w-100 text-end">
-                    <button className="modal-links" onClick={modalOpen}>
+                    <button
+                      type="button"
+                      className="modal-links"
+                      onClick={modalOpen}
+                    >
                       Forgot Password?
                     </button>
                   </div>
                   <div>
                     <button
                       className="btn btn-orange-color border-0"
-                      // onClick={handleClick}
+                      disabled={status == "loading"}
                     >
-                      Login
+                      {status == "loading" ? (
+                        <ThreeDots
+                          height="24"
+                          width="42"
+                          color="#FFF"
+                          wrapperClass="login-loading"
+                        />
+                      ) : (
+                        "Login"
+                      )}
                     </button>
                   </div>
                 </form>
@@ -225,29 +225,40 @@ export default function ModalLogin({ isModal, setIsModal }) {
                 <form onSubmit={handleForgotPasswordSubmit}>
                   <h2>Forgot Password?</h2>
                   <div>
-                    <input
+                    <Input
                       type="name"
-                      value={email}
+                      name={"email"}
+                      value={fformData.email}
                       placeholder="Email"
-                      className="form-control"
-                      onChange={handleForgotPasswordEmailChange}
+                      onChange={fhandleChange}
+                      maxLength={50}
+                      error={ferrors?.email}
                     />
                   </div>
-                  <div className="d-flex">
-                    {error && (
-                      <span className="errorMessage">
-                        {authForgotPwd?.message}
-                      </span>
-                    )}
-                  </div>
                   <div className="w-100 text-end">
-                    <button className="modal-links" onClick={modalOpen}>
+                    <button
+                      type="button"
+                      className="modal-links"
+                      onClick={modalOpen}
+                    >
                       Go Back to Login
                     </button>
                   </div>
                   <div className="">
-                    <button className="btn btn-orange-color border-0">
-                      Submit
+                    <button
+                      className="btn btn-orange-color border-0"
+                      disabled={fstatus == "loading"}
+                    >
+                      {fstatus == "loading" ? (
+                        <ThreeDots
+                          height="24"
+                          width="56"
+                          color="#FFF"
+                          wrapperClass="forgotpassword-loading"
+                        />
+                      ) : (
+                        "Submit"
+                      )}
                     </button>
                   </div>
                 </form>

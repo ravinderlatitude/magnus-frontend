@@ -10,6 +10,7 @@ import {
   getTetsListDetail,
   PaymentPayGAPI,
   getTetsLists,
+  ApplyCouponCodeAPI,
 } from "../../../apiServices/services";
 import { useRouter } from "next/router";
 import ImgNotFound from "../../assets/images/ImgNotFound.svg";
@@ -17,6 +18,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useRazorpay from "react-razorpay";
 import ModalRegister from "../../components/ModalRegister";
+import { ThreeDots } from "react-loader-spinner";
+import { toast } from "react-toastify";
+import Head from "next/head";
 
 // export async function generateStaticParams() {
 //   const posts = await getTetsLists();
@@ -83,6 +87,9 @@ const TestDetails = () => {
   const [loading, setLoading] = useState(false);
   const [paygUrl, setPaygUrl] = useState({ data: [] });
   const [isLoading, setIsLoading] = useState(false);
+  const [couponCode, setcouponCode] = useState("");
+  const [isCLoading, setIsCLoading] = useState(false);
+  const [couponRes, setCouponRes] = useState(null);
   const [error, setError] = useState(false);
   const auth = useSelector((state) => state.auth.user);
   const router = useRouter();
@@ -97,19 +104,43 @@ const TestDetails = () => {
     setIsModal(false);
     // console.log(isModalForgot, "modal");
   };
+
+  const handleValidateCoupon = async (event) => {
+    try {
+      const { value } = event.target;
+      setcouponCode(value.trim().toUpperCase());
+      setIsCLoading(true);
+      const couponResponse = await ApplyCouponCodeAPI({
+        test_slug: id,
+        coupon_code: value.trim().toUpperCase(),
+      });
+      setIsCLoading(false);
+      setCouponRes(couponResponse);
+      if (couponResponse.status != 200) {
+        setError(true);
+      } else {
+        setError(false);
+      }
+    } catch (err) {
+      setIsCLoading(false);
+    }
+  };
+
   useEffect(() => {
     (async () => {
       try {
         let testDetailsData = await getTetsListDetail(id);
         setTestListDetails(testDetailsData);
-
+        setcouponCode("");
+        setCouponRes(null);
+        setError(false);
         // console.log("testDetailsData==========:", testDetailsData);
         // console.log("testDetailsData==========:", testListDetails.data.id);
       } catch (ee) {
         console.error(ee.data);
       }
     })();
-  }, [id]);
+  }, [id, auth]);
 
   useEffect(() => {
     // console.log(auth);
@@ -120,19 +151,22 @@ const TestDetails = () => {
 
   const handlePayNow = async () => {
     setIsLoading(true);
-
     try {
-      let paygUrl = await PaymentPayGAPI({ test_id: testListDetails.data.id });
-      // console.log("paygUrl====>", paygUrl);
-      setPaygUrl(paygUrl);
-
+      let paygUrl = await PaymentPayGAPI({
+        test_id: testListDetails.data.id,
+        coupon_code: couponCode,
+      });
       if (paygUrl.status == 200) {
+        localStorage.setItem("PaygData", JSON.stringify(paygUrl));
         window.location.assign(paygUrl?.data.payment_url);
+      } else {
+        setIsLoading(false);
+        toast.error(paygUrl.message);
       }
     } catch (ee) {
+      setIsLoading(false);
       console.error(ee.data);
     }
-    setError(paygUrl?.message);
   };
 
   const testFees = testListDetails.data?.test_price;
@@ -152,6 +186,11 @@ const TestDetails = () => {
         </div>
       ) : (
         <>
+          <Head>
+            <title>
+              Self Assessment - {testListDetails.data?.title} - Latitude Magnus
+            </title>
+          </Head>
           <Banner title={testListDetails.data?.title} />
           <div className="test-details">
             <div className="container">
@@ -192,7 +231,6 @@ const TestDetails = () => {
               </Link> */}
                 <div
                   style={{
-                    fontSize: "22px;",
                     marginBottom: "10px",
                     color: "#0a6eb0",
                     fontWeight: "bold",
@@ -209,14 +247,31 @@ const TestDetails = () => {
                     5000
                   </span>{" "}
                   {/* {testListDetails.data?.test_price} Rs */}
-                  {testFeestruncatedNumber} Rs
+                  {couponRes?.data?.test_price || testFeestruncatedNumber} Rs
                 </div>
-
+                <div>
+                  <input
+                    type="text"
+                    value={couponCode}
+                    placeholder="Enter Coupon Code"
+                    className="coupon-code"
+                    maxLength={5}
+                    onChange={handleValidateCoupon}
+                  />
+                  {isCLoading ? (
+                    <ThreeDots height="24" width="67" color="#ea8127" />
+                  ) : (
+                    <div className={error ? "coupon-error" : "coupon-success"}>
+                      {couponRes?.message}
+                    </div>
+                  )}
+                </div>
                 {
                   !auth?.data ? (
                     <div className="btn-block">
                       <button
                         className="btn btn-orange-color border-0"
+                        style={{ marginTop: 15 }}
                         onClick={() => setIsModal((current) => !current)}
                       >
                         Buy Now
@@ -227,19 +282,18 @@ const TestDetails = () => {
                      *! Commented Buy Test button code uncomment one payment methode integrated
                      **/
 
-                    <>
-                      <button
-                        className="btn btn-orange-color"
-                        onClick={handlePayNow}
-                      >
-                        Buy Now
-                      </button>
-                      {paygUrl.status !== 200 && (
-                        <span className="errorMessage font-red mt-4">
-                          {paygUrl?.message}
-                        </span>
+                    <button
+                      className="btn btn-orange-color"
+                      style={{ marginTop: 15 }}
+                      onClick={handlePayNow}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <ThreeDots height="24" width="67" color="#FFF" />
+                      ) : (
+                        "Buy Now"
                       )}
-                    </>
+                    </button>
                   )
                   // null
                 }

@@ -19,7 +19,8 @@ function ActiveLink({ children, href, ...props }) {
       onClick={handleClick}
       //   style={style}
       //   className={"nav-link" + router.asPath === href ? "active" : ""}
-      className={router.asPath === href ? "nav-link active" : "nav-link"}
+      // className={router.asPath === href ? "nav-link active" : "nav-link"}
+      className={router.pathname === href ? "nav-link active" : "nav-link"}
       {...props}
     >
       {children}

@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import ICclose from "../assets/images/ICclose.svg";
-import useOutsideClick from "../hooks/useOutsideClick";
 
 import { VerifyUserAPI } from "../../apiServices/services";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { ThreeDots } from "react-loader-spinner";
+import { otpValidation } from "@/utils/form";
+import { Input } from "./Input";
 
 export default function ModalOtp({ isModal, setIsModal }) {
   // for Modal
@@ -15,15 +16,36 @@ export default function ModalOtp({ isModal, setIsModal }) {
   };
 
   const dispatch = useDispatch();
-  const [verify_key, setVerify_key] = useState(null);
-  const [verificationCode, setVerificationCode] = useState(null);
-  const [error, setError] = useState(null);
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
 
-  const verifyUser = useSelector((state) => state.verifyUser.user);
+  const [formData, setFormData] = useState({
+    otp: "",
+  });
+  const [errors, setErrors] = useState({
+    otp: "",
+  });
+  const { user: verifyUser, status } = useSelector((state) => state.verifyUser);
   const router = useRouter();
   const { verifiedregister } = router.query;
+
+  useEffect(() => {
+    if (isModal) {
+      setFormData({
+        otp: "",
+      });
+      setErrors({
+        otp: "",
+      });
+    }
+  }, [isModal]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setErrors({
+      ...errors,
+      [name]: otpValidation(name, value),
+    });
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleVerify = (event) => {
     const { value } = event.target;
@@ -32,26 +54,39 @@ export default function ModalOtp({ isModal, setIsModal }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(
-      VerifyUserAPI({
-        verify_key: verifiedregister,
-        verification_code: verificationCode,
-      })
-    );
-    setError(verifyUser?.message);
+    let validationErrors = {};
+    Object.keys(formData).forEach((name) => {
+      const error = otpValidation(name, formData[name]);
+      if (error && error.length > 0) {
+        validationErrors[name] = error;
+      }
+    });
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    if (Object.keys(validationErrors).length === 0) {
+      dispatch(
+        VerifyUserAPI({
+          verify_key: verifiedregister,
+          verification_code: formData.otp,
+        })
+      );
+    }
   };
-  // console.log(first);
+
+  const resendOtp = async (e) => {};
 
   return (
     <div>
       {isModal ? (
-        <div className="modal-bg-overlay" onClick={modalClick}>
+        <div className="modal-bg-overlay">
           <div
             className={" " + (!isModal ? "d-none" : "d-flex")}
             id="exampleModal"
             tabindex="-1"
           >
-            <div className="modal-main" onClick={modalClick}>
+            <div className="modal-main">
               <span className="modal-close" onClick={modalClick}>
                 <Image src={ICclose} alt="" />
               </span>
@@ -59,28 +94,43 @@ export default function ModalOtp({ isModal, setIsModal }) {
               <form onSubmit={handleSubmit}>
                 <div class="row">
                   <div className="col-12 col-md-12 pe-md-1">
-                    <input
+                    <Input
                       type="name"
-                      value={verificationCode}
+                      name={"otp"}
+                      value={formData.otp}
                       placeholder="Enter OTP Code"
-                      className="form-control"
-                      onChange={handleVerify}
+                      onChange={handleChange}
+                      maxLength={6}
+                      error={errors?.otp}
                     />
-                    <span className="errorMessage">{verifyUser?.message}</span>
-                    {error && (
-                      <span className="errorMessage">
-                        {verifyUser?.message}
-                      </span>
-                    )}
                   </div>
                 </div>
+                {/* <div className="w-100 text-end">
+                  <button
+                    type="button"
+                    className="modal-links"
+                    onClick={resendOtp}
+                  >
+                    Resend OTP
+                  </button>
+                </div> */}
 
                 <div className="">
                   <button
                     className="btn btn-orange-color border-0"
                     type="submit"
+                    disabled={status == "loading"}
                   >
-                    Verify Now
+                    {status == "loading" ? (
+                      <ThreeDots
+                        height="24"
+                        width="85"
+                        color="#FFF"
+                        wrapperClass="otp-loading"
+                      />
+                    ) : (
+                      "Verify Now"
+                    )}
                   </button>
                 </div>
               </form>

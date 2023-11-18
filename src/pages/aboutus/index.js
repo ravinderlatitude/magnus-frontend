@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import Head from "next/head";
 
 import AboutImg from "../../assets/images/AboutImg.png";
 import Banner from "../../components/banner";
@@ -12,7 +14,6 @@ import ICChoose from "../../assets/images/ICChoose.svg";
 import ICPay from "../../assets/images/ICPay.svg";
 
 import Testimonials from "@/components/Testimonials";
-import { useSelector } from "react-redux";
 
 // import LOGO from "../assets/images/logo.svg";
 const Aboutus = () => {
@@ -21,6 +22,9 @@ const Aboutus = () => {
 
   return (
     <div>
+      <Head>
+        <title>About Us - Latitude Magnus</title>
+      </Head>
       <Banner title={"About Us"} />
       <div className="about-block">
         <div className="container">
@@ -30,7 +34,7 @@ const Aboutus = () => {
             </div>
             <div className="col-md-6 col-12 title-text mt-md-0 mt-4">
               <h6>Know More</h6>
-              <h3>We offer a carefully and planned test.</h3>
+              <h3>We Offer Well Planned Test For You</h3>
               <p>
                 Magnus Latitude Pvt Ltd is dedicated to helping individuals gain
                 a deeper understanding of themselves through our comprehensive
@@ -117,7 +121,7 @@ const Aboutus = () => {
                 <div className="bx-icon box_blue">
                   <Image alt="" src={ICPay} />
                 </div>
-                <h6>Pay to access the test.</h6>
+                <h6>Pay and access the test</h6>
                 <p>Make the final payment to buy the test.</p>
               </div>
             </div>
